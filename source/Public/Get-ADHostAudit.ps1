@@ -13,7 +13,7 @@ function Get-ADHostAudit {
     .EXAMPLE
         PS C:\> Get-ADHostAudit -HostType WindowsWorkstations -Report -Verbose
     .EXAMPLE
-        PS C:\> Get-ADHostAudit -HostType Non-Windows -Report -Verbose
+        PS C:\> Get-ADHostAudit -HostType "Non-Windows" -Report -Verbose
     .EXAMPLE
         PS C:\> Get-ADHostAudit -OSType "2008" -DirPath "C:\Temp\" -Report -Verbose
     .PARAMETER HostType

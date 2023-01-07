@@ -3,7 +3,7 @@ function Get-ADUserLogonAudit {
     .SYNOPSIS
     Takes SamAccountName as input to retrieve most recent LastLogon from all DC's and output as DateTime.
     .DESCRIPTION
-    Will check if DC's are available for queries. Best run on PDC.
+    Will check if DC's are available for queries. Best run on PDC. To add: Verbose output of all datetime objects.
     .EXAMPLE
     Get-ADUsersLastLogon -SamAccountName "UserName"
     .PARAMETER SamAccountName
@@ -51,7 +51,7 @@ function Get-ADUserLogonAudit {
         $time = 0
         $dt = @()
         foreach ($dc in $params.ComputerName) {
-            $user | Get-ADObject -Server $hostname - -Properties lastLogon -OutVariable usertime -ErrorAction SilentlyContinue | Out-Null
+            $user | Get-ADObject -Server $dc -Properties lastLogon -OutVariable usertime -ErrorAction SilentlyContinue | Out-Null
             if ($usertime.LastLogon -gt $time) {
                 $time = $usertime.LastLogon
             }

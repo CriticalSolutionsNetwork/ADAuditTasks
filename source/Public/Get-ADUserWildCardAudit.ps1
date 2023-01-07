@@ -85,7 +85,9 @@ function Get-ADUserWildCardAudit {
         # Create Directory Path
         $AttachmentFolderPathCheck = Test-Path -Path $AttachmentFolderPath
         If (!($AttachmentFolderPathCheck)) {
+            $Script:ADLogString += Write-AuditLog -Message "Would you like to create the directory $($AttachmentFolderPath)?" -Severity Warning
             Try {
+
                 # If not present then create the dir
                 New-Item -ItemType Directory $AttachmentFolderPath -Force -ErrorAction Stop
             }

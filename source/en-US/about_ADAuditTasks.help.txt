@@ -2,13 +2,13 @@ TOPIC
     about_ADAuditTasks
 
 SHORT DESCRIPTION
-    A module for running various Active Directory Audits
+    Tasks for auditing Active Directory
 
 LONG DESCRIPTION
-    {{ Add Long description here }}
+    Multiple functions for conducting Audits in AD and sending the report via email.
 
 EXAMPLES
-    PS C:\> {{ add examples here }}
+    PS C:\> Get-ADActiveUserAudit -Report -Verbose
 
 NOTE:
     Thank you to all those who contributed to this module, by writing code, sharing opinions, and provided feedback.
@@ -17,8 +17,8 @@ TROUBLESHOOTING NOTE:
     Look out on the Github repository for issues and new releases.
 
 SEE ALSO
-  - {{ Please add Project URI such as github }}}
+  - https://github.com/CriticalSolutionsNetwork/ADAuditTasks
 
 KEYWORDS
-      {{ Add coma separated keywords here }}
+      ActiveDirectory,PowerShellModule
 
