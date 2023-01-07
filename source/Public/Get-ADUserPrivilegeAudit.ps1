@@ -20,7 +20,7 @@ function Get-ADUserPrivilegeAudit {
             Will return 3 reports to the default temp directory in a single zip file.
     .PARAMETER AttachmentFolderPath
         The path of the folder you want to save attachments to. The default is:
-            C:\temp\ADUserPrivilegeAudit'
+            C:\temp\ADUserPrivilegeAudit
     .PARAMETER Report
         Add report output as csv to DirPath directory.
     #>
@@ -29,11 +29,11 @@ function Get-ADUserPrivilegeAudit {
     [CmdletBinding()]
     param (
         [Parameter(
-            HelpMessage = 'Enter output folder path. Default: C:\temp\ADUserPrivilegeAudit',
+            HelpMessage = ' Enter output folder path. Default: C:\temp\ADUserPrivilegeAudit ',
             Position = 0,
             ValueFromPipeline = $true
         )]
-        [string]$AttachmentFolderPath = "C:\temp\ADUserPrivilegeAudit",
+        [string]$AttachmentFolderPath = 'C:\temp\ADUserPrivilegeAudit',
         [Parameter(
             HelpMessage = 'Switch to export output to a csv and zipped to Directory C:\temp\ADUserPrivilegeAudit Default: $false',
             Position = 1,
@@ -69,6 +69,7 @@ function Get-ADUserPrivilegeAudit {
         # Create Directory Path
         $AttachmentFolderPathCheck = Test-Path -Path $AttachmentFolderPath
         If (!($AttachmentFolderPathCheck)) {
+            $ADLogString += Write-AuditLog -Message "Would you like to create the directory $($AttachmentFolderPath)?" -Severity Warning
             Try {
                 # If not present then create the dir
                 New-Item -ItemType Directory $AttachmentFolderPath -Force -ErrorAction Stop

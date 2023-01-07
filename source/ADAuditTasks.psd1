@@ -27,7 +27,7 @@
     CompanyName       = 'CriticalSolutions.net LLC'
 
     # Copyright statement for this module
-    Copyright         = Copyright         = '(c) 2022 DrIOSX via CriticalSolutions.net LLC. All rights reserved.'
+    Copyright         = '(c) 2022 DrIOSX via CriticalSolutions.net LLC. All rights reserved.'
 
     # Description of the functionality provided by this module
     Description       = 'A module for running various Active Directory Audits'

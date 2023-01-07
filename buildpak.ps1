@@ -1,16 +1,15 @@
 Remove-Module ADAuditTasks
-Remove-Item .\output\ADAuditTasks -Recurse
+Remove-Item .\output\module\ADAuditTasks -Recurse
 Remove-Item ".\output\ADAuditTasks.*.nupkg"
 Remove-Item .\output\ReleaseNotes.md
 Remove-Item .\output\CHANGELOG.md
 .\build.ps1 -tasks build -CodeCoverageThreshold 0
-Remove-Item C:\temp\ADDS* -Recurse
+#Remove-Item C:\temp\ADDS* -Recurse
 
-.\build.ps1 -ResolveDependency -tasks noop
+#.\build.ps1 -ResolveDependency -tasks noop
+#.\build.ps1 -tasks build -CodeCoverageThreshold 0
 
-.\build.ps1 -tasks build -CodeCoverageThreshold 0
-
-
+git tag -a v0.1.0 -m "v0.1.0 Feature Update"
 
 # Update Changelog
 # Update Manifest from Previous Module
