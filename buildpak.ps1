@@ -9,7 +9,8 @@ Remove-Item .\output\CHANGELOG.md
 #.\build.ps1 -ResolveDependency -tasks noop
 #.\build.ps1 -tasks build -CodeCoverageThreshold 0
 
-git tag -a v0.1.0 -m "v0.1.0 Feature Update"
+git tag -a v0.1.1 -m "Fix Update"
+git tag -d v1.0.0
 
 # Update Changelog
 # Update Manifest from Previous Module
