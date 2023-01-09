@@ -1,4 +1,32 @@
 # ADAuditTasks Module
+
+## Summary
+
+The module contains various Active Directory auditing tasks that generate logs, CSV output and report objects. 
+Most reports can be sent via Send-AuditEmail by using them as the -AttachmentFiles parameter. 
+
+### Example
+```powershell
+Send-AuditEmail -SMTPServer "smtp.office365.com" -Port 587 -UserName "Username@contoso.com" `
+-From "Username@contoso.com" -To "user@anothercompany.com" -Pass (Read-Host -AsSecureString) -AttachmentFiles "$(Get-ADActiveUserAudit -Report)" -SSL
+```
+
+### Limitations
+
+The module Get-NetworkAudit does not return a string output of the filename for usage in the Send-AuditEmail function. 
+This will be added in a future update. 
+
+### The following Public Functions are available to the user executing the tasks: 
+```powershell
+Get-ADActiveUserAudit
+Get-ADHostAudit
+Get-ADUserLogonAudit
+Get-ADUserPrivilegeAudit
+Get-ADUserWildCardAudit
+Get-HostTag
+Get-NetworkAudit
+Send-AuditEmail
+```
 ## Get-ADActiveUserAudit
 ### Synopsis
 Gets active but stale AD User accounts that haven't logged in within the last 90 days by default.
@@ -6,9 +34,6 @@ Gets active but stale AD User accounts that haven't logged in within the last 90
 ```powershell
 
 Get-ADActiveUserAudit [[-Enabled] <Boolean>] [[-DaysInactive] <Int32>] [[-AttachmentFolderPath] <String>] [[-Report]] [<CommonParameters>]
-
-
-
 
 ```
 ### Parameters
