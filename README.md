@@ -2,18 +2,34 @@
 
 ## Summary
 
-The module contains various Active Directory auditing tasks that generate logs, CSV output and report objects. 
+- The module contains various Active Directory auditing tasks that generate logs, CSV output and report objects. 
 Most reports can be sent via Send-AuditEmail by using them as the -AttachmentFiles parameter. 
 
-### Example
+### Example 1:
 ```powershell
 Send-AuditEmail -SMTPServer "smtp.office365.com" -Port 587 -UserName "Username@contoso.com" `
 -From "Username@contoso.com" -To "user@anothercompany.com" -Pass (Read-Host -AsSecureString) -AttachmentFiles "$(Get-ADActiveUserAudit -Report)" -SSL
 ```
 
-### Limitations
+### Example 2:
+```powershell
+$SMTPServer = "smtp.office365.com"
+$Port = 587
+$UserName = "helpdesk@constoso.com"
+$From = "helpdesk@constoso.com"
+$To = "user@anothercompany.com"
+$password = Read-Host -AsSecureString
+$date = (Get-Date).tostring("yyyy-MM-dd_hh.mm.ss")
+$Body = "Report run on $date for $env:USERDNSDOMAIN"
 
-The module Get-NetworkAudit does not return a string output of the filename for usage in the Send-AuditEmail function. 
+
+Send-AuditEmail -smtpServer $SMTPServer -port $Port -username $UserName `
+-body $Body -from $From -to $To -pass $password -attachmentfiles "$(Get-ADActiveUserAudit -Report)" -ssl
+```
+
+### Limitations:
+
+- The module Get-NetworkAudit does not return a string output of the filename for usage in the Send-AuditEmail function. 
 This will be added in a future update. 
 
 ### The following Public Functions are available to the user executing the tasks: 
