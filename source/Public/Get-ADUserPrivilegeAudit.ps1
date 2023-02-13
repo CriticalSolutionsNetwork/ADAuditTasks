@@ -210,20 +210,15 @@ function Get-ADUserPrivilegeAudit {
             $csv2 = "$ExportFileName.ExtendedPermissions.csv"
             $csv3 = "$ExportFileName.PossibleServiceAccounts.csv"
             $zip1 = "$ExportFileName.zip"
-            $hash1 = "$ExportFileName.csv.SHA256.txt"
-            $hash2 = "$ExportFileName.ExtendedPermissions.csv.SHA256.txt"
-            $hash3 = "$ExportFileName.PossibleServiceAccounts.csv.SHA256.txt"
             $log = "$ExportFileName.AuditLog.csv"
 
             $Export | Export-Csv $csv1
             $Export2 | Export-Csv $csv2
             $Export3 | Export-Csv $csv3
             $csv1Sha256Hash = (Get-FileHash $csv1).Hash
-            $csv1Sha256Hash | Out-File $hash1 -Encoding utf8
             $csv2Sha256Hash = (Get-FileHash $csv2).Hash
-            $csv2Sha256Hash | Out-File $hash2 -Encoding utf8
             $csv3Sha256Hash = (Get-FileHash $csv3).Hash
-            $csv3Sha256Hash | Out-File $hash3 -Encoding utf8
+
 
             $ADLogString += Write-AuditLog -Message "Exported CSV $csv1 SHA256 hash: "
             $ADLogString += Write-AuditLog -Message "$($csv1Sha256Hash)"
@@ -238,8 +233,8 @@ function Get-ADUserPrivilegeAudit {
 
             $ADLogString | Export-Csv $log -NoTypeInformation -Encoding utf8
 
-            Compress-Archive $csv1, $csv2, $csv3, $hash1, $hash2, $hash3, $log -DestinationPath $zip1 -CompressionLevel Optimal
-            Remove-Item $csv1, $csv2, $csv3, $hash1, $hash2, $hash3, $log -Force
+            Compress-Archive $csv1, $csv2, $csv3, $log -DestinationPath $zip1 -CompressionLevel Optimal
+            Remove-Item $csv1, $csv2, $csv3, $log -Force
             return $zip1
         }
         else {

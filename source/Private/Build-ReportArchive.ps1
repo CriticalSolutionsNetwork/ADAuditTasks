@@ -17,13 +17,8 @@ function Build-ReportArchive {
             ValueFromPipelineByPropertyName = $true
         )][string]$zip,
         [Parameter(
-            HelpMessage = 'Hash File Name',
-            Position = 3,
-            ValueFromPipelineByPropertyName = $true
-        )][string]$hash,
-        [Parameter(
             HelpMessage = 'Log File Name',
-            Position = 4,
+            Position = 3,
             ValueFromPipelineByPropertyName = $true
         )][string]$log
     )
@@ -39,7 +34,6 @@ function Build-ReportArchive {
             throw $ExportErr
         }
         $Sha256Hash = (Get-FileHash $csv).Hash
-        $Sha256Hash | Out-File $hash -Encoding utf8
         $Script:ADLogString += Write-AuditLog -Message "Exported CSV SHA256 hash: "
         $Script:ADLogString += Write-AuditLog -Message "$($Sha256Hash)"
         $Script:ADLogString += Write-AuditLog -Message "Directory: $AttachmentFolderPath"
@@ -47,8 +41,8 @@ function Build-ReportArchive {
         $Script:ADLogString | Export-Csv $log -NoTypeInformation -Encoding utf8
     }
     end {
-        Compress-Archive -Path $csv, $hash, $log -DestinationPath $zip -CompressionLevel Optimal
-        Remove-Item $csv, $hash, $log -Force
+        Compress-Archive -Path $csv, $log -DestinationPath $zip -CompressionLevel Optimal
+        Remove-Item $csv, $log -Force
         return [string[]]$zip
     }
 }
