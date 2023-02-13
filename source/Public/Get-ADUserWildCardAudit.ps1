@@ -155,9 +155,8 @@ function Get-ADUserWildCardAudit {
             # Create FileNames
             $csv = "$ExportFileName.csv"
             $zip = "$ExportFileName.zip"
-            $hash = "$ExportFileName.csv.SHA256.txt"
             $log = "$ExportFileName.AuditLog.csv"
-            Build-ReportArchive -Export $Export -csv $csv -zip $zip -hash $hash -log $log -ErrorVariable BuildErr
+            Build-ReportArchive -Export $Export -csv $csv -zip $zip -log $log -ErrorVariable BuildErr
         }
         else {
             $Script:ADLogString += Write-AuditLog -Message "Returning output object."

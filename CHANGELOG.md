@@ -5,6 +5,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added option to error handling for blank output for `Get-ADHostAudit`.
+- Added line comments to `Get-ADHostAudit`
+
+### Removed
+- Removed hash output file for `Get-ADHostAudit`,`Get-ADUserPrivilegeAudit`, and `Get-ADUserWIldCardAudit`
+## [0.1.2] - 2023-01-06
+
 ### Fix
 
 - Fixed documentation
