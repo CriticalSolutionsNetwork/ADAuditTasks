@@ -1,4 +1,3 @@
-
 function Merge-ADAuditZip {
     param(
         [string[]]$FilePaths,  # Array of file paths to be merged into a single zip file
