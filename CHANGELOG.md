@@ -5,6 +5,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fix
+
+- Fixed multiple string output in `Get-ADHostAudit`
+
 ### Added
 
 - Added option to error handling for blank output for `Get-ADHostAudit`.
