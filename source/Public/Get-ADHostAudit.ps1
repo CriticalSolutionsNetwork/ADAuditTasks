@@ -253,6 +253,7 @@ function Get-ADHostAudit {
                 $zip = "$ExportFileName.$FileSuffix.zip"
                 $log = "$ExportFileName.$FileSuffix.AuditLog.csv"
                 Build-ReportArchive -Export $Export -csv $csv -zip $zip -log $log -ErrorVariable BuildErr
+                return $zip
             }
             # If the -Report switch is not used, return the output object
             else {
@@ -265,8 +266,16 @@ function Get-ADHostAudit {
             # If there is no output, log message and create an audit log file
             $ExportFileName = "$AttachmentFolderPath\$((Get-Date).ToString('yyyy-MM-dd_hh.mm.ss'))_$($ScriptFunctionName)_$($env:USERDNSDOMAIN)"
             $log = "$ExportFileName.$FileSuffix.AuditLog.csv"
-            $Script:ADLogString += "There is no output for the specified host type $FileSuffix"
+            $Script:ADLogString += Write-AuditLog "There is no output for the specified host type $FileSuffix"
             $Script:ADLogString | Export-Csv $log -NoTypeInformation -Encoding utf8
+
+            # If the -Report switch is not used, return null
+            if (-not $Report) {
+                return $null
+            }
+            else {
+                return $log
+            }
         }
     } # End End
 }
