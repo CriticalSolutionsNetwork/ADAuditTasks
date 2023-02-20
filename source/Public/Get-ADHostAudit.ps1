@@ -253,7 +253,6 @@ function Get-ADHostAudit {
                 $zip = "$ExportFileName.$FileSuffix.zip"
                 $log = "$ExportFileName.$FileSuffix.AuditLog.csv"
                 Build-ReportArchive -Export $Export -csv $csv -zip $zip -log $log -ErrorVariable BuildErr
-                return $zip
             }
             # If the -Report switch is not used, return the output object
             else {
