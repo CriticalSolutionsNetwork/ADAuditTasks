@@ -1,5 +1,5 @@
 Remove-Module ADAuditTasks
-Remove-Item .\output\module\ADAuditTasks -Recurse
+Remove-Item .\output\ADAuditTasks -Recurse
 Remove-Item ".\output\ADAuditTasks.*.nupkg"
 Remove-Item .\output\ReleaseNotes.md
 Remove-Item .\output\CHANGELOG.md

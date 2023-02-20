@@ -51,6 +51,9 @@ Gets active but stale AD User accounts that haven't logged in within the last 90
 
 Get-ADActiveUserAudit [[-Enabled] <Boolean>] [[-DaysInactive] <Int32>] [[-AttachmentFolderPath] <String>] [[-Report]] [<CommonParameters>]
 
+
+
+
 ```
 ### Parameters
 | Name  | Alias  | Description | Required? | Pipeline Input | Default Value |
