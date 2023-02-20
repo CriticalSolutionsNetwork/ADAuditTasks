@@ -1,7 +1,7 @@
 function Merge-ADAuditZip {
     param(
         [string[]]$FilePaths,  # Array of file paths to be merged into a single zip file
-        [int]$MaxFileSize = 100MB,  # Maximum size (in bytes) of the output zip file
+        [int]$MaxFileSize = 24MB,  # Maximum size (in bytes) of the output zip file
         [string]$OutputFolder = "C:\temp",  # Output path of the merged zip file
         [switch]$OpenDirectory  # Optional switch to open the directory of the merged zip file after creation
     )
