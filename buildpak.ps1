@@ -20,6 +20,7 @@ Remove-Item .\output\CHANGELOG.md
 #>
 git tag -a v0.1.1 -m "Fix Update"
 git tag -d v1.0.0
+
 $workstations = Get-ADHostAudit -HostType WindowsWorkstations -Report -Verbose
 $servers = Get-ADHostAudit -HostType WindowsServers -Report -Verbose
 $nonWindows = Get-ADHostAudit -HostType "Non-Windows" -Report -Verbose
@@ -27,6 +28,7 @@ $activeUsers = Get-ADActiveUserAudit -Report -Verbose
 $privilegedUsers = Get-ADUserPrivilegeAudit -Report -Verbose
 $wildcardUsers = Get-ADUserWildCardAudit -WildCardIdentifier "svc" -Report -Verbose
 Merge-ADAuditZip -FilePaths $workstations, $servers, $nonWindows, $activeUsers, $privilegedUsers, $wildcardUsers
+
 Get-HostTag -PhysicalOrVirtual Physical -Prefix "CSN" -SystemOS 'Windows Server' -DeviceFunction 'Application Server' -HostCount 5
 Get-ADUserLogonAudit -SamAccountName "<USERNAME>" -Verbose
 Get-NetworkAudit -LocalSubnets -Report -Verbose
@@ -40,7 +42,3 @@ Get-NetworkAudit -LocalSubnets -Report -Verbose
 
 .\build.ps1 -tasks build,pack,publish -CodeCoverageThreshold 0
 
-$workstations = Get-ADHostAudit -HostType WindowsWorkstations -Report
-$servers = Get-ADHostAudit -HostType WindowsServers -Report
-$nonWindows = Get-ADHostAudit -HostType "Non-Windows" -Report
-Merge-ADAuditZip -FilePaths $workstations, $servers, $nonWindows
