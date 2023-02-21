@@ -58,6 +58,19 @@ Send-AuditEmail -smtpServer $SMTPServer -port $Port -username $UserName `
 -body $Body -from $From -to $To -pass $password -attachmentfiles "$(Get-ADActiveUserAudit -Report)" -ssl
 ```
 
+### Example 4: Creating a ZIP file with parts
+
+This example demonstrates how to create a ZIP file that will be split into multiple parts. 
+
+```powershell
+$workstations = Get-ADHostAudit -HostType WindowsWorkstations -Report -Verbose
+$servers = Get-ADHostAudit -HostType WindowsServers -Report -Verbose
+$nonWindows = Get-ADHostAudit -HostType "Non-Windows" -Report -Verbose
+$activeUsers = Get-ADActiveUserAudit -Report -Verbose
+$privilegedUsers = Get-ADUserPrivilegeAudit -Report -Verbose
+$wildcardUsers = Get-ADUserWildCardAudit -WildCardIdentifier "svc" -Report -Verbose
+Merge-ADAuditZip -FilePaths $workstations, $servers, $nonWindows, $activeUsers, $privilegedUsers, $wildcardUsers -MaxFileSize 100MB -OutputFolder "C:\Temp" -OpenDirectory
+
 ### Limitations:
 
 - The module Get-NetworkAudit does not return a string output of the filename for usage in the Send-AuditEmail function. 

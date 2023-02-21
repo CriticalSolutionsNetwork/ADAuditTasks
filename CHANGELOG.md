@@ -7,6 +7,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Successfully ran the following PowerShell script to collect and merge audit reports from an Active Directory domain:
+
+    ```powershell
+    $workstations = Get-ADHostAudit -HostType WindowsWorkstations -Report -Verbose
+    $servers = Get-ADHostAudit -HostType WindowsServers -Report -Verbose
+    $nonWindows = Get-ADHostAudit -HostType "Non-Windows" -Report -Verbose
+    $activeUsers = Get-ADActiveUserAudit -Report -Verbose
+    $privilegedUsers = Get-ADUserPrivilegeAudit -Report -Verbose
+    $wildcardUsers = Get-ADUserWildCardAudit -WildCardIdentifier "svc" -Report -Verbose
+    Merge-ADAuditZip -FilePaths $workstations, $servers, $nonWindows, $activeUsers, $privilegedUsers, $wildcardUsers -OpenDirectory
+    ```
+
+- Added support for splitting large ZIP files into multiple parts in Merge-ADAuditZip
+- Added new parameter -OpenDirectory to Merge-ADAuditZip for opening the output directory after merging files
+- Added comment blocks to Merge-ADAuditZip
+
+### Changed
+
+- Improved error handling and logging in Merge-ADAuditZip
+- Renamed output file for Merge-ADAuditZip to include timestamp and domain name
+- Updated examples and usage information in Merge-ADAuditZip documentation
+
+### Fixed
+
+- Fixed issue with Merge-ADAuditZip where blank output files would prevent zipping remaining files
+
+
+## [0.1.7] - 2023-02-21
+
+### Added
+
 - Added comments and help blocks to various functions
 - Added `Submit-FTPUpload` as public function
 - Modified `Get-ADHostAudit` to fix multiple string output
