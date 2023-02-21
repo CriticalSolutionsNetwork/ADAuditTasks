@@ -70,7 +70,7 @@ $activeUsers = Get-ADActiveUserAudit -Report -Verbose
 $privilegedUsers = Get-ADUserPrivilegeAudit -Report -Verbose
 $wildcardUsers = Get-ADUserWildCardAudit -WildCardIdentifier "svc" -Report -Verbose
 Merge-ADAuditZip -FilePaths $workstations, $servers, $nonWindows, $activeUsers, $privilegedUsers, $wildcardUsers -MaxFileSize 100MB -OutputFolder "C:\Temp" -OpenDirectory
-
+```
 ### Limitations:
 
 - The module Get-NetworkAudit does not return a string output of the filename for usage in the Send-AuditEmail function. 
