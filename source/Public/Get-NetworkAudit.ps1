@@ -58,35 +58,42 @@ function Get-NetworkAudit {
         [switch]$Report
     )
     begin {
+        # Check if PSnmap module is installed, if not install it.
         If (Get-Module -ListAvailable -Name "PSnmap") { Import-Module "PSnmap" } Else { Install-Module "PSnmap" -Force; Import-Module "PSnmap" }
+
+        # Set default ports to scan
         if (!($ports)) {
             [int[]]$ports = "21", "22", "23", "25", "53", "67", "68", "80", "443", `
                 "88", "464", "123", "135", "137", "138", "139", `
                 "445", "389", "636", "514", "587", "1701", `
                 "3268", "3269", "3389", "5985", "5986"
         }
+        # Download and store the OUI CSV file from IEEE website
         $ouiobject = Invoke-RestMethod https://standards-oui.ieee.org/oui/oui.csv | ConvertFrom-Csv
-    } # Begin Close
+    } # End of begin block
     process {
         if ($LocalSubnets) {
+            # Get connected networks on the local device.
             $ConnectedNetworks = Get-NetIPConfiguration -Detailed | Where-Object { $_.Netadapter.status -eq "up" }
             $results = @()
             foreach ($network in $ConnectedNetworks) {
-                # Get Network DHCP Server
+                # Get DHCP server for the network
                 $DHCPServer = (Get-CimInstance -ClassName Win32_NetworkAdapterConfiguration | Where-Object { $_.IPAddress -eq $network.IPv4Address }).DHCPServer
-                # Get Subnet as CIDR
+                # Get subnet in CIDR format
                 $Subnet = "$($network.IPv4DefaultGateway.nexthop)/$($network.IPv4Address.PrefixLength)"
-                # Regex for IPV4 and IPV6 validation
+                # Validate the subnet format for IPv4 and IPv6
                 if (($subnet -match '^([0-9]{1,3}\.){3}[0-9]{1,3}(\/([0-9]|[1-2][0-9]|3[0-2]))?$') -or ($subnet -match '^s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:)))(%.+)?s*(\/([0-9]|[1-9][0-9]|1[0-1][0-9]|12[0-8]))?$')) {
                     # Create Network Scan Object
                     $NetworkAudit = Invoke-PSnmap -ComputerName $subnet -Port $ports -Dns -NoSummary -AddService
                     # Filter devices that don't ping as no results will be found.
                     $scan = $NetworkAudit | Where-Object { $_.Ping -eq $true }
+                    # Write out information about the network scan.
                     Write-Verbose "##########################################"
                     Write-Verbose "Network scan for Subnet $Subnet completed."
                     Write-Verbose "DHCP Server: $($DHCPServer)"
                     Write-Verbose "Gateway: $($network.IPv4DefaultGateway.nexthop)"
                     Write-Verbose "##########################################"
+                    # For each device in the scan, get MAC ID vendor information and add it as a NoteProperty to the object.
                     $scan | ForEach-Object {
                         $org = ""
                         $macid = ((arp -a $_.ComputerName | Select-String '([0-9a-f]{2}-){5}[0-9a-f]{2}').Matches.Value).Replace("-", ":")
@@ -103,11 +110,11 @@ function Get-NetworkAudit {
                     }
                     # Normalize Subnet text for filename.
                     $subnetText = $(($subnet.Replace("/", ".CIDR.")))
-                    # If report switch is true.
+                    # If report switch is true, export the scan to a CSV file with a timestamped filename.
                     if ($report) {
                         $scan | Export-Csv "C:\temp\$((Get-Date).ToString('yyyy-MM-dd_hh.mm.ss')).$($env:USERDNSDOMAIN)_Subnet.$($subnetText)_DHCP.$($DHCPServer)_Gateway.$($network.IPv4DefaultGateway.nexthop).NetScan.csv" -NoTypeInformation
                     }
-                    # Add scan to function output.
+                    # Add the scan to the function output.
                     $results += $scan
                 } # IF Subnet Match End
             } # End Foreach
