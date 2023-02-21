@@ -1,4 +1,5 @@
 # ADAuditTasks Module
+## Get-ADActiveUserAudit
 
 ## Summary
 
@@ -43,7 +44,6 @@ Get-HostTag
 Get-NetworkAudit
 Send-AuditEmail
 ```
-## Get-ADActiveUserAudit
 ### Synopsis
 Gets active but stale AD User accounts that haven't logged in within the last 90 days by default.
 ### Syntax
@@ -56,12 +56,12 @@ Get-ADActiveUserAudit [[-Enabled] <Boolean>] [[-DaysInactive] <Int32>] [[-Attach
 
 ```
 ### Parameters
-| Name  | Alias  | Description | Required? | Pipeline Input | Default Value |
-| - | - | - | - | - | - |
-| <nobr>Enabled</nobr> |  | If "$false", will also search disabled users. | false | true \\(ByPropertyName\\) | True |
-| <nobr>DaysInactive</nobr> |  | How far back in days to look for sign ins. Outside of this window, users are considered "Inactive" | false | true \\(ByPropertyName\\) | 90 |
-| <nobr>AttachmentFolderPath</nobr> |  | Default path is C:\\temp\\ADActiveUserAudit. This is the folder where attachments are going to be saved. | false | true \\(ByValue\\) | C:\\temp\\ADActiveUserAudit |
-| <nobr>Report</nobr> |  | Add report output as csv to DirPath directory. | false | true \\(ByPropertyName\\) | False |
+| Name                              | Alias | Description                                                                                              | Required? | Pipeline Input            | Default Value               |
+| --------------------------------- | ----- | -------------------------------------------------------------------------------------------------------- | --------- | ------------------------- | --------------------------- |
+| <nobr>Enabled</nobr>              |       | If "$false", will also search disabled users.                                                            | false     | true \\(ByPropertyName\\) | True                        |
+| <nobr>DaysInactive</nobr>         |       | How far back in days to look for sign ins. Outside of this window, users are considered "Inactive"       | false     | true \\(ByPropertyName\\) | 90                          |
+| <nobr>AttachmentFolderPath</nobr> |       | Default path is C:\\temp\\ADActiveUserAudit. This is the folder where attachments are going to be saved. | false     | true \\(ByValue\\)        | C:\\temp\\ADActiveUserAudit |
+| <nobr>Report</nobr>               |       | Add report output as csv to DirPath directory.                                                           | false     | true \\(ByPropertyName\\) | False                       |
 ### Outputs
  - ADAuditTasksUser
 
@@ -102,14 +102,14 @@ Get-ADHostAudit [-OSType] <String> [[-DaystoConsiderAHostInactive] <Int32>] [[-R
 
 ```
 ### Parameters
-| Name  | Alias  | Description | Required? | Pipeline Input | Default Value |
-| - | - | - | - | - | - |
-| <nobr>HostType</nobr> |  | Select from WindowsServers, WindowsWorkstations or Non-Windows. | true | true \\(ByValue\\) |  |
-| <nobr>OSType</nobr> |  | Search an OS String. There is no need to add wildcards. | true | true \\(ByValue\\) |  |
-| <nobr>DaystoConsiderAHostInactive</nobr> |  | How far back in days to look for sign ins. Outside of this window, hosts are considered "Inactive" | false | true \\(ByPropertyName\\) | 90 |
-| <nobr>Report</nobr> |  | Add report output as csv to DirPath directory. | false | true \\(ByPropertyName\\) | False |
-| <nobr>AttachmentFolderPath</nobr> |  | Default path is C:\\temp\\ADHostAudit. This is the folder where attachments are going to be saved. | false | false | C:\\temp\\ADHostAudit |
-| <nobr>Enabled</nobr> |  | If "$false", will also search disabled computers. | false | true \\(ByPropertyName\\) | True |
+| Name                                     | Alias | Description                                                                                        | Required? | Pipeline Input            | Default Value         |
+| ---------------------------------------- | ----- | -------------------------------------------------------------------------------------------------- | --------- | ------------------------- | --------------------- |
+| <nobr>HostType</nobr>                    |       | Select from WindowsServers, WindowsWorkstations or Non-Windows.                                    | true      | true \\(ByValue\\)        |                       |
+| <nobr>OSType</nobr>                      |       | Search an OS String. There is no need to add wildcards.                                            | true      | true \\(ByValue\\)        |                       |
+| <nobr>DaystoConsiderAHostInactive</nobr> |       | How far back in days to look for sign ins. Outside of this window, hosts are considered "Inactive" | false     | true \\(ByPropertyName\\) | 90                    |
+| <nobr>Report</nobr>                      |       | Add report output as csv to DirPath directory.                                                     | false     | true \\(ByPropertyName\\) | False                 |
+| <nobr>AttachmentFolderPath</nobr>        |       | Default path is C:\\temp\\ADHostAudit. This is the folder where attachments are going to be saved. | false     | false                     | C:\\temp\\ADHostAudit |
+| <nobr>Enabled</nobr>                     |       | If "$false", will also search disabled computers.                                                  | false     | true \\(ByPropertyName\\) | True                  |
 ### Outputs
  - System.Management.Automation.PSObject
 
@@ -154,9 +154,9 @@ Get-ADUserLogonAudit [-SamAccountName] <Object> [<CommonParameters>]
 
 ```
 ### Parameters
-| Name  | Alias  | Description | Required? | Pipeline Input | Default Value |
-| - | - | - | - | - | - |
-| <nobr>SamAccountName</nobr> | Identity, UserName, Account | The SamAccountName of the user being checked for LastLogon. | true | true \\(ByValue\\) |  |
+| Name                        | Alias                       | Description                                                 | Required? | Pipeline Input     | Default Value |
+| --------------------------- | --------------------------- | ----------------------------------------------------------- | --------- | ------------------ | ------------- |
+| <nobr>SamAccountName</nobr> | Identity, UserName, Account | The SamAccountName of the user being checked for LastLogon. | true      | true \\(ByValue\\) |               |
 ### Outputs
  - System.DateTime
 
@@ -180,10 +180,10 @@ Get-ADUserPrivilegeAudit [[-AttachmentFolderPath] <String>] [[-Report]] [<Common
 
 ```
 ### Parameters
-| Name  | Alias  | Description | Required? | Pipeline Input | Default Value |
-| - | - | - | - | - | - |
-| <nobr>AttachmentFolderPath</nobr> |  | The path of the folder you want to save attachments to. The default is: C:\\temp\\ADUserPrivilegeAudit | false | true \\(ByValue\\) | C:\\temp\\ADUserPrivilegeAudit |
-| <nobr>Report</nobr> |  | Add report output as csv to DirPath directory. | false | true \\(ByPropertyName\\) | False |
+| Name                              | Alias | Description                                                                                            | Required? | Pipeline Input            | Default Value                  |
+| --------------------------------- | ----- | ------------------------------------------------------------------------------------------------------ | --------- | ------------------------- | ------------------------------ |
+| <nobr>AttachmentFolderPath</nobr> |       | The path of the folder you want to save attachments to. The default is: C:\\temp\\ADUserPrivilegeAudit | false     | true \\(ByValue\\)        | C:\\temp\\ADUserPrivilegeAudit |
+| <nobr>Report</nobr>               |       | Add report output as csv to DirPath directory.                                                         | false     | true \\(ByPropertyName\\) | False                          |
 ### Examples
 **EXAMPLE 1**
 ```powershell
@@ -216,13 +216,13 @@ Get-ADUserWildCardAudit [[-Enabled] <Boolean>] [[-DaysInactive] <Int32>] -WildCa
 
 ```
 ### Parameters
-| Name  | Alias  | Description | Required? | Pipeline Input | Default Value |
-| - | - | - | - | - | - |
-| <nobr>Enabled</nobr> |  | If "$false", will also search disabled users. | false | true \\(ByPropertyName\\) | True |
-| <nobr>DaysInactive</nobr> |  | How far back in days to look for sign ins. Outside of this window, users are considered "Inactive" | false | true \\(ByPropertyName\\) | 90 |
-| <nobr>WildCardIdentifier</nobr> |  | The search string to look for in the name of the account. Case does not matter. Do not add a wildcard \\(\\*\\) as it will do this automatically. | true | true \\(ByPropertyName\\) |  |
-| <nobr>AttachmentFolderPath</nobr> |  | Default path is C:\\temp\\ADUserWildCardAudit. This is the folder where attachments are going to be saved. | false | true \\(ByValue\\) | C:\\temp\\ADUserWildCardAudit |
-| <nobr>Report</nobr> |  | Add report output as csv to AttachmentFolderPath directory. | false | true \\(ByPropertyName\\) | False |
+| Name                              | Alias | Description                                                                                                                                       | Required? | Pipeline Input            | Default Value                 |
+| --------------------------------- | ----- | ------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ------------------------- | ----------------------------- |
+| <nobr>Enabled</nobr>              |       | If "$false", will also search disabled users.                                                                                                     | false     | true \\(ByPropertyName\\) | True                          |
+| <nobr>DaysInactive</nobr>         |       | How far back in days to look for sign ins. Outside of this window, users are considered "Inactive"                                                | false     | true \\(ByPropertyName\\) | 90                            |
+| <nobr>WildCardIdentifier</nobr>   |       | The search string to look for in the name of the account. Case does not matter. Do not add a wildcard \\(\\*\\) as it will do this automatically. | true      | true \\(ByPropertyName\\) |                               |
+| <nobr>AttachmentFolderPath</nobr> |       | Default path is C:\\temp\\ADUserWildCardAudit. This is the folder where attachments are going to be saved.                                        | false     | true \\(ByValue\\)        | C:\\temp\\ADUserWildCardAudit |
+| <nobr>Report</nobr>               |       | Add report output as csv to AttachmentFolderPath directory.                                                                                       | false     | true \\(ByPropertyName\\) | False                         |
 ### Outputs
  - ADAuditTasksUser
 
@@ -247,13 +247,13 @@ Get-HostTag [-PhysicalOrVirtual] <String> [-Prefix] <String> [-SystemOS] <String
 
 ```
 ### Parameters
-| Name  | Alias  | Description | Required? | Pipeline Input | Default Value |
-| - | - | - | - | - | - |
-| <nobr>PhysicalOrVirtual</nobr> |  | Tab through selections to add 'P' or 'V' for physical or virtual to host tag. | true | true \\(ByPropertyName\\) |  |
-| <nobr>Prefix</nobr> |  | Enter the 2-3 letter prefix. Good for prefixing company initials, locations, or other. | true | true \\(ByPropertyName\\) |  |
-| <nobr>SystemOS</nobr> |  | Use tab to cycle through the following options: "Cisco ASA", "Android", "Apple IOS", "Dell Storage Center", "MACOSX", "Dell Power Edge", "Embedded", "Embedded Firmware", "Cisco IOS", "Linux", "Qualys", "Citrix ADC \\(Netscaler\\)", "Windows Thin Client", "VMWare", "Nutanix", "TrueNas", "FreeNas", "ProxMox", "Windows Workstation", "Windows Server", "Windows Server Core", "Generic OS", "Generic HyperVisor" | true | true \\(ByPropertyName\\) |  |
-| <nobr>DeviceFunction</nobr> |  | Use tab to cycle through the following options: "Application Server", "Backup Server", "Directory Server", "Email Server", "Firewall", "FTP Server", "Hypervisor", "File Server", "NAS File Server", "Power Distribution Unit", "Redundant Power Supply", "SAN Appliance", "SQL Server", "Uninteruptable Power Supply", "Web Server", "Management", "Blade Enclosure", "Blade Enclosure Switch", "SAN specific switch", "General server/Network switch", "Generic Function Device" | true | true \\(ByPropertyName\\) |  |
-| <nobr>HostCount</nobr> |  | Enter a number from 1 to 999 for how many hostnames you'd like to create. | false | true \\(ByPropertyName\\) | 1 |
+| Name                           | Alias | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | Required? | Pipeline Input            | Default Value |
+| ------------------------------ | ----- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ------------------------- | ------------- |
+| <nobr>PhysicalOrVirtual</nobr> |       | Tab through selections to add 'P' or 'V' for physical or virtual to host tag.                                                                                                                                                                                                                                                                                                                                                                                                      | true      | true \\(ByPropertyName\\) |               |
+| <nobr>Prefix</nobr>            |       | Enter the 2-3 letter prefix. Good for prefixing company initials, locations, or other.                                                                                                                                                                                                                                                                                                                                                                                             | true      | true \\(ByPropertyName\\) |               |
+| <nobr>SystemOS</nobr>          |       | Use tab to cycle through the following options: "Cisco ASA", "Android", "Apple IOS", "Dell Storage Center", "MACOSX", "Dell Power Edge", "Embedded", "Embedded Firmware", "Cisco IOS", "Linux", "Qualys", "Citrix ADC \\(Netscaler\\)", "Windows Thin Client", "VMWare", "Nutanix", "TrueNas", "FreeNas", "ProxMox", "Windows Workstation", "Windows Server", "Windows Server Core", "Generic OS", "Generic HyperVisor"                                                            | true      | true \\(ByPropertyName\\) |               |
+| <nobr>DeviceFunction</nobr>    |       | Use tab to cycle through the following options: "Application Server", "Backup Server", "Directory Server", "Email Server", "Firewall", "FTP Server", "Hypervisor", "File Server", "NAS File Server", "Power Distribution Unit", "Redundant Power Supply", "SAN Appliance", "SQL Server", "Uninteruptable Power Supply", "Web Server", "Management", "Blade Enclosure", "Blade Enclosure Switch", "SAN specific switch", "General server/Network switch", "Generic Function Device" | true      | true \\(ByPropertyName\\) |               |
+| <nobr>HostCount</nobr>         |       | Enter a number from 1 to 999 for how many hostnames you'd like to create.                                                                                                                                                                                                                                                                                                                                                                                                          | false     | true \\(ByPropertyName\\) | 1             |
 ### Outputs
  - System.String\\[\\]
 
@@ -285,12 +285,12 @@ Get-NetworkAudit [[-Ports] <Int32[]>] [-Computers] <String[]> [-Report] [<Common
 
 ```
 ### Parameters
-| Name  | Alias  | Description | Required? | Pipeline Input | Default Value |
-| - | - | - | - | - | - |
-| <nobr>Ports</nobr> |  | Default ports are: "21", "22", "23", "25", "53", "67", "68", "80", "443", "88", "464", "123", "135", "137", "138", "139", "445", "389", "636", "514", "587", "1701", "3268", "3269", "3389", "5985", "5986"  If you want to supply a port, do so as an integer or an array of integers. "22","80","443", etc. | false | true \\(ByPropertyName\\) |  |
-| <nobr>LocalSubnets</nobr> |  | Specify this switch to automatically scan subnets on the local network of the scanning device. Will not scan outside of the hosting device's subnet. | true | true \\(ByPropertyName\\) | False |
-| <nobr>Computers</nobr> |  | Scan single host or array of hosts using Subet ID in CIDR Notation, IP, NETBIOS, or FQDN in "quotes"' For Example: "10.11.1.0/24","10.11.2.0/24" | true | true \\(ByPropertyName\\) |  |
-| <nobr>Report</nobr> |  | Specify this switch if you would like a report generated in C:\\temp. | false | false | False |
+| Name                      | Alias | Description                                                                                                                                                                                                                                                                                                   | Required? | Pipeline Input            | Default Value |
+| ------------------------- | ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ------------------------- | ------------- |
+| <nobr>Ports</nobr>        |       | Default ports are: "21", "22", "23", "25", "53", "67", "68", "80", "443", "88", "464", "123", "135", "137", "138", "139", "445", "389", "636", "514", "587", "1701", "3268", "3269", "3389", "5985", "5986"  If you want to supply a port, do so as an integer or an array of integers. "22","80","443", etc. | false     | true \\(ByPropertyName\\) |               |
+| <nobr>LocalSubnets</nobr> |       | Specify this switch to automatically scan subnets on the local network of the scanning device. Will not scan outside of the hosting device's subnet.                                                                                                                                                          | true      | true \\(ByPropertyName\\) | False         |
+| <nobr>Computers</nobr>    |       | Scan single host or array of hosts using Subet ID in CIDR Notation, IP, NETBIOS, or FQDN in "quotes"' For Example: "10.11.1.0/24","10.11.2.0/24"                                                                                                                                                              | true      | true \\(ByPropertyName\\) |               |
+| <nobr>Report</nobr>       |       | Specify this switch if you would like a report generated in C:\\temp.                                                                                                                                                                                                                                         | false     | false                     | False         |
 ### Outputs
  - System.Management.Automation.PSObject
 
@@ -307,6 +307,44 @@ Get-NetworkAudit -report
 ### Links
 
  - [Specify a URI to a help page, this will show when Get-Help -Online is used.](#Specify a URI to a help page, this will show when Get-Help -Online is used.)
+## Merge-ADAuditZip
+### Synopsis
+Combines multiple audit report files into a single compressed ZIP file.
+### Syntax
+```powershell
+
+Merge-ADAuditZip [[-FilePaths] <String[]>] [[-MaxFileSize] <Int32>] [[-OutputFolder] <String>] [-OpenDirectory] [<CommonParameters>]
+
+
+
+
+```
+### Parameters
+| Name                       | Alias | Description                                                                                          | Required? | Pipeline Input | Default Value |
+| -------------------------- | ----- | ---------------------------------------------------------------------------------------------------- | --------- | -------------- | ------------- |
+| <nobr>FilePaths</nobr>     |       | Specifies an array of file paths to be merged into a single compressed ZIP file.                     | false     | false          |               |
+| <nobr>MaxFileSize</nobr>   |       | Specifies the maximum file size \\(in bytes\\) for the output ZIP file. The default value is 24 MB.  | false     | false          | 25165824      |
+| <nobr>OutputFolder</nobr>  |       | Specifies the output folder for the merged compressed ZIP file. The default folder is C:\\temp.      | false     | false          | C:\\temp      |
+| <nobr>OpenDirectory</nobr> |       | Specifies an optional switch to open the directory of the merged compressed ZIP file after creation. | false     | false          | False         |
+### Note
+This may or may not work with various types of input.
+
+### Examples
+**EXAMPLE 1**
+```powershell
+$workstations = Get-ADHostAudit -HostType WindowsWorkstations -Report
+$servers = Get-ADHostAudit -HostType WindowsServers -Report
+$nonWindows = Get-ADHostAudit -HostType "Non-Windows" -Report
+Merge-ADAuditZip -FilePaths $workstations, $servers, $nonWindows
+```
+This example combines three audit reports for Windows workstations, Windows servers, and non-Windows hosts into a single compressed ZIP file.
+
+**EXAMPLE 2**
+```powershell
+Merge-ADAuditZip -FilePaths C:\AuditReports\Report1.csv,C:\AuditReports\Report2.csv -MaxFileSize 50MB -OutputFolder C:\MergedReports -OpenDirectory
+```
+This example merges two audit reports into a single compressed ZIP file with a maximum file size of 50 MB, an output folder of C:\\MergedReports, and opens the directory of the merged compressed ZIP file after creation.
+
 ## Send-AuditEmail
 ### Synopsis
 This is a wrapper function for Send-MailKitMessage and takes string arrays as input.
@@ -322,21 +360,21 @@ Send-AuditEmail -AttachmentFiles <String[]> [-SMTPServer <String>] [-Port <Int32
 
 ```
 ### Parameters
-| Name  | Alias  | Description | Required? | Pipeline Input | Default Value |
-| - | - | - | - | - | - |
-| <nobr>AttachmentFiles</nobr> |  | The full filepath to the zip you are sending: -AttachmentFiles "C:\\temp\\ADHostAudit\\2023-01-04\\_03.45.14\\_Get-ADHostAudit\\_AD.CONTOSO.COM.Servers.zip"  The Audit reports output this filename if the "-Report" switch is used allowing it to be nested in this parameter for ease of automation. | true | true \\(ByPropertyName\\) |  |
-| <nobr>SMTPServer</nobr> |  | The SMTP Server address. For example: "smtp.office365.com" | false | false |  |
-| <nobr>Port</nobr> |  | The following ports can be used to send email: "993", "995", "587", "25" | false | true \\(ByPropertyName\\) | 0 |
-| <nobr>UserName</nobr> |  | The Account authorized to send email via SMTP. From parameter is usually the same. | false | false |  |
-| <nobr>SSL</nobr> |  | Switch to ensure SSL is used during transport. | false | false | False |
-| <nobr>From</nobr> |  | This is who the email will appear to originate from. This is either the same as the UserName, or, if delegated, access to an email account the Username account has delegated permissions to send for. Link: https://learn.microsoft.com/en-us/microsoft-365/admin/add-users/give-mailbox-permissions-to-another-user?view=o365-worldwide | false | false |  |
-| <nobr>To</nobr> |  | This is the mailbox who will be the recipient of the communication. | false | false |  |
-| <nobr>Subject</nobr> |  | The subject is automatically populated with the name of the function that ran the script, as well as the domain and hostname.  If you specify subject in the parameters, it will override the default with your subject. | false | false | "$\\($script:MyInvocation.MyCommand.Name -replace '\\..\\*'\\) report ran for $\\($env:USERDNSDOMAIN\\) on host $\\($env:COMPUTERNAME\\)." |
-| <nobr>Body</nobr> |  | The body of the message, pre-populates with the same data as the subject line. Specify body text in the function parameters to override. | false | false | "$\\($script:MyInvocation.MyCommand.Name -replace '\\..\\*'\\) report ran for $\\($env:USERDNSDOMAIN\\) on host $\\($env:COMPUTERNAME\\)." |
-| <nobr>Pass</nobr> |  | Takes a SecureString as input. The password must be added to the command by using: -Pass \\(Read-Host -AsSecureString\\) You will be promted to enter the password for the UserName parameter. | false | false |  |
-| <nobr>Function</nobr> |  | If you are using the optional function feature and created a password retrieval function, this is the name of the function in Azure AD that accesses the vault. | false | false |  |
-| <nobr>FunctionApp</nobr> |  | If you are using the optional function feature, this is the name of the function app in Azure AD. | false | false |  |
-| <nobr>Token</nobr> |  | If you are using the optional function feature, this is the api token for the specific function. Ensure you are using the "Function Key" and NOT the "Host Key" to ensure access is only to the specific funtion. | false | false |  |
+| Name                         | Alias | Description                                                                                                                                                                                                                                                                                                                               | Required? | Pipeline Input            | Default Value                                                                                                                              |
+| ---------------------------- | ----- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| <nobr>AttachmentFiles</nobr> |       | The full filepath to the zip you are sending: -AttachmentFiles "C:\\temp\\ADHostAudit\\2023-01-04\\_03.45.14\\_Get-ADHostAudit\\_AD.CONTOSO.COM.Servers.zip"  The Audit reports output this filename if the "-Report" switch is used allowing it to be nested in this parameter for ease of automation.                                   | true      | true \\(ByPropertyName\\) |                                                                                                                                            |
+| <nobr>SMTPServer</nobr>      |       | The SMTP Server address. For example: "smtp.office365.com"                                                                                                                                                                                                                                                                                | false     | false                     |                                                                                                                                            |
+| <nobr>Port</nobr>            |       | The following ports can be used to send email: "993", "995", "587", "25"                                                                                                                                                                                                                                                                  | false     | true \\(ByPropertyName\\) | 0                                                                                                                                          |
+| <nobr>UserName</nobr>        |       | The Account authorized to send email via SMTP. From parameter is usually the same.                                                                                                                                                                                                                                                        | false     | false                     |                                                                                                                                            |
+| <nobr>SSL</nobr>             |       | Switch to ensure SSL is used during transport.                                                                                                                                                                                                                                                                                            | false     | false                     | False                                                                                                                                      |
+| <nobr>From</nobr>            |       | This is who the email will appear to originate from. This is either the same as the UserName, or, if delegated, access to an email account the Username account has delegated permissions to send for. Link: https://learn.microsoft.com/en-us/microsoft-365/admin/add-users/give-mailbox-permissions-to-another-user?view=o365-worldwide | false     | false                     |                                                                                                                                            |
+| <nobr>To</nobr>              |       | This is the mailbox who will be the recipient of the communication.                                                                                                                                                                                                                                                                       | false     | false                     |                                                                                                                                            |
+| <nobr>Subject</nobr>         |       | The subject is automatically populated with the name of the function that ran the script, as well as the domain and hostname.  If you specify subject in the parameters, it will override the default with your subject.                                                                                                                  | false     | false                     | "$\\($script:MyInvocation.MyCommand.Name -replace '\\..\\*'\\) report ran for $\\($env:USERDNSDOMAIN\\) on host $\\($env:COMPUTERNAME\\)." |
+| <nobr>Body</nobr>            |       | The body of the message, pre-populates with the same data as the subject line. Specify body text in the function parameters to override.                                                                                                                                                                                                  | false     | false                     | "$\\($script:MyInvocation.MyCommand.Name -replace '\\..\\*'\\) report ran for $\\($env:USERDNSDOMAIN\\) on host $\\($env:COMPUTERNAME\\)." |
+| <nobr>Pass</nobr>            |       | Takes a SecureString as input. The password must be added to the command by using: -Pass \\(Read-Host -AsSecureString\\) You will be promted to enter the password for the UserName parameter.                                                                                                                                            | false     | false                     |                                                                                                                                            |
+| <nobr>Function</nobr>        |       | If you are using the optional function feature and created a password retrieval function, this is the name of the function in Azure AD that accesses the vault.                                                                                                                                                                           | false     | false                     |                                                                                                                                            |
+| <nobr>FunctionApp</nobr>     |       | If you are using the optional function feature, this is the name of the function app in Azure AD.                                                                                                                                                                                                                                         | false     | false                     |                                                                                                                                            |
+| <nobr>Token</nobr>           |       | If you are using the optional function feature, this is the api token for the specific function. Ensure you are using the "Function Key" and NOT the "Host Key" to ensure access is only to the specific funtion.                                                                                                                         | false     | false                     |                                                                                                                                            |
 ### Examples
 **EXAMPLE 1**
 ```powershell
