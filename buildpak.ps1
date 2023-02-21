@@ -27,7 +27,7 @@ $activeUsers = Get-ADActiveUserAudit -Report -Verbose
 $privilegedUsers = Get-ADUserPrivilegeAudit -Report -Verbose
 $wildcardUsers = Get-ADUserWildCardAudit -WildCardIdentifier "svc" -Report -Verbose
 Merge-ADAuditZip -FilePaths $workstations, $servers, $nonWindows, $activeUsers, $privilegedUsers, $wildcardUsers
-Get-HostTag -PhysicalOrVirtual Physical -Prefix "CRP" -SystemOS 'Windows Server' -ErrorAction
+Get-HostTag -PhysicalOrVirtual Physical -Prefix "CSN" -SystemOS 'Windows Server' -DeviceFunction 'Application Server' -HostCount 5
 Get-ADUserLogonAudit -SamAccountName "<USERNAME>" -Verbose
 Get-NetworkAudit -LocalSubnets -Report -Verbose
 # Update Changelog
