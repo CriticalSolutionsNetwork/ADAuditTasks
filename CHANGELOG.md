@@ -5,6 +5,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added function `Merge-ADAuditZip` as a public function.
+
+## [0.1.4] - 2023-02-20
+
 ### Fix
 
 - Fixed multiple string output in `Get-ADHostAudit`
@@ -47,5 +53,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added Private Function `Submit-FTPUpload`
 - Added Private Function `Test-IsAdmin`
 - Added Private Function `Write-ADAuditLog`
-
-
