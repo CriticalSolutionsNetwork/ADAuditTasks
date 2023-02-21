@@ -66,40 +66,40 @@ function Send-AuditEmail {
             MandaTory = $true,
             HelpMessage = 'Enter the Zip file paths as comma separated array with quotes for each filepath',
             ValueFromPipelineByPropertyName = $true
-        )][string[]]$AttachmentFiles,
-        [string]$SMTPServer,
+        )][string[]]$AttachmentFiles, # Array of paths to zip files that will be attached to the email
+        [string]$SMTPServer, # SMTP server for sending the email
         [Parameter(
             HelpMessage = 'Enter the port number for the mail relay',
             ValueFromPipelineByPropertyName = $true
         )]
         [ValidateSet("993", "995", "587", "25")]
-        [int]$Port,
-        [string]$UserName,
-        [switch]$SSL,
-        [string]$From,
-        [string]$To,
-        [string]$Subject = "$($script:MyInvocation.MyCommand.Name -replace '\..*') report ran for $($env:USERDNSDOMAIN) on host $($env:COMPUTERNAME).",
-        [string]$Body = "$($script:MyInvocation.MyCommand.Name -replace '\..*') report ran for $($env:USERDNSDOMAIN) on host $($env:COMPUTERNAME).",
+        [int]$Port, # Port number for the mail relay
+        [string]$UserName, # Username for SMTP authentication
+        [switch]$SSL, # Whether to use SSL for the SMTP connection
+        [string]$From, # Email address for the sender
+        [string]$To, # Email address for the recipient
+        [string]$Subject = "$($script:MyInvocation.MyCommand.Name -replace '\..*') report ran for $($env:USERDNSDOMAIN) on host $($env:COMPUTERNAME).", # Email subject line
+        [string]$Body = "$($script:MyInvocation.MyCommand.Name -replace '\..*') report ran for $($env:USERDNSDOMAIN) on host $($env:COMPUTERNAME).", # Email body text
         [Parameter(
             ParameterSetName = 'Pass',
             HelpMessage = 'Enter this as the parameter: (Read-Host -AsSecureString)'
         )]
-        [securestring]$Pass,
+        [securestring]$Pass, # SecureString containing the password for SMTP authentication
         [Parameter(
             ParameterSetName = 'Func',
             HelpMessage = 'Enter the name of the Function as showing in the function app'
         )]
-        [string]$Function,
+        [string]$Function, # Name of the function in the Azure Function App
         [Parameter(
             ParameterSetName = 'Func',
             HelpMessage = 'Enter the name of the function app'
         )]
-        [string]$FunctionApp,
+        [string]$FunctionApp, # Name of the Azure Function App
         [Parameter(
             ParameterSetName = 'Func',
             HelpMessage = 'Enter the API key associated with the function. Not the Host Key.'
         )]
-        [string]$Token
+        [string]$Token                  # API key for the Azure Function App
     )
     begin {
         $module = Get-Module -Name Send-MailKitMessage -ListAvailable
@@ -110,15 +110,15 @@ function Send-AuditEmail {
             Import-Module "Send-MailKitMessage" -Global -ErrorAction STop -ErrorVariable MailkitErr | Out-Null
         }
         catch {
-            # End run and log To file.
+            # If the Send-MailKitMessage module is not installed, log an error and exit the function
             $ADLogString += Write-AuditLog -Message "The Module Was not installed. Use `"Save-Module -Name Send-MailKitMessage -AllowPrerelease -Path C:\temp`" on another Windows Machine."
             $ADLogString += Write-AuditLog -Message "End Log" -Severity Error
             throw MailkitErr
         }
-        # Recipient
+        # Create recipient list
         $RecipientList = [MimeKit.InternetAddressList]::new()
         $RecipientList.Add([MimeKit.InternetAddress]$To)
-        # Attachment
+        # Create attachment list
         $AttachmentList = [System.Collections.Generic.List[string]]::new()
         foreach ($currentItem in $attachmentfiles) {
             $AttachmentList.Add("$currentItem")
@@ -128,19 +128,21 @@ function Send-AuditEmail {
         # Mail Account variable
         $User = $UserName
         if ($Pass) {
-            # Set Credential To $Password parameter input.
+            # If the -Pass parameter is provided, set the credentials to the value of the parameter.
             $Credential = `
                 [System.Management.AuTomation.PSCredential]::new($User, $Pass)
         }
         elseif ($FunctionApp) {
+            # If a function app name and API key are provided, retrieve credentials from the function app URL.
             $url = "https://$($FunctionApp).azurewebsites.net/api/$($Function)"
-            # Retrieve credentials From function app url inTo a SecureString.
             $a, $b = (Invoke-RestMethod $url -Headers @{ 'x-functions-key' = "$Token" }).split(',')
             $Credential = `
                 [System.Management.AuTomation.PSCredential]::new($User, (ConvertTo-SecureString -String $a -Key $b.split(' ')) )
         }
+
     }
     Process {
+        # Set the parameters for the email message
         $Parameters = @{
             "UseSecureConnectionIfAvailable" = $SSL
             "Credential"                     = $Credential
@@ -152,9 +154,11 @@ function Send-AuditEmail {
             "TextBody"                       = $Body
             "AttachmentList"                 = $AttachmentList
         }
+        # Send the email using the Send-MailKitMessage cmdlet with the parameters above
         Send-MailKitMessage @Parameters
     }
     End {
+        # Clear sensitive variables from memory
         Clear-Variable -Name "a", "b", "Credential", "Token" -Scope Local -ErrorAction SilentlyContinue
     }
 }

@@ -93,8 +93,10 @@ function Get-ADActiveUserAudit {
                 $Script:ADLogString += Write-AuditLog -Message "End Log"
                 throw $Script:ADLogString
             }
+            # Log creation of output directory
             $outputMsg = "$("Output Folder created at: `n" + $AttachmentFolderPath)"
             $Script:ADLogString += Write-AuditLog -Message $outputMsg
+            # Pause for 2 seconds to avoid potential race conditions.
             Start-Sleep 2
         }
         # ADUser Properties to search for.
@@ -111,19 +113,22 @@ function Get-ADActiveUserAudit {
         "Title",
         "Manager",
         "Department"
-        $Script:ADLogString += Write-AuditLog -Message "Retriving the following ADUser properties: "
+        # Log the properties being retrieved.
+        $Script:ADLogString += Write-AuditLog -Message "Retrieving the following ADUser properties: "
         $Script:ADLogString += Write-AuditLog -Message "$($propsArray -join " | ")"
         # Establish timeframe to review.
         $time = (Get-Date).Adddays( - ($DaysInactive))
+        # Log the search criteria.
         $Script:ADLogString += Write-AuditLog -Message "Searching for users who have not signed in within the last $DaysInactive days."
         $Script:ADLogString += Write-AuditLog -Message "Where property Enabled = $Enabled"
+        # Pause for 2 seconds to avoid potential race conditions.
         Start-Sleep 2
     }
     process {
         # Get Users
         Get-ADUser -Filter { LastLogonTimeStamp -lt $time -and Enabled -eq $Enabled } `
             -Properties $propsArray -OutVariable ADExport | Out-Null
-        $Script:ADLogString += Write-AuditLog -Message "Creating a custom object from ADUser output."
+        # Create custom object for the output
         $Export = @()
         foreach ($item in $ADExport) {
             $Export += [ADAuditTasksUser]::new(
@@ -143,22 +148,27 @@ function Get-ADActiveUserAudit {
                 $false
             )
         }
-    }
+    } # End Process
     end {
+        # Log success message.
         $Script:ADLogString += Write-AuditLog -Message "The $ScriptFunctionName Export was successful."
+        # Log output object properties.
         $Script:ADLogString += Write-AuditLog -Message "There are $($Export.Count) objects listed with the following properties: "
         $Script:ADLogString += Write-AuditLog -Message "$(($Export | Get-Member -MemberType property ).Name -join " | ")"
+        # Export to csv and zip, if requested.
         if ($Report) {
-            # Add Datetime to filename
+            # Add Datetime to filename.
             $ExportFileName = "$AttachmentFolderPath\$((Get-Date).ToString('yyyy-MM-dd_hh.mm.ss'))_$($ScriptFunctionName)_$($env:USERDNSDOMAIN)"
-            # Create FileNames
+            # Create FileNames.
             $csv = "$ExportFileName.csv"
             $zip = "$ExportFileName.zip"
             $hash = "$ExportFileName.csv.SHA256.txt"
             $log = "$ExportFileName.AuditLog.csv"
+            # Call the Build-ReportArchive function to create the archive.
             Build-ReportArchive -Export $Export -csv $csv -zip $zip -hash $hash -log $log -ErrorAction SilentlyContinue -ErrorVariable BuildErr
         }
         else {
+            # Log message indicating that the function is returning the output object.
             $Script:ADLogString += Write-AuditLog -Message "Returning output object."
             Start-Sleep 2
             return $Export

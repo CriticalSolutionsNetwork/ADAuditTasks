@@ -267,7 +267,6 @@ function Get-ADHostAudit {
             $log = "$ExportFileName.$FileSuffix.AuditLog.csv"
             $Script:ADLogString += Write-AuditLog "There is no output for the specified host type $FileSuffix"
             $Script:ADLogString | Export-Csv $log -NoTypeInformation -Encoding utf8
-
             # If the -Report switch is not used, return null
             if (-not $Report) {
                 return $null

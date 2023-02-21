@@ -1,84 +1,106 @@
 function Get-ADUserPrivilegeAudit {
     <#
     .SYNOPSIS
-        Produces 3 object outputs: PrivilegedGroups, AdExtendedRights and possible service accounts.
+        Produces three object outputs: PrivilegedGroups, AdExtendedRights, and possible service accounts.
     .DESCRIPTION
-        Reports will be created in the C:\temp directory if the -Report Switch is used.
-        To instantiate variables with the objects, provide 3 objects on the left side of the assignment:
-            For Example: $a,$b,$c = Get-ADUserPrivilegeAudit -verbose
-        The objects will be populated with PrivilegedGroups, AdExtendedRights and possible
-        service accounts respectively.
+        The Get-ADUserPrivilegeAudit function produces reports on privileged groups,
+        AD extended rights, and possible service accounts. If the -Report switch is
+        used, the reports will be created in the specified folder. To instantiate
+        variables with the objects, provide three objects on the left side of the
+        assignment:
+
+        Example: $a,$b,$c = Get-ADUserPrivilegeAudit -Verbose
+
+        The objects will be populated with privileged groups, AD extended rights,
+        and possible service accounts, respectively.
     .EXAMPLE
         Get-ADUserPrivilegeAudit -Verbose
-        Get the reports as three separate objects.
-            To instantiate variables with the objects, provide 3 objects on the left side of the assignment:
-                For Example: $a,$b,$c = Get-ADUserPrivilegeAudit -verbose
-                The objects will be populated with PrivilegedGroups, AdExtendedRights and possible
-                service accounts respectively.
+
+        Gets the reports as three separate objects. To instantiate variables with
+        the objects, provide three objects on the left side of the assignment:
+
+        Example: $a,$b,$c = Get-ADUserPrivilegeAudit -Verbose
+
+        The objects will be populated with privileged groups, AD extended rights,
+        and possible service accounts, respectively.
     .EXAMPLE
         Get-ADUserPrivilegeAudit -Report -Verbose
-            Will return 3 reports to the default temp directory in a single zip file.
+
+        Returns three reports to the default folder, C:\temp\ADUserPrivilegeAudit,
+        in a single zip file.
     .PARAMETER AttachmentFolderPath
-        The path of the folder you want to save attachments to. The default is:
-            C:\temp\ADUserPrivilegeAudit
+        Specifies the path of the folder where you want to save attachments.
+        The default path is C:\temp\ADUserPrivilegeAudit.
     .PARAMETER Report
-        Add report output as csv to DirPath directory.
+        Adds report output as CSV to the directory specified by AttachmentFolderPath.
+    .NOTES
+        This function requires the ActiveDirectory module.
     #>
-
-
     [CmdletBinding()]
     param (
+        # Input parameter: output folder path for generated reports
         [Parameter(
             HelpMessage = ' Enter output folder path. Default: C:\temp\ADUserPrivilegeAudit ',
             Position = 0,
             ValueFromPipeline = $true
         )]
         [string]$AttachmentFolderPath = 'C:\temp\ADUserPrivilegeAudit',
+        # Input parameter: switch to export output to a CSV and zip to the specified directory
         [Parameter(
-            HelpMessage = 'Switch to export output to a csv and zipped to Directory C:\temp\ADUserPrivilegeAudit Default: $false',
+            HelpMessage = 'Switch to export output to a CSV and zipped to Directory C:\temp\ADUserPrivilegeAudit Default: $false',
             Position = 1,
             ValueFromPipelineByPropertyName = $true
         )]
         [switch]$Report
     )
     begin {
-        #Create logging object
+        # Create logging object
         $ADLogString = @()
-        #Begin Logging
+        # Begin Logging
         $ADLogString += Write-AuditLog -Message "Begin Log"
+        # Get name of the function
         $ScriptFunctionName = $MyInvocation.MyCommand.Name -replace '\..*'
+        # Check if ActiveDirectory module is installed
         $module = Get-Module -Name ActiveDirectory -ListAvailable -InformationAction SilentlyContinue
         if (-not $module) {
+            # Prompt user to install ActiveDirectory module
             $ADLogString += Write-AuditLog -Message "Install Active Directory Module?" -Severity Warning
             try {
+                # Install ActiveDirectory module using Server Manager
                 Import-Module ServerManager -ErrorAction Stop -ErrorVariable InstallADModuleErr
                 Add-WindowsFeature RSAT-AD-PowerShell -IncludeAllSubFeature -ErrorAction Stop -ErrorVariable InstallADModuleErr
             }
             catch {
+                # If module is not installed and cannot be installed, throw an error
                 $ADLogString += Write-AuditLog -Message "You must install the Active Directory module to continue" -Severity Error
                 throw $InstallADModuleError
             }
         } # End If not Module
         try {
+            # Import ActiveDirectory module
             Import-Module "ActiveDirectory" -Global -ErrorAction Stop -InformationAction SilentlyContinue -ErrorVariable ImportADModuleErr
         }
         catch {
+            # If module is not imported, throw an error
             $ADLogString += Write-AuditLog -Message "You must import the Active Directory module to continue" -Severity Error
             throw $ImportADModuleErr
         } # End Try Catch
-        # Create Directory Path
+        # Create output directory if it does not already exist
         $AttachmentFolderPathCheck = Test-Path -Path $AttachmentFolderPath
         If (!($AttachmentFolderPathCheck)) {
+            # Prompt user to create output directory
             $ADLogString += Write-AuditLog -Message "Would you like to create the directory $($AttachmentFolderPath)?" -Severity Warning
             Try {
-                # If not present then create the dir
+                # Create output directory if it does not already exist
                 New-Item -ItemType Directory $AttachmentFolderPath -Force -ErrorAction Stop
             }
             Catch {
+                # If directory cannot be created, throw an error
                 $ADLogString += Write-AuditLog -Message $("Directory: " + $AttachmentFolderPath + "was not created.") -Severity Error
                 $ADLogString += Write-AuditLog -Message "End Log"
                 throw $ADLogString
             }
+            # Log the creation of the output directory
             $ADLogString += Write-AuditLog -Message "$("Output Folder created at: `n" + $AttachmentFolderPath)"
             Start-Sleep 2
         }
@@ -109,9 +131,12 @@ function Get-ADUserPrivilegeAudit {
         Start-Sleep 2
     }
     process {
+        # Iterate through each group in $AD_PrivilegedGroups
         foreach ($group in $AD_PrivilegedGroups) {
+            # Clear the GroupMember variable and retrieve all members of the current group
             Clear-Variable GroupMember -ErrorAction SilentlyContinue
             Get-ADGroupMember -Identity $group -Recursive -OutVariable GroupMember | Out-Null
+            # Select the desired properties for each member and add custom properties to the output
             $GroupMember | Select-Object SamAccountName, Name, ObjectClass, `
             @{N = 'PriviledgedGroup'; E = { $group } }, `
             @{N = 'Enabled'; E = { (Get-ADUser -Identity $_.samaccountname).Enabled } }, `
@@ -134,20 +159,22 @@ function Get-ADUserPrivilegeAudit {
                 Title, `
             @{N = 'Manager'; E = { (Get-ADUser -Identity $_.manager).Name } }, `
             @{N = 'SuspectedSvcAccount'; E = {
-                    # Null gave unexpected behavior on the left side. Works on the right side.
+                    # Check if the account is a suspected service account based on PasswordNeverExpires or servicePrincipalName
                     if (((Get-ADUser -Identity $_.samaccountname -Properties PasswordNeverExpires).PasswordNeverExpires) -or (((Get-ADUser -Identity $_.samaccountname -Properties servicePrincipalName).servicePrincipalName) -ne $null) ) {
                         return $true
-                    } # end if
+                    }
                     else {
                         return $false
-                    } # end else
+                    }
                 } # End Expression
             }, # End Named Expression SuspectedSvcAccount
             Department, AccessRequired, NeedMailbox -OutVariable members | Out-Null
+            # Add the member objects to $ADUsers array
             $ADUsers += $members
         }
+        # Create an array to store the output objects
         $Export = @()
-        # Create $Export Object
+        # Iterate through each member in $ADUsers and create a custom object with desired properties
         foreach ($User in $ADUsers) {
             $hash = [ordered]@{
                 PriviledgedGroup     = $User.PriviledgedGroup
@@ -170,25 +197,31 @@ function Get-ADUserPrivilegeAudit {
             New-Object -TypeName PSCustomObject -Property $hash -OutVariable PSObject | Out-Null
             $Export += $PSObject
         }
+        # Log success message for $ScriptFunctionName export
         $ADLogString += Write-AuditLog -Message "The $ScriptFunctionName Export was successful."
+        # Log count and properties of objects in $Export
         $ADLogString += Write-AuditLog -Message "There are $($Export.Count) objects listed with the following properties: "
         $ADLogString += Write-AuditLog -Message "$(($Export | Get-Member -MemberType noteproperty ).Name -join " | ")"
+
         # Get PDC
         $dc = (Get-ADDomainController -Discover -DomainName $env:USERDNSDOMAIN -Service PrimaryDC).Name
         # Get DN of AD Root.
         $rootou = (Get-ADRootDSE).defaultNamingContext
-        # Get ad objects from the PDC for the root ou. #TODO Check
+        # Get AD objects from the PDC for the root ou. #TODO Check
         $Allobjects = Get-ADObject -Server $dc -SearchBase $rootou -SearchScope subtree -LDAPFilter `
             "(&(objectclass=user)(objectcategory=person))" -Properties ntSecurityDescriptor -ResultSetSize $null
-        # "(|(objectClass=domain)(objectClass=organizationalUnit)(objectClass=group)(sAMAccountType=805306368)(objectCategory=Computer)(&(objectclass=user)(objectcategory=person)))"
-        # Create $Export2 Object
+
+        # Create $Export2 object by looping through all objects in $Allobjects and retrieving extended rights
         $Export2 = Foreach ($ADObject in $Allobjects) {
             Get-AdExtendedRight $ADObject
         }
+        # Log success message for extended permissions export
         $ADLogString += Write-AuditLog -Message "The Extended Permissions Export was successful."
+        # Log count and properties of objects in $Export2
         $ADLogString += Write-AuditLog -Message "There are $($Export2.Count) objects listed with the following properties: "
         $ADLogString += Write-AuditLog -Message "$(($Export2 | Get-Member -MemberType noteproperty ).Name -join " | ")"
-        # Export Delegated access, allowed protocols and Destination Serivces.
+
+        # Export Delegated access, allowed protocols, and Destination Services by filtering for relevant properties
         $Export3 = Get-ADObject -Filter { (msDS-AllowedToDelegateTo -like '*') -or (UserAccountControl -band 0x0080000) -or (UserAccountControl -band 0x1000000) } `
             -prop samAccountName, msDS-AllowedToDelegateTo, servicePrincipalName, userAccountControl | `
             Select-Object DistinguishedName, ObjectClass, samAccountName, `
@@ -196,8 +229,10 @@ function Get-ADUserPrivilegeAudit {
         @{N = 'DelegationStatus'; E = { if ($_.UserAccountControl -band 0x80000) { 'AllServices' }else { 'SpecificServices' } } }, `
         @{N = 'AllowedProtocols'; E = { if ($_.UserAccountControl -band 0x1000000) { 'Any' }else { 'Kerberos' } } }, `
         @{N = 'DestinationServices'; E = { $_.'msDS-AllowedToDelegateTo' } }
-        # Log Success
+
+        # Log success message for delegated permissions export
         $ADLogString += Write-AuditLog -Message "The delegated permissions Export was successful."
+        # Log count and properties of objects in $Export3
         $ADLogString += Write-AuditLog -Message "There are $($Export3.Count) objects listed with the following properties: "
         $ADLogString += Write-AuditLog -Message "$(($Export3 | Get-Member -MemberType noteproperty ).Name -join " | ")"
     }
@@ -211,36 +246,40 @@ function Get-ADUserPrivilegeAudit {
             $csv3 = "$ExportFileName.PossibleServiceAccounts.csv"
             $zip1 = "$ExportFileName.zip"
             $log = "$ExportFileName.AuditLog.csv"
-
+            # Export results to CSV files
             $Export | Export-Csv $csv1
             $Export2 | Export-Csv $csv2
             $Export3 | Export-Csv $csv3
+            # Compute SHA256 hash for each CSV file
             $csv1Sha256Hash = (Get-FileHash $csv1).Hash
             $csv2Sha256Hash = (Get-FileHash $csv2).Hash
             $csv3Sha256Hash = (Get-FileHash $csv3).Hash
-
-
+            # Log SHA256 hash for each CSV file
             $ADLogString += Write-AuditLog -Message "Exported CSV $csv1 SHA256 hash: "
             $ADLogString += Write-AuditLog -Message "$($csv1Sha256Hash)"
             $ADLogString += Write-AuditLog -Message "Exported CSV $csv2 SHA256 hash: "
             $ADLogString += Write-AuditLog -Message "$($csv2Sha256Hash)"
             $ADLogString += Write-AuditLog -Message "Exported CSV $csv3 SHA256 hash: "
             $ADLogString += Write-AuditLog -Message "$($csv3Sha256Hash)"
+            # Log directory path and ZIP file path
             $ADLogString += Write-AuditLog -Message "Directory: $AttachmentFolderPath"
             $ADLogString += Write-AuditLog -Message "Returning string filepath of: "
             $ADLogString += Write-AuditLog -Message "FilePath: $zip1"
-
-
+            # Export audit log to CSV file
             $ADLogString | Export-Csv $log -NoTypeInformation -Encoding utf8
-
+            # Compress CSV files and audit log into a ZIP file
             Compress-Archive $csv1, $csv2, $csv3, $log -DestinationPath $zip1 -CompressionLevel Optimal
+            # Remove CSV and audit log files
             Remove-Item $csv1, $csv2, $csv3, $log -Force
+            # Return ZIP file path
             return $zip1
         }
         else {
+            # Return output objects
             $ADLogString += Write-AuditLog -Message "Returning 3 output objects. Create object like this:  `$a, `$b, `$c, = Get-ADUserPrivilegedAudit"
             Start-Sleep 2
             return $Export, $Export2, $Export3
         }
     }
+
 }
