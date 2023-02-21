@@ -1,5 +1,5 @@
 function Merge-ADAuditZip {
-<#
+    <#
     .SYNOPSIS
     Combines multiple audit report files into a single compressed ZIP file.
     .DESCRIPTION
@@ -53,7 +53,13 @@ function Merge-ADAuditZip {
     # Create a hashtable to store the file sizes
     $fileSizes = @{}
     foreach ($filePath in $FilePaths) {
-        $fileSizes[$filePath] = (Get-Item $filePath).Length  # Get the size of each file and store in hashtable
+        # Check if the file is not empty
+        if (Get-Content $filePath) {
+            $fileSizes[$filePath] = (Get-Item $filePath).Length  # Get the size of each file and store in hashtable
+        }
+        else {
+            $Script:ADLogString += Write-AuditLog -Message  "File $filePath is empty and will be skipped."
+        }
     }
     # Sort the files by size in descending order
     $sortedFiles = $fileSizes.GetEnumerator() | Sort-Object -Property Value -Descending | Select-Object -ExpandProperty Name
