@@ -9,6 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added comments and help blocks to various functions
 - Added `Submit-FTPUpload` as public function
+- Modified `Get-ADHostAudit` to fix multiple string output
+
+### Changed
+
+- Updated documentation to include examples and usage information
+
+### Fixed
+
+- Fixed error handling in `Get-ADHostAudit` for blank output
+- Fixed several bugs related to incorrect variable naming and parameter types
+
 
 ## [0.1.6] - 2023-02-20
 
