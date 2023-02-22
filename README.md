@@ -60,7 +60,7 @@ Send-AuditEmail -smtpServer $SMTPServer -port $Port -username $UserName `
 
 ### Example 4: Creating a ZIP file with parts
 
-This example demonstrates how to create a ZIP file that will be split into multiple parts. 
+This example demonstrates how to create a ZIP file that could be split into multiple parts. 
 
 ```powershell
 $workstations = Get-ADHostAudit -HostType WindowsWorkstations -Report -Verbose
@@ -70,6 +70,34 @@ $activeUsers = Get-ADActiveUserAudit -Report -Verbose
 $privilegedUsers = Get-ADUserPrivilegeAudit -Report -Verbose
 $wildcardUsers = Get-ADUserWildCardAudit -WildCardIdentifier "svc" -Report -Verbose
 Merge-ADAuditZip -FilePaths $workstations, $servers, $nonWindows, $activeUsers, $privilegedUsers, $wildcardUsers -MaxFileSize 100MB -OutputFolder "C:\Temp" -OpenDirectory
+```
+### Example 5: Creating a ZIP file with parts and emailing it
+
+This example demonstrates how to create a ZIP file that could be split into multiple parts and emailed.
+
+```powershell
+# Function Variables
+$workstations = Get-ADHostAudit -HostType WindowsWorkstations -Report -Verbose
+$servers = Get-ADHostAudit -HostType WindowsServers -Report -Verbose
+$nonWindows = Get-ADHostAudit -HostType "Non-Windows" -Report -Verbose
+$activeUsers = Get-ADActiveUserAudit -Report -Verbose
+$privilegedUsers = Get-ADUserPrivilegeAudit -Report -Verbose
+$wildcardUsers = Get-ADUserWildCardAudit -WildCardIdentifier "svc" -Report -Verbose
+
+# Email Variables
+$SMTPServer = "smtp.office365.com"
+$Port = 587
+$UserName = "helpdesk@constoso.com"
+$From = "helpdesk@constoso.com"
+$To = "user@anothercompany.com"
+$password = Read-Host -AsSecureString
+$date = (Get-Date).tostring("yyyy-MM-dd_hh.mm.ss")
+$Body = "Report run on $date for $env:USERDNSDOMAIN"
+$attachments = Merge-ADAuditZip -FilePaths $workstations, $servers, $nonWindows, $activeUsers, $privilegedUsers, $wildcardUsers
+
+
+Send-AuditEmail -smtpServer $SMTPServer -port $Port -username $UserName `
+-body $Body -from $From -to $To -pass $password -attachmentfiles $attachments -ssl
 ```
 ### Limitations:
 
