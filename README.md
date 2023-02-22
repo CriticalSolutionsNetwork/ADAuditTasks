@@ -21,7 +21,7 @@ See the [ADAuditTasks help documentation](https://criticalsolutionsnetwork.githu
 - `Merge-ADAuditZip`
 - `Send-AuditEmail`
 - `Submit-FTPUpload`
-### Example 1 - Creating a zip file of various host types
+### Example 1: Creating a zip file of various host types
 
 The following example demonstrates how to create a zip file of different host types:
 
