@@ -10,13 +10,14 @@ Remove-Item .\output\CHANGELOG.md
 #.\build.ps1 -tasks build -CodeCoverageThreshold 0
 <#
 1. Merge the pull request that contains the code documentation and comments.
-2. Switch to the main branch in your local repository using git checkout main.
-3. Pull the latest changes from the remote repository using git pull origin main.
+2. Switch to the main branch in your local repository using `git checkout main`.
+3. Pull the latest changes from the remote repository using `git pull origin main`.
 4. Verify that the module works as expected by importing it into a PowerShell session and running the cmdlets.
-5. Tag the main branch with the version number 0.1.7 using git tag -a v0.1.7 -m "Release version 0.1.7".
-6. Push the tag to the remote repository using git push origin v0.1.7.
-7. Run the build using the pack task to create the NuGet package: .\build.ps1 -tasks pack -CodeCoverageThreshold 0.
-8. Upload the NuGet package to the PowerShell Gallery using the publish task: .\build.ps1 -tasks publish -CodeCoverageThreshold 0.
+5. Tag the main branch with the version number 0.1.7 using `git tag -a v0.1.7 -m "Release version 0.1.7"`.
+6. Push the tag to the remote repository using `git push origin v0.1.7`.
+7. Run the build using the pack task to create the NuGet package: `.\build.ps1 -tasks pack -CodeCoverageThreshold 0`.
+8. Upload the NuGet package to the PowerShell Gallery using the publish task: `.\build.ps1 -tasks publish -CodeCoverageThreshold 0`.
+
 #>
 git tag -a v0.1.1 -m "Fix Update"
 git tag -d v1.0.0

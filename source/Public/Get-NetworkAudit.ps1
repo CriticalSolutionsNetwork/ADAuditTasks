@@ -58,6 +58,10 @@ function Get-NetworkAudit {
         [switch]$Report
     )
     begin {
+        # Create logging object
+        $Script:ADLogString = @()
+        # Begin Logging
+        $Script:ADLogString += Write-AuditLog -Message "Begin Log"
         # Check if PSnmap module is installed, if not install it.
         If (Get-Module -ListAvailable -Name "PSnmap") { Import-Module "PSnmap" } Else { Install-Module "PSnmap" -Force; Import-Module "PSnmap" }
 
@@ -112,7 +116,10 @@ function Get-NetworkAudit {
                     $subnetText = $(($subnet.Replace("/", ".CIDR.")))
                     # If report switch is true, export the scan to a CSV file with a timestamped filename.
                     if ($report) {
-                        $scan | Export-Csv "C:\temp\$((Get-Date).ToString('yyyy-MM-dd_hh.mm.ss')).$($env:USERDNSDOMAIN)_Subnet.$($subnetText)_DHCP.$($DHCPServer)_Gateway.$($network.IPv4DefaultGateway.nexthop).NetScan.csv" -NoTypeInformation
+                        $csv = "C:\temp\$((Get-Date).ToString('yyyy-MM-dd_hh.mm.ss')).$($env:USERDNSDOMAIN)_Subnet.$($subnetText)_DHCP.$($DHCPServer)_Gateway.$($network.IPv4DefaultGateway.nexthop).NetScan.csv"
+                        $zip = $csv -replace ".csv", ".zip"
+                        $log = $csv -replace ".csv", ".AuditLog.csv"
+                        return Build-ReportArchive -Export $scan -csv $csv -zip $zip -log $log -ErrorVariable BuildErr
                     }
                     # Add the scan to the function output.
                     $results += $scan
@@ -123,7 +130,10 @@ function Get-NetworkAudit {
             $Subnet = $Computers
             $results = Invoke-PSnmap -ComputerName $subnet -Port $ports -Dns -NoSummary -AddService | Where-Object { $_.Ping -eq $true }
             if ($Report) {
-                $results | Export-Csv "C:\temp\$((Get-Date).ToString('yyyy-MM-dd_hh.mm.ss')).$($env:USERDNSDOMAIN)_HostScan.csv" -NoTypeInformation
+                $csv = "C:\temp\$((Get-Date).ToString('yyyy-MM-dd_hh.mm.ss')).$($env:USERDNSDOMAIN)_HostScan.csv"
+                $zip = $csv -replace ".csv", ".zip"
+                $log = $csv -replace ".csv", ".AuditLog.csv"
+            return Build-ReportArchive -Export $results -csv $csv -zip $zip -log $log -ErrorVariable BuildErr
             }
         }
     } # Process Close
