@@ -8,20 +8,39 @@ $ProjectName = ((Get-ChildItem -Path $ProjectPath\*\*.psd1).Where{
 Import-Module $ProjectName
 
 InModuleScope $ProjectName {
-    Describe Get-PrivateFunction {
-        Context 'Default' {
-            BeforeEach {
-                $return = Get-PrivateFunction -PrivateData 'string'
-            }
+    Describe "Write-AuditLog" {
+        It "Returns a pscustomobject" {
+            # Mock Test-IsAdmin function
+            Mock Test-IsAdmin { $true }
 
-            It 'Returns a single object' {
-                ($return | Measure-Object).Count | Should -Be 1
-            }
+            # Call the function and check the return type
+            $result = Write-AuditLog -Message "Test message"
+            $result.GetType().Name | Should Be "pscustomobject"
+        }
 
-            It 'Returns a string based on the parameter PrivateData' {
-                $return | Should -Be 'string'
-            }
+        It "Logs an audit entry with the specified message and severity" {
+            # Mock Write-Verbose, Write-Warning and Write-Error functions
+            Mock Write-Verbose { $null }
+            Mock Write-Warning { $null }
+            Mock Write-Error { $null }
+
+            # Mock Test-IsAdmin function
+            Mock Test-IsAdmin { $true }
+
+            # Call the function with a warning message and check the result
+            $result = Write-AuditLog -Message "Test warning message" -Severity "Warning"
+            $result.Message | Should Be "Test warning message"
+            $result.Severity | Should Be "Warning"
+
+            # Call the function with an error message and check the result
+            $result = Write-AuditLog -Message "Test error message" -Severity "Error"
+            $result.Message | Should Be "Test error message"
+            $result.Severity | Should Be "Error"
+
+            # Call the function with an information message and check the result
+            $result = Write-AuditLog -Message "Test information message" -Severity "Information"
+            $result.Message | Should Be "Test information message"
+            $result.Severity | Should Be "Information"
         }
     }
 }
-

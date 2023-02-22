@@ -24,48 +24,46 @@ AfterAll {
     Remove-Module -Name $script:moduleName
 }
 
-Describe Get-Something {
-
-    Context 'Return values' {
-        BeforeEach {
-            $return = Get-Something -Data 'value'
-        }
-
-        It 'Returns a single object' {
-            ($return | Measure-Object).Count | Should -Be 1
-        }
-
+Describe "Get-ADActiveUserAudit" {
+    It "Returns an object of type ADAuditTasksUser" {
+        # Call the function and check the return type
+        $result = Get-ADActiveUserAudit
+        $result.GetType().Name | Should Be "ADAuditTasksUser"
     }
 
-    Context 'Pipeline' {
-        It 'Accepts values from the pipeline by value' {
-            $return = 'value1', 'value2' | Get-Something
-
-            $return[0] | Should -Be 'value1'
-            $return[1] | Should -Be 'value2'
-        }
-
-        It 'Accepts value from the pipeline by property name' {
-            $return = 'value1', 'value2' | ForEach-Object {
-                [PSCustomObject]@{
-                    Data = $_
-                    OtherProperty = 'other'
-                }
-            } | Get-Something
-
-
-            $return[0] | Should -Be 'value1'
-            $return[1] | Should -Be 'value2'
-        }
+    It "Returns an object with the expected properties" {
+        # Call the function and check the returned object properties
+        $result = Get-ADActiveUserAudit
+        $result | Should have property SamAccountName
+        $result | Should have property GivenName
+        $result | Should have property Surname
+        $result | Should have property Name
+        $result | Should have property UserPrincipalName
+        $result | Should have property LastLogonTimeStamp
+        $result | Should have property Enabled
+        $result | Should have property DistinguishedName
+        $result | Should have property Title
+        $result | Should have property Manager
+        $result | Should have property Department
+        $result | Should have property HasBeenEmailed
+        $result | Should have property HasBeenEmailedValue
     }
 
-    Context 'ShouldProcess' {
-        It 'Supports WhatIf' {
-            (Get-Command Get-Something).Parameters.ContainsKey('WhatIf') | Should -Be $true
-            { Get-Something -Data 'value' -WhatIf } | Should -Not -Throw
-        }
+    It "Calls Write-AuditLog with the expected message and severity" {
+        # Mock Write-AuditLog function
+        Mock Write-AuditLog { [PSCustomObject]@{Message="Test message"; Severity="Warning"} }
 
+        # Call the function
+        $result = Get-ADActiveUserAudit -Report -Verbose
 
+        # Check that Write-AuditLog was called with the expected message and severity
+        Assert-MockCalled Write-AuditLog -Exactly 1 -ParameterFilter { $args[0] -eq "Begin Log" }
+        Assert-MockCalled Write-AuditLog -Exactly 1 -ParameterFilter { $args[0] -eq "The Get-ADActiveUserAudit Export was successful." }
+        Assert-MockCalled Write-AuditLog -Exactly 1 -ParameterFilter { $args[0] -eq "Returning output object." }
+        Assert-MockCalled Write-AuditLog -Exactly 1 -ParameterFilter { $args[0] -eq "End Log" }
+        Assert-MockCalled Write-AuditLog -AtLeast 1 -ParameterFilter { $args[0] -eq "Test message" }
+        Assert-MockCalled Write-AuditLog -AtLeast 1 -ParameterFilter { $args[1] -eq "Warning" }
     }
 }
+
 

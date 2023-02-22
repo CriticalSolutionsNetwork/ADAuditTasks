@@ -43,3 +43,4 @@ Get-NetworkAudit -LocalSubnets -Report -Verbose
 
 .\build.ps1 -tasks build,pack,publish -CodeCoverageThreshold 0
 
+.\build.ps1 -tasks Build,Test -CodeCoverageThreshold 0
