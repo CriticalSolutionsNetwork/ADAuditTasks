@@ -1,4 +1,4 @@
-function Send-GraphEmail {
+function Send-GraphAppEmail {
     [CmdletBinding()]
     param (
         [Parameter(HelpMessage = "The New-GraphEmailApp API application object for sending the email.")]
