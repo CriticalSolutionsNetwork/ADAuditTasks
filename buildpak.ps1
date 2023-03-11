@@ -21,16 +21,16 @@ Remove-Item .\output\CHANGELOG.md
 $ver = "v0.2.1"
 git checkout main
 git pull origin main
-git tag -a $ver -m "$ver Release Fix"
+git tag -a $ver -m "Release version $ver Fix"
 git push origin $ver
 # git tag -d $ver
 
-$workstations = Get-ADHostAudit -HostType WindowsWorkstations -Report -Verbose
-$servers = Get-ADHostAudit -HostType WindowsServers -Report -Verbose
-$nonWindows = Get-ADHostAudit -HostType "Non-Windows" -Report -Verbose
-$activeUsers = Get-ADActiveUserAudit -Report -Verbose
-$privilegedUsers = Get-ADUserPrivilegeAudit -Report -Verbose
-$wildcardUsers = Get-ADUserWildCardAudit -WildCardIdentifier "svc" -Report -Verbose
+$workstations       = Get-ADHostAudit -HostType WindowsWorkstations -Report -Verbose
+$servers            = Get-ADHostAudit -HostType WindowsServers -Report -Verbose
+$nonWindows         = Get-ADHostAudit -HostType "Non-Windows" -Report -Verbose
+$activeUsers        = Get-ADActiveUserAudit -Report -Verbose
+$privilegedUsers    = Get-ADUserPrivilegeAudit -Report -Verbose
+$wildcardUsers      = Get-ADUserWildCardAudit -WildCardIdentifier "svc" -Report -Verbose
 Merge-ADAuditZip -FilePaths $workstations, $servers, $nonWindows, $activeUsers, $privilegedUsers, $wildcardUsers -OpenDirectory
 
 Get-HostTag -PhysicalOrVirtual Physical -Prefix "CSN" -SystemOS 'Windows Server' -DeviceFunction 'Application Server' -HostCount 5

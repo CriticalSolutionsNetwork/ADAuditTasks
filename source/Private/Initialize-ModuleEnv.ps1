@@ -95,12 +95,12 @@ function Initialize-ModuleEnv {
                     Import-Module $name -ErrorAction Stop
                 }
                 catch {
-                    $Script:ADLogString += Write-AuditLog -Message $throwmsg -Severity Error
+                    $Script:LogString += Write-AuditLog -Message $throwmsg -Severity Error
                     throw
                 }
             }
             else {
-                $Script:ADLogString += Write-AuditLog -Message "The $name module is required to continue" -Severity Error
+                $Script:LogString += Write-AuditLog -Message "The $name module is required to continue" -Severity Error
                 throw "The $name module is required to continue"
             }
         }

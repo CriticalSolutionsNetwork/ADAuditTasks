@@ -38,7 +38,7 @@ function Get-ADUserLogonAudit {
     )
     process {
         #Create logging object
-        $ADLogString = @()
+        $Script:LogString = @()
         #Begin Logging
         #Get all domain controllers
         $DomainControllers = Get-ADDomainController -Filter { Name -like "*" }
@@ -61,13 +61,13 @@ function Get-ADUserLogonAudit {
         }
         #Write audit logs for domain controllers that are available for queries
         if ($params.ComputerName) {
-            $ADLogString += Write-AuditLog -Message "The following DC's were available for WSMan:"
-            $ADLogString += Write-AuditLog -Message "$($params.ComputerName)"
+            $Script:LogString += Write-AuditLog -Message "The following DC's were available for WSMan:"
+            $Script:LogString += Write-AuditLog -Message "$($params.ComputerName)"
         }
         #Write audit logs for domain controllers that are not available for queries
         if ($NoRemoteAccess.NoRemoteAccess) {
-            $ADLogString += Write-AuditLog -Message "The following DC's were unavailable and weren't included:"
-            $ADLogString += Write-AuditLog -Message "$($NoRemoteAccess.NoRemoteAccess)"
+            $Script:LogString += Write-AuditLog -Message "The following DC's were unavailable and weren't included:"
+            $Script:LogString += Write-AuditLog -Message "$($NoRemoteAccess.NoRemoteAccess)"
         }
         #Get the AD user object based on the given SamAccountName
         $user = Get-ADUser -Identity $SamAccountName

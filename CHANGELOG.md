@@ -5,6 +5,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Changed public function `Get-ADActiveUserAudit` to incorporate private function `Install-ADModule`
+
+## [0.2.1] - 2023-03-11
+
 ### Added
 
 - Added Private Functions `New-GraphEmailApp` and `Send-GraphAppEmail`. Further work needed.
@@ -26,7 +32,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     $wildcardUsers = Get-ADUserWildCardAudit -WildCardIdentifier "svc" -Report -Verbose
     Merge-ADAuditZip -FilePaths $workstations, $servers, $nonWindows, $activeUsers, $privilegedUsers, $wildcardUsers -OpenDirectory
     ```
-
 
 ## [0.2.0] - 2023-02-21
 

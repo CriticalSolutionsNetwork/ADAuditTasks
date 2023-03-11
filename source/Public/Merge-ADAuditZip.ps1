@@ -48,13 +48,13 @@ function Merge-ADAuditZip {
     $FilePaths = $FilePaths | Where-Object { $_ }
     # Create the output directory if it doesn't exist
     if (-not (Test-Path -Path $OutputFolder)) {
-        $Script:ADLogString += Write-AuditLog -Message "Would you like to create the directory $($OutputFolder)?" -Severity Warning
+        $Script:LogString += Write-AuditLog -Message "Would you like to create the directory $($OutputFolder)?" -Severity Warning
         Try {
             # If not present then create the dir
             New-Item -ItemType Directory $OutputFolder -Force -ErrorAction Stop -ErrorVariable CreateDirErr | Out-Null
         }
         Catch {
-            $Script:ADLogString += Write-AuditLog -Message "Unable to create output directory $($OutputFolder)" -Severity Error
+            $Script:LogString += Write-AuditLog -Message "Unable to create output directory $($OutputFolder)" -Severity Error
             throw $CreateDirErr
         }
     }

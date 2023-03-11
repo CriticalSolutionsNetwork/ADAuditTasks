@@ -111,8 +111,8 @@ function Send-AuditEmail {
         }
         catch {
             # If the Send-MailKitMessage module is not installed, log an error and exit the function
-            $ADLogString += Write-AuditLog -Message "The Module Was not installed. Use `"Save-Module -Name Send-MailKitMessage -AllowPrerelease -Path C:\temp`" on another Windows Machine."
-            $ADLogString += Write-AuditLog -Message "End Log" -Severity Error
+            $Script:LogString += Write-AuditLog -Message "The Module Was not installed. Use `"Save-Module -Name Send-MailKitMessage -AllowPrerelease -Path C:\temp`" on another Windows Machine."
+            $Script:LogString += Write-AuditLog -Message "End Log" -Severity Error
             throw MailkitErr
         }
         # Create recipient list

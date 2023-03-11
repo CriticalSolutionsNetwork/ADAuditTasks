@@ -73,18 +73,18 @@ function Build-ReportArchive {
         }
         catch {
             # Write error to log and re-throw error
-            $Script:ADLogString += Write-AuditLog -Message "Failed to export CSV: $csv" -Severity Error
+            $Script:LogString += Write-AuditLog -Message "Failed to export CSV: $csv" -Severity Error
             throw $ExportErr
         }
         # Get SHA-256 hash of the CSV file and write to log
         $Sha256Hash = (Get-FileHash $csv).Hash
-        $Script:ADLogString += Write-AuditLog -Message "Exported CSV SHA256 hash: "
-        $Script:ADLogString += Write-AuditLog -Message "$($Sha256Hash)"
+        $Script:LogString += Write-AuditLog -Message "Exported CSV SHA256 hash: "
+        $Script:LogString += Write-AuditLog -Message "$($Sha256Hash)"
         # Write information about the export directory and file path to log
-        $Script:ADLogString += Write-AuditLog -Message "Directory: $AttachmentFolderPath"
-        $Script:ADLogString += Write-AuditLog -Message "FilePath: $zip"
+        $Script:LogString += Write-AuditLog -Message "Directory: $AttachmentFolderPath"
+        $Script:LogString += Write-AuditLog -Message "FilePath: $zip"
         # Export log to CSV file
-        $Script:ADLogString | Export-Csv $log -NoTypeInformation -Encoding utf8
+        $Script:LogString | Export-Csv $log -NoTypeInformation -Encoding utf8
     }
     # Clean up and archive files
     end {

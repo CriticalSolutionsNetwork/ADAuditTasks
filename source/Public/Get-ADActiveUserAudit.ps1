@@ -57,19 +57,20 @@ function Get-ADActiveUserAudit {
     )
     begin {
         #Create logging object
-        $Script:ADLogString = @()
+        $Script:LogString = @()
         #Begin Logging
-        $Script:ADLogString += Write-AuditLog -Message "Begin Log"
+        $Script:LogString += Write-AuditLog -Message "Begin Log"
         $ScriptFunctionName = $MyInvocation.MyCommand.Name -replace '\..*'
+        ### ADModule Install
         $module = Get-Module -Name ActiveDirectory -ListAvailable -InformationAction SilentlyContinue
         if (-not $module) {
-            $Script:ADLogString += Write-AuditLog -Message "Install Active Directory Module?" -Severity Warning
+            $Script:LogString += Write-AuditLog -Message "Install Active Directory Module?" -Severity Warning
             try {
                 Import-Module ServerManager -ErrorAction Stop -InformationAction SilentlyContinue -ErrorVariable InstallADModuleErr
                 Add-WindowsFeature RSAT-AD-PowerShell -IncludeAllSubFeature -ErrorAction Stop -InformationAction SilentlyContinue -ErrorVariable InstallADModuleErr
             }
             catch {
-                $Script:ADLogString += Write-AuditLog -Message "You must install the Active Directory module to continue" -Severity Error
+                $Script:LogString += Write-AuditLog -Message "You must install the Active Directory module to continue" -Severity Error
                 throw $InstallADModuleError
             }
         } # End If not Module
@@ -77,25 +78,26 @@ function Get-ADActiveUserAudit {
             Import-Module "ActiveDirectory" -Global -ErrorAction Stop -InformationAction SilentlyContinue -ErrorVariable ImportADModuleErr
         }
         catch {
-            $Script:ADLogString += Write-AuditLog -Message "You must import the Active Directory module to continue" -Severity Error
+            $Script:LogString += Write-AuditLog -Message "You must import the Active Directory module to continue" -Severity Error
             throw $ImportADModuleErr
         } # End Try Catch
+        ### End ADModule Install
         # Create Directory Path
         $AttachmentFolderPathCheck = Test-Path -Path $AttachmentFolderPath
         If (!($AttachmentFolderPathCheck)) {
-            $Script:ADLogString += Write-AuditLog -Message "Would you like to create the directory $($AttachmentFolderPath)?" -Severity Warning
+            $Script:LogString += Write-AuditLog -Message "Would you like to create the directory $($AttachmentFolderPath)?" -Severity Warning
             Try {
                 # If not present then create the dir
                 New-Item -ItemType Directory $AttachmentFolderPath -Force -ErrorAction Stop | Out-Null
             }
             Catch {
-                $Script:ADLogString += Write-AuditLog -Message $("Directory: " + $AttachmentFolderPath + "was not created.") -Severity Error
-                $Script:ADLogString += Write-AuditLog -Message "End Log"
-                throw $Script:ADLogString
+                $Script:LogString += Write-AuditLog -Message $("Directory: " + $AttachmentFolderPath + "was not created.") -Severity Error
+                $Script:LogString += Write-AuditLog -Message "End Log"
+                throw $Script:LogString
             }
             # Log creation of output directory
             $outputMsg = "$("Output Folder created at: `n" + $AttachmentFolderPath)"
-            $Script:ADLogString += Write-AuditLog -Message $outputMsg
+            $Script:LogString += Write-AuditLog -Message $outputMsg
             # Pause for 2 seconds to avoid potential race conditions.
             Start-Sleep 2
         }
@@ -114,13 +116,13 @@ function Get-ADActiveUserAudit {
         "Manager",
         "Department"
         # Log the properties being retrieved.
-        $Script:ADLogString += Write-AuditLog -Message "Retrieving the following ADUser properties: "
-        $Script:ADLogString += Write-AuditLog -Message "$($propsArray -join " | ")"
+        $Script:LogString += Write-AuditLog -Message "Retrieving the following ADUser properties: "
+        $Script:LogString += Write-AuditLog -Message "$($propsArray -join " | ")"
         # Establish timeframe to review.
         $time = (Get-Date).Adddays( - ($DaysInactive))
         # Log the search criteria.
-        $Script:ADLogString += Write-AuditLog -Message "Searching for users who have not signed in within the last $DaysInactive days."
-        $Script:ADLogString += Write-AuditLog -Message "Where property Enabled = $Enabled"
+        $Script:LogString += Write-AuditLog -Message "Searching for users who have not signed in within the last $DaysInactive days."
+        $Script:LogString += Write-AuditLog -Message "Where property Enabled = $Enabled"
         # Pause for 2 seconds to avoid potential race conditions.
         Start-Sleep 2
     }
@@ -151,10 +153,10 @@ function Get-ADActiveUserAudit {
     } # End Process
     end {
         # Log success message.
-        $Script:ADLogString += Write-AuditLog -Message "The $ScriptFunctionName Export was successful."
+        $Script:LogString += Write-AuditLog -Message "The $ScriptFunctionName Export was successful."
         # Log output object properties.
-        $Script:ADLogString += Write-AuditLog -Message "There are $($Export.Count) objects listed with the following properties: "
-        $Script:ADLogString += Write-AuditLog -Message "$(($Export | Get-Member -MemberType property ).Name -join " | ")"
+        $Script:LogString += Write-AuditLog -Message "There are $($Export.Count) objects listed with the following properties: "
+        $Script:LogString += Write-AuditLog -Message "$(($Export | Get-Member -MemberType property ).Name -join " | ")"
         # Export to csv and zip, if requested.
         if ($Report) {
             # Add Datetime to filename.
@@ -168,7 +170,7 @@ function Get-ADActiveUserAudit {
         }
         else {
             # Log message indicating that the function is returning the output object.
-            $Script:ADLogString += Write-AuditLog -Message "Returning output object."
+            $Script:LogString += Write-AuditLog -Message "Returning output object."
             Start-Sleep 2
             return $Export
         }

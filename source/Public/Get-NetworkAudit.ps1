@@ -59,9 +59,9 @@ function Get-NetworkAudit {
     )
     begin {
         # Create logging object
-        $Script:ADLogString = @()
+        $Script:LogString = @()
         # Begin Logging
-        $Script:ADLogString += Write-AuditLog -Message "Begin Log"
+        $Script:LogString += Write-AuditLog -Message "Begin Log"
         # Check if PSnmap module is installed, if not install it.
         If (Get-Module -ListAvailable -Name "PSnmap") { Import-Module "PSnmap" } Else { Install-Module "PSnmap" -Force; Import-Module "PSnmap" }
 
