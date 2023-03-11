@@ -1,5 +1,5 @@
 function Merge-ADAuditZip {
-        <#
+    <#
     .SYNOPSIS
     Combines multiple audit report files into a single compressed ZIP file.
     .DESCRIPTION
@@ -97,6 +97,7 @@ function Merge-ADAuditZip {
     if ($OpenDirectory) {
         # If the OpenDirectory switch is used
         Invoke-Item (Split-Path $outputPath)  # Open the directory of the merged zip file
+        return $outputPath
     }
     else {
         return $outputPath  # Otherwise, return the path of the merged zip file

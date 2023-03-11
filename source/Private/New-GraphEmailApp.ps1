@@ -63,10 +63,7 @@ function New-GraphEmailApp {
     begin {
         # Step 0:
         # Test-IsAdmin
-        if (Test-IsAdmin) {
-            continue
-        }
-        else {
+        if (!(Test-IsAdmin)) {
             throw "The function must be running as a local administrator."
         }
         # Step 1:
@@ -113,7 +110,7 @@ function New-GraphEmailApp {
         # Step 3:
         # Create the file paths for the encrypted files.
         $dataFilePath = "$env:ProgramData\GraphEmailApp\Graphemailapp-$($env:USERDNSDOMAIN).bin"
-        $keyFilePath = "$env:ProgramData\GraphEmailApp\$($env:USERDNSDOMAIN)-GraphAppkey.bin"
+        $keyFilePath = "$env:ProgramData\GraphEmailApp\GraphAppkey-$($env:USERDNSDOMAIN).bin"
         # Begin Logging
         Write-Verbose "Begin Log"
         # Step 4:
@@ -187,7 +184,7 @@ function New-GraphEmailApp {
             $RequiredResourceAccess.ResourceAccess += @{ Id = $ResID; Type = "Role" }
             $AppPermissions = New-Object -TypeName System.Collections.Generic.List[Microsoft.Graph.PowerShell.Models.MicrosoftGraphRequiredResourceAccess]
             $AppPermissions.Add($RequiredResourceAccess)
-
+            Write-Verbose "App permissions are: $AppPermissions"
             # Create app registration.
             $AppRegistration = New-MgApplication -DisplayName $AppName -SignInAudience "AzureADMyOrg" `
                 -Web @{ RedirectUris = "http://localhost"; } `

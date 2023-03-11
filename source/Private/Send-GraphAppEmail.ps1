@@ -30,11 +30,50 @@ function Send-GraphAppEmail {
 
     )
     begin {
+        $module = Get-Module -Name Microsoft.Graph -ListAvailable -InformationAction SilentlyContinue
+        if (-not $module) {
+            Write-Warning "Install Microsoft.Graph Module 1.22.0?"
+            try {
+                Install-Module Microsoft.Graph -Scope CurrentUser -RequiredVersion "1.22.0"
+            }
+            catch {
+                "You must install the Microsoft.Graph module to continue"
+                throw $InstallADModuleError
+            }
+        } # End If not Module
+        try {
+            Import-Module Microsoft.Graph.Authentication
+            Import-Module Microsoft.Graph.Applications
+            Import-Module Microsoft.Graph.Identity.SignIns
+            Import-Module Microsoft.Graph.Users
+        }
+        catch {
+            throw "You must import the Microsoft.Graph module to continue"
+        } # End Try Catch
+        # Step 2:
+        # Install and import the ExchangeOnlineManagement module. Tested: 3.1.0
+        $module2 = Get-Module -Name ExchangeOnlineManagement -ListAvailable -InformationAction SilentlyContinue
+        if (-not $module2) {
+            Write-Warning "Install ExchangeOnlineManagement Module 3.1.0?"
+            try {
+                Install-Module ExchangeOnlineManagement -Scope CurrentUser -RequiredVersion "3.1.0"
+            }
+            catch {
+                throw "You must install the ExchangeOnlineManagement module to continue"
+            }
+        } # End If not Module
+        try {
+            Import-Module ExchangeOnlineManagement
+        }
+        catch {
+            throw "You must import the Microsoft.Graph module to continue"
+        } # End Try Catch
+        Write-Verbose "Successfully imported ExchangeOnlineManagement and Microsoft Graph modules."
         # If a GraphEmailApp object was not passed in, attempt to retrieve it from the local machine
         if (!$GraphEmailApp) {
             try {
-                $keyFilePath = "$env:ProgramData\GraphEmailApp\$($env:USERDNSDOMAIN)-GraphAppkey.bin"
                 $dataFilePath = "$env:ProgramData\GraphEmailApp\Graphemailapp-$($env:USERDNSDOMAIN).bin"
+                $keyFilePath = "$env:ProgramData\GraphEmailApp\GraphAppkey-$($env:USERDNSDOMAIN).bin"
                 if (Test-Path $dataFilePath) {
                     $decryptedBytes = [System.Security.Cryptography.ProtectedData]::Unprotect([System.IO.File]::ReadAllBytes($dataFilePath), (Get-Content $keyFilePath -Encoding Byte), 'CurrentUser')
                     $decryptedData = [System.Text.Encoding]::UTF8.GetString($decryptedBytes)
@@ -61,25 +100,23 @@ function Send-GraphAppEmail {
         if (!($cert)) {
             throw "Certificate with thumbprint $CertThumbprint not found in local machine's certificate store"
         } # End Region If
+        Write-Output "The certificate thumbprint is $CertThumbprint"
     } # End Region Begin
     Process {
         # Authenticate with Azure AD and obtain an access token for the Microsoft Graph API using the certificate
         $MSToken = Get-MsalToken -ClientId $AppId -TenantId $Tenant -ClientCertificate $Cert
-
         # Set up the request headers
         $authheader = @{Authorization = "Bearer $($MSToken.AccessToken)" }
-
         # Set up the request URL
         $url = "https://graph.microsoft.com/v1.0/users/$($FromAddress)/sendMail"
-
         # Build the message body
         $Message =
-        @"
+@"
 {
     "message": {
         "subject": "$Subject",
         "body": {
-            "contentType": "html",
+            "contentType": "Text",
             "content": "$EmailBody"
         },
         "toRecipients": [
@@ -105,12 +142,10 @@ function Send-GraphAppEmail {
         } # End Region If
         # Convert the message to JSON format
         $jsonMessage = $message | ConvertTo-Json -Depth 4
-
         # Set up the request body
         $body = $jsonMessage
     }
     End {
-
         # Send the email message using the Invoke-RestMethod cmdlet
         Invoke-RestMethod -Headers $authHeader -Uri $url -Body $body -Method POST -ContentType 'application/json'
     } # End Region End

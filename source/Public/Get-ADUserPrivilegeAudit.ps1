@@ -67,8 +67,8 @@ function Get-ADUserPrivilegeAudit {
             $ADLogString += Write-AuditLog -Message "Install Active Directory Module?" -Severity Warning
             try {
                 # Install ActiveDirectory module using Server Manager
-                Import-Module ServerManager -ErrorAction Stop -ErrorVariable InstallADModuleErr
-                Add-WindowsFeature RSAT-AD-PowerShell -IncludeAllSubFeature -ErrorAction Stop -ErrorVariable InstallADModuleErr
+                Import-Module ServerManager -ErrorAction Stop -InformationAction SilentlyContinue -ErrorVariable InstallADModuleErr
+                Add-WindowsFeature RSAT-AD-PowerShell -IncludeAllSubFeature -ErrorAction Stop  -InformationAction SilentlyContinue -ErrorVariable InstallADModuleErr
             }
             catch {
                 # If module is not installed and cannot be installed, throw an error
@@ -92,7 +92,7 @@ function Get-ADUserPrivilegeAudit {
             $ADLogString += Write-AuditLog -Message "Would you like to create the directory $($AttachmentFolderPath)?" -Severity Warning
             Try {
                 # Create output directory if it does not already exist
-                New-Item -ItemType Directory $AttachmentFolderPath -Force -ErrorAction Stop
+                New-Item -ItemType Directory $AttachmentFolderPath -Force -ErrorAction Stop | Out-Null
             }
             Catch {
                 # If directory cannot be created, throw an error

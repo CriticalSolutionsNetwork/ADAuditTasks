@@ -65,8 +65,8 @@ function Get-ADActiveUserAudit {
         if (-not $module) {
             $Script:ADLogString += Write-AuditLog -Message "Install Active Directory Module?" -Severity Warning
             try {
-                Import-Module ServerManager -ErrorAction Stop -ErrorVariable InstallADModuleErr
-                Add-WindowsFeature RSAT-AD-PowerShell -IncludeAllSubFeature -ErrorAction Stop -ErrorVariable InstallADModuleErr
+                Import-Module ServerManager -ErrorAction Stop -InformationAction SilentlyContinue -ErrorVariable InstallADModuleErr
+                Add-WindowsFeature RSAT-AD-PowerShell -IncludeAllSubFeature -ErrorAction Stop -InformationAction SilentlyContinue -ErrorVariable InstallADModuleErr
             }
             catch {
                 $Script:ADLogString += Write-AuditLog -Message "You must install the Active Directory module to continue" -Severity Error
@@ -86,7 +86,7 @@ function Get-ADActiveUserAudit {
             $Script:ADLogString += Write-AuditLog -Message "Would you like to create the directory $($AttachmentFolderPath)?" -Severity Warning
             Try {
                 # If not present then create the dir
-                New-Item -ItemType Directory $AttachmentFolderPath -Force -ErrorAction Stop
+                New-Item -ItemType Directory $AttachmentFolderPath -Force -ErrorAction Stop | Out-Null
             }
             Catch {
                 $Script:ADLogString += Write-AuditLog -Message $("Directory: " + $AttachmentFolderPath + "was not created.") -Severity Error

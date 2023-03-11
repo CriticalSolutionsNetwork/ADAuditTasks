@@ -100,10 +100,10 @@ function Get-NetworkAudit {
                     # For each device in the scan, get MAC ID vendor information and add it as a NoteProperty to the object.
                     $scan | ForEach-Object {
                         $org = ""
-                        $macid = ((arp -a $_.ComputerName | Select-String '([0-9a-f]{2}-){5}[0-9a-f]{2}').Matches.Value).Replace("-", ":")
-                        $macpop = $macid.replace(":", "")
-                        $macsubstr = $macpop.Substring(0, 6)
-                        $org = ($ouiobject | Where-Object { $_.assignment -eq $macsubstr })."Organization Name"
+                        $macid = ((arp -a $_.ComputerName | Select-String '([0-9a-f]{2}-){5}[0-9a-f]{2}').Matches.Value).Replace("-", ":") | Out-Null
+                        $macpop = $macid.replace(":", "") | Out-Null
+                        $macsubstr = $macpop.Substring(0, 6) | Out-Null
+                        $org = ($ouiobject | Where-Object { $_.assignment -eq $macsubstr })."Organization Name" | Out-Null
                         Add-Member -InputObject $_ -MemberType NoteProperty -Name MacID -Value $macid
                         if ($org) {
                             Add-Member -InputObject $_ -MemberType NoteProperty -Name ManufacturerName -Value $org
