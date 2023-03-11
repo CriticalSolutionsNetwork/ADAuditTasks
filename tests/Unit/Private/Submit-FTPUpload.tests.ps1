@@ -8,20 +8,50 @@ $ProjectName = ((Get-ChildItem -Path $ProjectPath\*\*.psd1).Where{
 Import-Module $ProjectName
 
 InModuleScope $ProjectName {
-    Describe Get-PrivateFunction {
-        Context 'Default' {
-            BeforeEach {
-                $return = Get-PrivateFunction -PrivateData 'string'
-            }
+    $ErrorActionPreference = "Stop"
 
-            It 'Returns a single object' {
-                ($return | Measure-Object).Count | Should -Be 1
-            }
+    Describe "Submit-FTPUpload" {
+        Context "when all required parameters are provided" {
+            It "should upload the file to the remote FTP server" {
+                # Arrange
+                $FTPUserName = "username"
+                $Password = ConvertTo-SecureString "password" -AsPlainText -Force
+                $FTPHostName = "ftp.example.com"
+                $Protocol = "Sftp"
+                $FTPSecure = "None"
+                $SshHostKeyFingerprint = "00:11:22:33:44:55:66:77:88:99:aa:bb:cc:dd:ee:ff"
+                $LocalFilePath = "C:\temp\file.txt"
+                $RemoteFTPPath = "/folder"
+                $WriteAuditLogMock = New-ModuleFunction -Name 'Write-AuditLog' -ScriptBlock { return }
+                Mock Write-AuditLog -Mock $WriteAuditLogMock
 
-            It 'Returns a string based on the parameter PrivateData' {
-                $return | Should -Be 'string'
+                # Mock the necessary cmdlets and functions from the module
+                Mock Submit-FTPUpload { return }
+                Mock Test-WinSCPPath { return $true }
+                Mock Send-WinSCPItem { return @{ IsSuccess = $true } }
+                Mock Remove-WinSCPSession { return }
+                Mock New-WinSCPSessionOption { return }
+                Mock New-WinSCPSession { return }
+
+                # Act
+                Submit-FTPUpload -FTPUserName $FTPUserName `
+                    -Password $Password `
+                    -FTPHostName $FTPHostName `
+                    -Protocol $Protocol `
+                    -FTPSecure $FTPSecure `
+                    -SshHostKeyFingerprint $SshHostKeyFingerprint `
+                    -LocalFilePath $LocalFilePath `
+                    -RemoteFTPPath $RemoteFTPPath
+
+                # Assert
+                Assert-MockCalled Submit-FTPUpload -Exactly 1 -Scope It
+                Assert-MockCalled Test-WinSCPPath -Exactly 1 -Scope It
+                Assert-MockCalled Send-WinSCPItem -Exactly 1 -Scope It
+                Assert-MockCalled Remove-WinSCPSession -Exactly 1 -Scope It
+                Assert-MockCalled New-WinSCPSessionOption -Exactly 1 -Scope It
+                Assert-MockCalled New-WinSCPSession -Exactly 1 -Scope It
+                Assert-MockCalled Write-AuditLog -Exactly 1 -Scope It
             }
         }
     }
 }
-
