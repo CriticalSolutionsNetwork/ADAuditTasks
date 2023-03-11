@@ -18,11 +18,12 @@ Remove-Item .\output\CHANGELOG.md
 7. Run the build using the pack task to create the NuGet package: `.\build.ps1 -tasks pack -CodeCoverageThreshold 0`.
 8. Upload the NuGet package to the PowerShell Gallery using the publish task: `.\build.ps1 -tasks publish -CodeCoverageThreshold 0`.
 #>
+$ver = "v0.2.1"
 git checkout main
 git pull origin main
-git tag -a v0.1.1 -m "Fix Update"
-`git push origin v0.1.1
-git tag -d v1.0.0
+git tag -a $ver -m "$ver Release Fix"
+git push origin $ver
+# git tag -d $ver
 
 $workstations = Get-ADHostAudit -HostType WindowsWorkstations -Report -Verbose
 $servers = Get-ADHostAudit -HostType WindowsServers -Report -Verbose
