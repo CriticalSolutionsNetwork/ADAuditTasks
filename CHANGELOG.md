@@ -16,29 +16,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Fixed error output in `Get-NetworkAudit`
-## [0.2.1] - 2023-03-11
-
-### Added
-
-- Added Private Functions `New-GraphEmailApp` and `Send-GraphAppEmail`. Further work needed.
-- Added Private Functions `Initialize-ModuleEnv` and `Install-ADModule` for future use.
-- Added test structure and sample tests.
-- Added pipe to `Out-Null` for directory creation in order to preserve output.
-
-### Fixed
-
-- Fixed multiple function outputs when output directories are created during the run.
-- Successfully ran the following PowerShell script to collect and merge audit reports from an Active Directory domain:
-
-    ```powershell
-    $workstations = Get-ADHostAudit -HostType WindowsWorkstations -Report -Verbose
-    $servers = Get-ADHostAudit -HostType WindowsServers -Report -Verbose
-    $nonWindows = Get-ADHostAudit -HostType "Non-Windows" -Report -Verbose
-    $activeUsers = Get-ADActiveUserAudit -Report -Verbose
-    $privilegedUsers = Get-ADUserPrivilegeAudit -Report -Verbose
-    $wildcardUsers = Get-ADUserWildCardAudit -WildCardIdentifier "svc" -Report -Verbose
-    Merge-ADAuditZip -FilePaths $workstations, $servers, $nonWindows, $activeUsers, $privilegedUsers, $wildcardUsers -OpenDirectory
-    ```
 
 ## [0.2.0] - 2023-02-21
 
