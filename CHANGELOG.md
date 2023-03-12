@@ -7,9 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Changed public functions `Get-ADActiveUserAudit`, `Get-ADHostAudit`,`Get-ADUserLogonAudit`, `Get-ADUserPrivilegeAudit`,`Get-ADUserPrivilegeAudit`, and `Get-ADUserWildCardAudit` to incorporate private function `Install-ADModule`
+- Changed public functions `Get-NetworkAudit` and `Send-AuditEmail` to incorporate private function `Initialize-ModuleEnv`
+- Changed public functions `Get-ADActiveUserAudit`, `Get-ADHostAudit`,`Get-ADUserLogonAudit`,`Get-ADUserPrivilegeAudit`,`Get-ADUserPrivilegeAudit`, and `Get-ADUserWildCardAudit` to incorporate private function `Install-ADModule`
 - Changed `Write-AUditLog` variable to `$LogString`. 
 
+### Fixed
+
+- Fixed error output in `Get-NetworkAudit`
 ## [0.2.1] - 2023-03-11
 
 ### Added
