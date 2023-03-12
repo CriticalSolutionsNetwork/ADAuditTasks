@@ -38,6 +38,15 @@ function New-GraphEmailApp {
         This cmdlet requires that the user running the cmdlet is a local administrator and has the necessary permissions
         to create the app and connect to Exchange Online. In addition, a mail-enabled security group must already exist
         in Exchange Online for the MailEnabledSendingGroup parameter.
+
+        # https://www.powershellgallery.com/packages/Microsoft.Graph/1.23.0 Updated: 3/4/2023
+        $params1 = @{
+            PublicModuleNames      = "PSnmap","Microsoft.Graph"
+            PublicRequiredVersions = "1.3.1","1.23.0"
+            ImportModuleNames      = "Microsoft.Graph.Authentication", "Microsoft.Graph.Identity.SignIns"
+            Scope                  = "CurrentUser"
+        }
+        Initialize-ModuleEnv @params1 -Verbose
     #>
 
     [OutputType([pscustomobject])]

@@ -78,43 +78,31 @@ function Get-ADHostAudit {
     )
     begin {
         # Create logging object
-        $Script:ADLogString = @()
+        $Script:LogString = @()
         # Begin Logging
-        $Script:ADLogString += Write-AuditLog -Message "Begin Log"
+        $Script:LogString += Write-AuditLog -Message "Begin Log"
+        $Script:LogString += Write-AuditLog -Message "###############################################"
         # Get the name of the script function
         $ScriptFunctionName = $MyInvocation.MyCommand.Name -replace '\..*'
         # Check if the Active Directory module is installed and install it if necessary
-        $module = Get-Module -Name ActiveDirectory -ListAvailable -InformationAction SilentlyContinue
-        if (-not $module) {
-            $Script:ADLogString += Write-AuditLog -Message "Install Active Directory Module?" -Severity Warning
-            try {
-                Import-Module ServerManager -ErrorAction Stop -ErrorVariable InstallADModuleErr
-                Add-WindowsFeature RSAT-AD-PowerShell -IncludeAllSubFeature -ErrorAction Stop -ErrorVariable InstallADModuleErr
-            }
-            catch {
-                $Script:ADLogString += Write-AuditLog -Message "You must install the Active Directory module to continue" -Severity Error
-                throw $InstallADModuleError
-            }
-        }
         try {
-            Import-Module "ActiveDirectory" -Global -ErrorAction Stop -InformationAction SilentlyContinue -ErrorVariable ImportADModuleErr
+            Install-ADModule -ErrorAction Stop -Verbose
         }
         catch {
-            $Script:ADLogString += Write-AuditLog -Message "You must import the Active Directory module to continue" -Severity Error
-            throw ImportADModuleErr
-        }
+            throw $_.Exception
+        } ### End ADModule Install
         # Calculate the time that is considered a host inactive
         $time = (Get-Date).Adddays( - ($DaystoConsiderAHostInactive))
         # Check if the attachment folder exists and create it if it does not
         $AttachmentFolderPathCheck = Test-Path -Path $AttachmentFolderPath
         If (!($AttachmentFolderPathCheck)) {
-            $Script:ADLogString += Write-AuditLog -Message "Would you like to create the directory $($AttachmentFolderPath)?" -Severity Warning
+            $Script:LogString += Write-AuditLog -Message "Would you like to create the directory $($AttachmentFolderPath)?" -Severity Warning
             Try {
                 # If not present then create the dir
                 New-Item -ItemType Directory $AttachmentFolderPath -Force -ErrorAction Stop -ErrorVariable CreateDirErr | Out-Null
             }
             Catch {
-                $Script:ADLogString += Write-AuditLog -Message "Unable to create output directory $($AttachmentFolderPath)" -Severity Error
+                $Script:LogString += Write-AuditLog -Message "Unable to create output directory $($AttachmentFolderPath)" -Severity Error
                 throw $CreateDirErr
             }
         }
@@ -123,30 +111,30 @@ function Get-ADHostAudit {
             'HostType' {
                 if ($HostType -eq "WindowsWorkstations") {
                     $FileSuffix = "Workstations"
-                    $Script:ADLogString += Write-AuditLog -Message "###############################################"
-                    $Script:ADLogString += Write-AuditLog -Message "Searching Windows Workstations......"
+                    $Script:LogString += Write-AuditLog -Message "###############################################"
+                    $Script:LogString += Write-AuditLog -Message "Searching Windows Workstations......"
                     Start-Sleep 2
                 }
                 elseif ($HostType -eq "Non-Windows") {
                     $POSIX = $true
                     $FileSuffix = "Non-Windows"
-                    $Script:ADLogString += Write-AuditLog -Message "###############################################"
-                    $Script:ADLogString += Write-AuditLog -Message "Searching Non-Windows Computer Objects......"
+                    $Script:LogString += Write-AuditLog -Message "###############################################"
+                    $Script:LogString += Write-AuditLog -Message "Searching Non-Windows Computer Objects......"
                     Start-Sleep 2
                 }
                 elseif ($HostType -eq "WindowsServers") {
                     $OSPicked = "*Server*"
                     $FileSuffix = "Servers"
-                    $Script:ADLogString += Write-AuditLog -Message "###############################################"
-                    $Script:ADLogString += Write-AuditLog -Message "Searching Windows Servers......"
+                    $Script:LogString += Write-AuditLog -Message "###############################################"
+                    $Script:LogString += Write-AuditLog -Message "Searching Windows Servers......"
                     Start-Sleep 2
                 }
             }
             'OSType' {
                 $OSPicked = '*' + $OSType + '*'
                 $FileSuffix = $OSType
-                $Script:ADLogString += Write-AuditLog -Message "###############################################"
-                $Script:ADLogString += Write-AuditLog -Message "Searching OSType $OsType......"
+                $Script:LogString += Write-AuditLog -Message "###############################################"
+                $Script:LogString += Write-AuditLog -Message "Searching OSType $OsType......"
                 Start-Sleep 2
             }
         }
@@ -168,20 +156,20 @@ function Get-ADHostAudit {
     } # End Begin
     process {
         # Log the search criteria
-        $Script:ADLogString += Write-AuditLog -Message "Searching computers that have logged in within the last $DaystoConsiderAHostInactive days."
-        $Script:ADLogString += Write-AuditLog -Message "Where property Enabled = $Enabled"
+        $Script:LogString += Write-AuditLog -Message "Searching computers that have logged in within the last $DaystoConsiderAHostInactive days."
+        $Script:LogString += Write-AuditLog -Message "Where property Enabled = $Enabled"
         Start-Sleep 2
         # Determine the Active Directory computers to include in the report
         if ($OSPicked) {
-            $Script:ADLogString += Write-AuditLog -Message "And Operating System is like: $OSPicked."
+            $Script:LogString += Write-AuditLog -Message "And Operating System is like: $OSPicked."
             $ActiveComputers = (Get-ADComputer -Filter { (LastLogonTimeStamp -gt $time) -and (Enabled -eq $Enabled) -and (OperatingSystem -like $OSPicked) }).Name
         }
         elseif ($POSIX) {
-            $Script:ADLogString += Write-AuditLog -Message "And Operating System is: Non-Windows(POSIX)."
+            $Script:LogString += Write-AuditLog -Message "And Operating System is: Non-Windows(POSIX)."
             $ActiveComputers = (Get-ADComputer -Filter { OperatingSystem -notlike "*windows*" -and OperatingSystem -notlike "*server*" -and Enabled -eq $Enabled -and lastlogontimestamp -gt $time } ).Name
         }
         else {
-            $Script:ADLogString += Write-AuditLog -Message "And Operating System is -like `"*windows*`" -and Operating System -notlike `"*server*`" (Workstations)."
+            $Script:LogString += Write-AuditLog -Message "And Operating System is -like `"*windows*`" -and Operating System -notlike `"*server*`" (Workstations)."
             $ActiveComputers = (Get-ADComputer -Filter { OperatingSystem -like "*windows*" -and OperatingSystem -notlike "*server*" -and Enabled -eq $Enabled -and lastlogontimestamp -gt $time } ).Name
         }
         # Retrieve the selected properties for each Active Directory computer and store the results in an array
@@ -241,9 +229,9 @@ function Get-ADHostAudit {
             # Create a message that lists the properties that were exported
             $ExportMembers = "Export: $(($Export | Get-Member -MemberType noteproperty ).Name -join " | ")"
             # Log a successful export message and list the exported properties and the number of objects exported
-            $Script:ADLogString += Write-AuditLog -Message "The $ScriptFunctionName Export was successful."
-            $Script:ADLogString += Write-AuditLog -Message "There are $($Export.Count) objects listed with the following properties: "
-            $Script:ADLogString += Write-AuditLog -Message "$ExportMembers"
+            $Script:LogString += Write-AuditLog -Message "The $ScriptFunctionName Export was successful."
+            $Script:LogString += Write-AuditLog -Message "There are $($Export.Count) objects listed with the following properties: "
+            $Script:LogString += Write-AuditLog -Message "$ExportMembers"
             # If the -Report switch is used, create a report archive and log the output
             if ($Report) {
                 # Add Datetime to filename
@@ -256,7 +244,7 @@ function Get-ADHostAudit {
             }
             # If the -Report switch is not used, return the output object
             else {
-                $Script:ADLogString += Write-AuditLog -Message "Returning output object."
+                $Script:LogString += Write-AuditLog -Message "Returning output object."
                 Start-Sleep 2
                 return $Export
             }
@@ -265,8 +253,8 @@ function Get-ADHostAudit {
             # If there is no output, log message and create an audit log file
             $ExportFileName = "$AttachmentFolderPath\$((Get-Date).ToString('yyyy-MM-dd_hh.mm.ss'))_$($ScriptFunctionName)_$($env:USERDNSDOMAIN)"
             $log = "$ExportFileName.$FileSuffix.AuditLog.csv"
-            $Script:ADLogString += Write-AuditLog "There is no output for the specified host type $FileSuffix"
-            $Script:ADLogString | Export-Csv $log -NoTypeInformation -Encoding utf8
+            $Script:LogString += Write-AuditLog "There is no output for the specified host type $FileSuffix"
+            $Script:LogString | Export-Csv $log -NoTypeInformation -Encoding utf8
             # If the -Report switch is not used, return null
             if (-not $Report) {
                 return $null

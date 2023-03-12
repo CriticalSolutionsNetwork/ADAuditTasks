@@ -73,7 +73,7 @@ function Submit-FTPUpload {
         foreach ($File in $LocalFilePath) {
             $sendvar = Send-WinSCPItem -Path $File -Destination $RemoteFTPPath -WinSCPSession $WinSCPSession -ErrorAction Stop -ErrorVariable SendWinSCPErr
             if ($sendvar.IsSuccess -eq $false) {
-                $ADLogString += Write-AuditLog -Message $SendWinSCPErr -Severity Error
+                $Script:LogString += Write-AuditLog -Message $SendWinSCPErr -Severity Error
                 $errorindex += 1
             }
         }

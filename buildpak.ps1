@@ -18,28 +18,27 @@ Remove-Item .\output\CHANGELOG.md
 7. Run the build using the pack task to create the NuGet package: `.\build.ps1 -tasks pack -CodeCoverageThreshold 0`.
 8. Upload the NuGet package to the PowerShell Gallery using the publish task: `.\build.ps1 -tasks publish -CodeCoverageThreshold 0`.
 #>
-$ver = "v0.2.1"
+$ver = "v0.3.0"
 git checkout main
 git pull origin main
-git tag -a $ver -m "$ver Release Fix"
+git tag -a $ver -m "Release version $ver Fix"
+"Fix: Issues #25 #26"
 git push origin $ver
 # git tag -d $ver
 
-$workstations = Get-ADHostAudit -HostType WindowsWorkstations -Report -Verbose
-$servers = Get-ADHostAudit -HostType WindowsServers -Report -Verbose
-$nonWindows = Get-ADHostAudit -HostType "Non-Windows" -Report -Verbose
-$activeUsers = Get-ADActiveUserAudit -Report -Verbose
-$privilegedUsers = Get-ADUserPrivilegeAudit -Report -Verbose
-$wildcardUsers = Get-ADUserWildCardAudit -WildCardIdentifier "svc" -Report -Verbose
+$workstations       = Get-ADHostAudit -HostType WindowsWorkstations -Report -Verbose
+$servers            = Get-ADHostAudit -HostType WindowsServers -Report -Verbose
+$nonWindows         = Get-ADHostAudit -HostType "Non-Windows" -Report -Verbose
+$activeUsers        = Get-ADActiveUserAudit -Report -Verbose
+$privilegedUsers    = Get-ADUserPrivilegeAudit -Report -Verbose
+$wildcardUsers      = Get-ADUserWildCardAudit -WildCardIdentifier "svc" -Report -Verbose
 Merge-ADAuditZip -FilePaths $workstations, $servers, $nonWindows, $activeUsers, $privilegedUsers, $wildcardUsers -OpenDirectory
 
 Get-HostTag -PhysicalOrVirtual Physical -Prefix "CSN" -SystemOS 'Windows Server' -DeviceFunction 'Application Server' -HostCount 5
 Get-ADUserLogonAudit -SamAccountName "<USERNAME>" -Verbose
 Get-NetworkAudit -LocalSubnets -Report -Verbose
 
-$graphemailobject = New-GraphEmailApp -Prefix "CSN" -UserId "helpdesk@criticalsolutions.net" -MailEnabledSendingGroup "CSN-GraphAPIMail@criticalsolutions.net" -Verbose
-Send-GraphAppEmail -GraphEmailApp $graphemailobject -To "dougrios@criticalsolutions.net" -FromAddress "helpdesk@criticalsolutions.net" -Subject "Testing GraphEmailApp" -EmailBody "This is a test."
-Send-GraphAppEmail -To "dougrios@criticalsolutions.net" -FromAddress "helpdesk@criticalsolutions.net" -Subject "Testing GraphEmailApp" -EmailBody "This is a test."
+
 # Update Changelog
 # Update Manifest from Previous Module
 # git tag -a v1.0.0 -m "v1.0.0 Release"

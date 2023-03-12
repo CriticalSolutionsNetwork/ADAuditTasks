@@ -102,19 +102,15 @@ function Send-AuditEmail {
         [string]$Token                  # API key for the Azure Function App
     )
     begin {
-        $module = Get-Module -Name Send-MailKitMessage -ListAvailable
-        if (-not $module) {
-            Install-Module -Name Send-MailKitMessage -AllowPrerelease -Scope CurrentUser -Force
+        # Install/Import Required Module
+        # Tested Version:
+        # https://www.powershellgallery.com/packages/Send-MailKitMessage/3.2.0-preview1 Updated: 11/8/2021
+        $params = @{
+            PrereleaseModuleNames      = "Send-MailKitMessage"
+            PrereleaseRequiredVersions = "3.2.0-preview1"
+            Scope                      = "CurrentUser"
         }
-        try {
-            Import-Module "Send-MailKitMessage" -Global -ErrorAction STop -ErrorVariable MailkitErr | Out-Null
-        }
-        catch {
-            # If the Send-MailKitMessage module is not installed, log an error and exit the function
-            $ADLogString += Write-AuditLog -Message "The Module Was not installed. Use `"Save-Module -Name Send-MailKitMessage -AllowPrerelease -Path C:\temp`" on another Windows Machine."
-            $ADLogString += Write-AuditLog -Message "End Log" -Severity Error
-            throw MailkitErr
-        }
+        Initialize-ModuleEnv @params
         # Create recipient list
         $RecipientList = [MimeKit.InternetAddressList]::new()
         $RecipientList.Add([MimeKit.InternetAddress]$To)

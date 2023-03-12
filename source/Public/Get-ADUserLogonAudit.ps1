@@ -38,8 +38,17 @@ function Get-ADUserLogonAudit {
     )
     process {
         #Create logging object
-        $ADLogString = @()
+        $Script:LogString = @()
         #Begin Logging
+        $Script:LogString += Write-AuditLog -Message "Begin Log"
+        $Script:LogString += Write-AuditLog -Message "###############################################"
+        # Check if the Active Directory module is installed and install it if necessary
+        try {
+            Install-ADModule -ErrorAction Stop -Verbose
+        }
+        catch {
+            throw $_.Exception
+        } ### End ADModule Install
         #Get all domain controllers
         $DomainControllers = Get-ADDomainController -Filter { Name -like "*" }
         $Comps = $DomainControllers.name
@@ -61,13 +70,13 @@ function Get-ADUserLogonAudit {
         }
         #Write audit logs for domain controllers that are available for queries
         if ($params.ComputerName) {
-            $ADLogString += Write-AuditLog -Message "The following DC's were available for WSMan:"
-            $ADLogString += Write-AuditLog -Message "$($params.ComputerName)"
+            $Script:LogString += Write-AuditLog -Message "The following DC's were available for WSMan:"
+            $Script:LogString += Write-AuditLog -Message "$($params.ComputerName)"
         }
         #Write audit logs for domain controllers that are not available for queries
         if ($NoRemoteAccess.NoRemoteAccess) {
-            $ADLogString += Write-AuditLog -Message "The following DC's were unavailable and weren't included:"
-            $ADLogString += Write-AuditLog -Message "$($NoRemoteAccess.NoRemoteAccess)"
+            $Script:LogString += Write-AuditLog -Message "The following DC's were unavailable and weren't included:"
+            $Script:LogString += Write-AuditLog -Message "$($NoRemoteAccess.NoRemoteAccess)"
         }
         #Get the AD user object based on the given SamAccountName
         $user = Get-ADUser -Identity $SamAccountName

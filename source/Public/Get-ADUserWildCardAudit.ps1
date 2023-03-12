@@ -59,44 +59,33 @@ function Get-ADUserWildCardAudit {
     )
     begin {
         #Create logging object
-        $Script:ADLogString = @()
+        $Script:LogString = @()
         #Begin Logging
-        $Script:ADLogString += Write-AuditLog -Message "Begin Log"
+        $Script:LogString += Write-AuditLog -Message "Begin Log"
+        $Script:LogString += Write-AuditLog -Message "###############################################"
         $ScriptFunctionName = $MyInvocation.MyCommand.Name -replace '\..*'
-        $module = Get-Module -Name ActiveDirectory -ListAvailable -InformationAction SilentlyContinue
-        if (-not $module) {
-            $Script:ADLogString += Write-AuditLog -Message "Install Active Directory Module?" -Severity Warning
-            try {
-                Import-Module ServerManager -ErrorAction Stop -InformationAction SilentlyContinue -ErrorVariable InstallADModuleErr
-                Add-WindowsFeature RSAT-AD-PowerShell -IncludeAllSubFeature -ErrorAction Stop -InformationAction SilentlyContinue -ErrorVariable InstallADModuleErr
-            }
-            catch {
-                $Script:ADLogString += Write-AuditLog -Message "You must install the Active Directory module to continue" -Severity Error
-                throw $InstallADModuleError
-            }
-        } # End If not Module
+        ### ActiveDirectory Module Install
         try {
-            Import-Module "ActiveDirectory" -Global -ErrorAction Stop -InformationAction SilentlyContinue -ErrorVariable ImportADModuleErr
+            Install-ADModule -ErrorAction Stop -Verbose
         }
         catch {
-            $Script:ADLogString += Write-AuditLog -Message "You must import the Active Directory module to continue" -Severity Error
-            throw $ImportADModuleErr
-        } # End Try Catch
+            throw $_.Exception
+        } ### End ADModule Install
         # Create Directory Path
         $AttachmentFolderPathCheck = Test-Path -Path $AttachmentFolderPath
         If (!($AttachmentFolderPathCheck)) {
-            $Script:ADLogString += Write-AuditLog -Message "Would you like to create the directory $($AttachmentFolderPath)?" -Severity Warning
+            $Script:LogString += Write-AuditLog -Message "Would you like to create the directory $($AttachmentFolderPath)?" -Severity Warning
             Try {
 
                 # If not present then create the dir
                 New-Item -ItemType Directory $AttachmentFolderPath -Force -ErrorAction Stop | Out-Null
             }
             Catch {
-                $Script:ADLogString += Write-AuditLog -Message $("Directory: " + $AttachmentFolderPath + "was not created.") -Severity Error
-                $Script:ADLogString += Write-AuditLog -Message "End Log"
-                throw $Script:ADLogString
+                $Script:LogString += Write-AuditLog -Message $("Directory: " + $AttachmentFolderPath + "was not created.") -Severity Error
+                $Script:LogString += Write-AuditLog -Message "End Log"
+                throw $Script:LogString
             }
-            $Script:ADLogString += Write-AuditLog -Message "$("Output Folder created at: `n" + $AttachmentFolderPath)"
+            $Script:LogString += Write-AuditLog -Message "$("Output Folder created at: `n" + $AttachmentFolderPath)"
             Start-Sleep 2
         }
         # ADUser Properties to search for.
@@ -113,10 +102,10 @@ function Get-ADUserWildCardAudit {
         "Title",
         "Manager",
         "Department"
-        $Script:ADLogString += Write-AuditLog -Message "Retriving the following ADUser properties: "
-        $Script:ADLogString += Write-AuditLog -Message "$($propsArray -join " | ")"
+        $Script:LogString += Write-AuditLog -Message "Retriving the following ADUser properties: "
+        $Script:LogString += Write-AuditLog -Message "$($propsArray -join " | ")"
         # Establish timeframe to review.
-        $Script:ADLogString += Write-AuditLog -Message "Searching for accounts using search string `"$WildCardIdentifier`" "
+        $Script:LogString += Write-AuditLog -Message "Searching for accounts using search string `"$WildCardIdentifier`" "
         Start-Sleep 2
     }
     process {
@@ -124,7 +113,7 @@ function Get-ADUserWildCardAudit {
         $WildCardIdentifierstring = '*' + $WildCardIdentifier + '*'
         Get-ADUser -Filter { Name -like $WildCardIdentifierstring } `
             -Properties $propsArray -OutVariable ADExport | Out-Null
-        $Script:ADLogString += Write-AuditLog -Message "Creating a custom object from ADUser output."
+        $Script:LogString += Write-AuditLog -Message "Creating a custom object from ADUser output."
         $Export = @()
         foreach ($item in $ADExport) {
             $Export += [ADAuditTasksUser]::new(
@@ -146,9 +135,9 @@ function Get-ADUserWildCardAudit {
         }
     }
     end {
-        $Script:ADLogString += Write-AuditLog -Message "The $ScriptFunctionName Export was successful."
-        $Script:ADLogString += Write-AuditLog -Message "There are $($Export.Count) objects listed with the following properties: "
-        $Script:ADLogString += Write-AuditLog -Message "$(($Export | Get-Member -MemberType property ).Name -join " | ")"
+        $Script:LogString += Write-AuditLog -Message "The $ScriptFunctionName Export was successful."
+        $Script:LogString += Write-AuditLog -Message "There are $($Export.Count) objects listed with the following properties: "
+        $Script:LogString += Write-AuditLog -Message "$(($Export | Get-Member -MemberType property ).Name -join " | ")"
         if ($Report) {
             # Add Datetime to filename
             $ExportFileName = "$AttachmentFolderPath\$((Get-Date).ToString('yyyy-MM-dd_hh.mm.ss'))_$($ScriptFunctionName)_$($env:USERDNSDOMAIN)"
@@ -159,7 +148,7 @@ function Get-ADUserWildCardAudit {
             Build-ReportArchive -Export $Export -csv $csv -zip $zip -log $log -ErrorVariable BuildErr
         }
         else {
-            $Script:ADLogString += Write-AuditLog -Message "Returning output object."
+            $Script:LogString += Write-AuditLog -Message "Returning output object."
             Start-Sleep 2
             return $Export
         }
