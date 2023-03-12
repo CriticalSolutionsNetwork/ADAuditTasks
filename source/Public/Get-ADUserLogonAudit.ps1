@@ -40,6 +40,15 @@ function Get-ADUserLogonAudit {
         #Create logging object
         $Script:LogString = @()
         #Begin Logging
+        $Script:LogString += Write-AuditLog -Message "Begin Log"
+        $Script:LogString += Write-AuditLog -Message "###############################################"
+        # Check if the Active Directory module is installed and install it if necessary
+        try {
+            Install-ADModule -ErrorAction Stop -Verbose
+        }
+        catch {
+            throw $_.Exception
+        } ### End ADModule Install
         #Get all domain controllers
         $DomainControllers = Get-ADDomainController -Filter { Name -like "*" }
         $Comps = $DomainControllers.name

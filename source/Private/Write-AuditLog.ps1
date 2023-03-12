@@ -67,6 +67,7 @@ function Write-AuditLog {
     return [pscustomobject]@{
         Time      = ((Get-Date).ToString('yyyy-MM-dd hh:mmTss'))
         PSVersion = ($PSVersionTable.PSVersion).ToString()
+        PSEdition = ($PSVersionTable.PSEdition).ToString()
         IsAdmin   = $(Test-IsAdmin)
         User      = "$Env:USERDOMAIN\$Env:USERNAME"
         HostName  = $Env:COMPUTERNAME

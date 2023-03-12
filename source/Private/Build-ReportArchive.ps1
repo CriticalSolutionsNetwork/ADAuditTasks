@@ -83,13 +83,18 @@ function Build-ReportArchive {
         # Write information about the export directory and file path to log
         $Script:LogString += Write-AuditLog -Message "Directory: $AttachmentFolderPath"
         $Script:LogString += Write-AuditLog -Message "FilePath: $zip"
-        # Export log to CSV file
+        $Script:LogString += Write-AuditLog -Message "End Log"
         $Script:LogString | Export-Csv $log -NoTypeInformation -Encoding utf8
     }
     # Clean up and archive files
     end {
-        Compress-Archive -Path $csv, $log -DestinationPath $zip -CompressionLevel Optimal
-        Remove-Item $csv, $log -Force
-        return [string[]]$zip
+        try {
+            Compress-Archive -Path $csv, $log -DestinationPath $zip -CompressionLevel Optimal -ErrorAction Stop
+            Remove-Item $csv, $log -Force
+            return [string[]]$zip
+        }
+        catch {
+            throw $_.Exception
+        }
     }
 } # End Function

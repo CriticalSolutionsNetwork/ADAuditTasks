@@ -22,6 +22,7 @@ $ver = "v0.2.1"
 git checkout main
 git pull origin main
 git tag -a $ver -m "Release version $ver Fix"
+"Fix: Issues #20 #21 #22 #23 #24"
 git push origin $ver
 # git tag -d $ver
 

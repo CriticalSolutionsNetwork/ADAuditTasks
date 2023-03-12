@@ -60,28 +60,15 @@ function Get-ADActiveUserAudit {
         $Script:LogString = @()
         #Begin Logging
         $Script:LogString += Write-AuditLog -Message "Begin Log"
+        $Script:LogString += Write-AuditLog -Message "###############################################"
         $ScriptFunctionName = $MyInvocation.MyCommand.Name -replace '\..*'
-        ### ADModule Install
-        $module = Get-Module -Name ActiveDirectory -ListAvailable -InformationAction SilentlyContinue
-        if (-not $module) {
-            $Script:LogString += Write-AuditLog -Message "Install Active Directory Module?" -Severity Warning
-            try {
-                Import-Module ServerManager -ErrorAction Stop -InformationAction SilentlyContinue -ErrorVariable InstallADModuleErr
-                Add-WindowsFeature RSAT-AD-PowerShell -IncludeAllSubFeature -ErrorAction Stop -InformationAction SilentlyContinue -ErrorVariable InstallADModuleErr
-            }
-            catch {
-                $Script:LogString += Write-AuditLog -Message "You must install the Active Directory module to continue" -Severity Error
-                throw $InstallADModuleError
-            }
-        } # End If not Module
+        ### ActiveDirectory Module Install
         try {
-            Import-Module "ActiveDirectory" -Global -ErrorAction Stop -InformationAction SilentlyContinue -ErrorVariable ImportADModuleErr
+            Install-ADModule -ErrorAction Stop -Verbose
         }
         catch {
-            $Script:LogString += Write-AuditLog -Message "You must import the Active Directory module to continue" -Severity Error
-            throw $ImportADModuleErr
-        } # End Try Catch
-        ### End ADModule Install
+            throw $_.Exception
+        } ### End ADModule Install
         # Create Directory Path
         $AttachmentFolderPathCheck = Test-Path -Path $AttachmentFolderPath
         If (!($AttachmentFolderPathCheck)) {

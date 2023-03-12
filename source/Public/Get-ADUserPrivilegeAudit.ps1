@@ -58,33 +58,18 @@ function Get-ADUserPrivilegeAudit {
         $Script:LogString = @()
         # Begin Logging
         $Script:LogString += Write-AuditLog -Message "Begin Log"
+        $Script:LogString += Write-AuditLog -Message "###############################################"
         # Get name of the function
         $ScriptFunctionName = $MyInvocation.MyCommand.Name -replace '\..*'
+
         # Check if ActiveDirectory module is installed
-        $module = Get-Module -Name ActiveDirectory -ListAvailable -InformationAction SilentlyContinue
-        if (-not $module) {
-            # Prompt user to install ActiveDirectory module
-            $Script:LogString += Write-AuditLog -Message "Install Active Directory Module?" -Severity Warning
-            try {
-                # Install ActiveDirectory module using Server Manager
-                Import-Module ServerManager -ErrorAction Stop -InformationAction SilentlyContinue -ErrorVariable InstallADModuleErr
-                Add-WindowsFeature RSAT-AD-PowerShell -IncludeAllSubFeature -ErrorAction Stop  -InformationAction SilentlyContinue -ErrorVariable InstallADModuleErr
-            }
-            catch {
-                # If module is not installed and cannot be installed, throw an error
-                $Script:LogString += Write-AuditLog -Message "You must install the Active Directory module to continue" -Severity Error
-                throw $InstallADModuleError
-            }
-        } # End If not Module
+        ### ActiveDirectory Module Install
         try {
-            # Import ActiveDirectory module
-            Import-Module "ActiveDirectory" -Global -ErrorAction Stop -InformationAction SilentlyContinue -ErrorVariable ImportADModuleErr
+            Install-ADModule -ErrorAction Stop -Verbose
         }
         catch {
-            # If module is not imported, throw an error
-            $Script:LogString += Write-AuditLog -Message "You must import the Active Directory module to continue" -Severity Error
-            throw $ImportADModuleErr
-        } # End Try Catch
+            throw $_.Exception
+        } ### End ADModule Install
         # Create output directory if it does not already exist
         $AttachmentFolderPathCheck = Test-Path -Path $AttachmentFolderPath
         If (!($AttachmentFolderPathCheck)) {

@@ -81,28 +81,16 @@ function Get-ADHostAudit {
         $Script:LogString = @()
         # Begin Logging
         $Script:LogString += Write-AuditLog -Message "Begin Log"
+        $Script:LogString += Write-AuditLog -Message "###############################################"
         # Get the name of the script function
         $ScriptFunctionName = $MyInvocation.MyCommand.Name -replace '\..*'
         # Check if the Active Directory module is installed and install it if necessary
-        $module = Get-Module -Name ActiveDirectory -ListAvailable -InformationAction SilentlyContinue
-        if (-not $module) {
-            $Script:LogString += Write-AuditLog -Message "Install Active Directory Module?" -Severity Warning
-            try {
-                Import-Module ServerManager -ErrorAction Stop -ErrorVariable InstallADModuleErr
-                Add-WindowsFeature RSAT-AD-PowerShell -IncludeAllSubFeature -ErrorAction Stop -ErrorVariable InstallADModuleErr
-            }
-            catch {
-                $Script:LogString += Write-AuditLog -Message "You must install the Active Directory module to continue" -Severity Error
-                throw $InstallADModuleError
-            }
-        }
         try {
-            Import-Module "ActiveDirectory" -Global -ErrorAction Stop -InformationAction SilentlyContinue -ErrorVariable ImportADModuleErr
+            Install-ADModule -ErrorAction Stop -Verbose
         }
         catch {
-            $Script:LogString += Write-AuditLog -Message "You must import the Active Directory module to continue" -Severity Error
-            throw ImportADModuleErr
-        }
+            throw $_.Exception
+        } ### End ADModule Install
         # Calculate the time that is considered a host inactive
         $time = (Get-Date).Adddays( - ($DaystoConsiderAHostInactive))
         # Check if the attachment folder exists and create it if it does not
