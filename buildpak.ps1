@@ -38,9 +38,7 @@ Get-HostTag -PhysicalOrVirtual Physical -Prefix "CSN" -SystemOS 'Windows Server'
 Get-ADUserLogonAudit -SamAccountName "<USERNAME>" -Verbose
 Get-NetworkAudit -LocalSubnets -Report -Verbose
 
-$graphemailobject = New-GraphEmailApp -Prefix "CSN" -UserId "helpdesk@criticalsolutions.net" -MailEnabledSendingGroup "CSN-GraphAPIMail@criticalsolutions.net" -Verbose
-Send-GraphAppEmail -GraphEmailApp $graphemailobject -To "dougrios@criticalsolutions.net" -FromAddress "helpdesk@criticalsolutions.net" -Subject "Testing GraphEmailApp" -EmailBody "This is a test."
-Send-GraphAppEmail -To "dougrios@criticalsolutions.net" -FromAddress "helpdesk@criticalsolutions.net" -Subject "Testing GraphEmailApp" -EmailBody "This is a test."
+
 # Update Changelog
 # Update Manifest from Previous Module
 # git tag -a v1.0.0 -m "v1.0.0 Release"

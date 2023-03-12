@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Changed public function `Get-ADActiveUserAudit` to incorporate private function `Install-ADModule`
+- Changed public functions `Get-ADActiveUserAudit`, `Get-ADHostAudit`,`Get-ADUserLogonAudit`, `Get-ADUserPrivilegeAudit`,`Get-ADUserPrivilegeAudit`, and `Get-ADUserWildCardAudit` to incorporate private function `Install-ADModule`
 - Changed `Write-AUditLog` variable to `$LogString`. 
 
 ## [0.2.1] - 2023-03-11
