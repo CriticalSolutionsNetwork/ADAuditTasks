@@ -174,7 +174,6 @@ function Initialize-ModuleEnv {
                 $Script:LogString += Write-AuditLog -Message $throwmsg -Severity Error
                 throw $_.Exception
             }
-
         }
     }
 }
