@@ -111,6 +111,7 @@ function Get-ADUserPrivilegeAudit {
         $members = @()
         $ADUsers = @()
         # AD Groups to search for.
+        $Script:LogString += Write-AuditLog -Message "###############################################"
         $Script:LogString += Write-AuditLog -Message "Retriving info from the following priveledged groups: "
         $Script:LogString += Write-AuditLog -Message "$($AD_PrivilegedGroups -join " | ")"
         Start-Sleep 2

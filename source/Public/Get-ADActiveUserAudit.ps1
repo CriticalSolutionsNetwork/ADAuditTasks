@@ -103,6 +103,7 @@ function Get-ADActiveUserAudit {
         "Manager",
         "Department"
         # Log the properties being retrieved.
+        $Script:LogString += Write-AuditLog -Message "###############################################"
         $Script:LogString += Write-AuditLog -Message "Retrieving the following ADUser properties: "
         $Script:LogString += Write-AuditLog -Message "$($propsArray -join " | ")"
         # Establish timeframe to review.
@@ -118,29 +119,12 @@ function Get-ADActiveUserAudit {
         Get-ADUser -Filter { LastLogonTimeStamp -lt $time -and Enabled -eq $Enabled } `
             -Properties $propsArray -OutVariable ADExport | Out-Null
         # Create custom object for the output
-        $Export = @()
-        foreach ($item in $ADExport) {
-            $Export += [ADAuditTasksUser]::new(
-                $($item.SamAccountName),
-                $($item.GivenName),
-                $($item.Surname),
-                $($item.Name),
-                $($item.UserPrincipalName),
-                $($item.LastLogonTimeStamp),
-                $($item.Enabled),
-                $($item.LastLogonTimeStamp),
-                $($item.DistinguishedName),
-                $($item.Title),
-                $($item.Manager),
-                $($item.Department),
-                $false,
-                $false
-            )
-        }
+        $Export = Build-ADAuditTasksUser -ADExport $ADExport
     } # End Process
     end {
         # Log success message.
         $Script:LogString += Write-AuditLog -Message "The $ScriptFunctionName Export was successful."
+
         # Log output object properties.
         $Script:LogString += Write-AuditLog -Message "There are $($Export.Count) objects listed with the following properties: "
         $Script:LogString += Write-AuditLog -Message "$(($Export | Get-Member -MemberType property ).Name -join " | ")"

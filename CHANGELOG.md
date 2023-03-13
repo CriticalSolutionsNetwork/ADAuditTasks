@@ -5,6 +5,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added private function `Build-ADAuditTasksUser` for ADAuditTasksUser Class.
+- Integrated new private function into `Get-ADActiveUserAudit` and `Get-ADUserWildCardAudit`
+
 ## [0.3.0] - 2023-03-12
 
 ### Changed
