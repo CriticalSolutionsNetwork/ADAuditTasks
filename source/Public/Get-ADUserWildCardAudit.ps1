@@ -102,6 +102,7 @@ function Get-ADUserWildCardAudit {
         "Title",
         "Manager",
         "Department"
+        $Script:LogString += Write-AuditLog -Message "###############################################"
         $Script:LogString += Write-AuditLog -Message "Retriving the following ADUser properties: "
         $Script:LogString += Write-AuditLog -Message "$($propsArray -join " | ")"
         # Establish timeframe to review.
@@ -114,25 +115,7 @@ function Get-ADUserWildCardAudit {
         Get-ADUser -Filter { Name -like $WildCardIdentifierstring } `
             -Properties $propsArray -OutVariable ADExport | Out-Null
         $Script:LogString += Write-AuditLog -Message "Creating a custom object from ADUser output."
-        $Export = @()
-        foreach ($item in $ADExport) {
-            $Export += [ADAuditTasksUser]::new(
-                $($item.SamAccountName),
-                $($item.GivenName),
-                $($item.Surname),
-                $($item.Name),
-                $($item.UserPrincipalName),
-                $($item.LastLogonTimeStamp),
-                $($item.Enabled),
-                $($item.LastLogonTimeStamp),
-                $($item.DistinguishedName),
-                $($item.Title),
-                $($item.Manager),
-                $($item.Department),
-                $false,
-                $false
-            )
-        }
+        $Export = Build-ADAuditTasksUser -ADExport $ADExport
     }
     end {
         $Script:LogString += Write-AuditLog -Message "The $ScriptFunctionName Export was successful."
