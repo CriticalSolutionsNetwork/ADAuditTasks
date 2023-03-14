@@ -164,9 +164,26 @@ function Get-ADHostAudit {
             whenChanged            NoteProperty datetime whenChanged=3/5/2023 11:10:03 AM
         #>
         # Create a new object for each Active Directory computer with the selected properties and store the results in an array
-        $ADCompExport = foreach ($item in $ADComps) {
-            Build-ADAuditTasksComputer -ADComputer $item
-        } # End foreach Item in ADComps
+        $ADCompExport = @()
+        foreach ($item in $ADComps) {
+            $ADCompExport += [ADAuditTasksComputer]::new(
+                $item.Name,
+                $item.DNSHostName,
+                $item.Enabled,
+                $item.IPv4Address,
+                $item.IPv6Address,
+                $item.OperatingSystem,
+                $item.lastLogonTimestamp,
+                $item.Created,
+                $item.whenChanged,
+                $item.Description,
+                $item.DistinguishedName,
+                $(($item.KerberosEncryptionType).Value.tostring()),
+                ($item.servicePrincipalName -join " | "),
+                $item.Name,
+                $item.lastLogonTimestamp
+            ) # End New [ADComputerAccount] object
+        }# End foreach Item in ADComps
         # Convert the objects to PSCustomObjects and store the results in an array
         # Convert the objects to PSCustomObjects and store the results in an array
         $Export = @()

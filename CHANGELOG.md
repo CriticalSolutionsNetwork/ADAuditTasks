@@ -5,6 +5,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added 
+
+- Private function for computer class. 
+
 ## [0.3.1] - 2023-03-13
 
 ### Added
