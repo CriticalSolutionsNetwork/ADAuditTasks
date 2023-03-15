@@ -71,24 +71,8 @@ function Get-ADUserPrivilegeAudit {
             throw $_.Exception
         } ### End ADModule Install
         # Create output directory if it does not already exist
-        $AttachmentFolderPathCheck = Test-Path -Path $AttachmentFolderPath
-        If (!($AttachmentFolderPathCheck)) {
-            # Prompt user to create output directory
-            $Script:LogString += Write-AuditLog -Message "Would you like to create the directory $($AttachmentFolderPath)?" -Severity Warning
-            Try {
-                # Create output directory if it does not already exist
-                New-Item -ItemType Directory $AttachmentFolderPath -Force -ErrorAction Stop | Out-Null
-            }
-            Catch {
-                # If directory cannot be created, throw an error
-                $Script:LogString += Write-AuditLog -Message $("Directory: " + $AttachmentFolderPath + "was not created.") -Severity Error
-                $Script:LogString += Write-AuditLog -Message "End Log"
-                throw $Script:LogString
-            }
-            # Log the creation of the output directory
-            $Script:LogString += Write-AuditLog -Message "$("Output Folder created at: `n" + $AttachmentFolderPath)"
-            Start-Sleep 2
-        }
+        Build-DirectoryPath -DirectoryPath $AttachmentFolderPath
+        # Create Privilege Groups Array.
         $AD_PrivilegedGroups = @(
             'Enterprise Admins',
             'Schema Admins',

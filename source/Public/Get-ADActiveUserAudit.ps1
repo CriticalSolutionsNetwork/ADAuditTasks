@@ -69,26 +69,9 @@ function Get-ADActiveUserAudit {
         catch {
             throw $_.Exception
         } ### End ADModule Install
-        # Create Directory Path
-        $AttachmentFolderPathCheck = Test-Path -Path $AttachmentFolderPath
-        If (!($AttachmentFolderPathCheck)) {
-            $Script:LogString += Write-AuditLog -Message "Would you like to create the directory $($AttachmentFolderPath)?" -Severity Warning
-            Try {
-                # If not present then create the dir
-                New-Item -ItemType Directory $AttachmentFolderPath -Force -ErrorAction Stop | Out-Null
-            }
-            Catch {
-                $Script:LogString += Write-AuditLog -Message $("Directory: " + $AttachmentFolderPath + "was not created.") -Severity Error
-                $Script:LogString += Write-AuditLog -Message "End Log"
-                throw $Script:LogString
-            }
-            # Log creation of output directory
-            $outputMsg = "$("Output Folder created at: `n" + $AttachmentFolderPath)"
-            $Script:LogString += Write-AuditLog -Message $outputMsg
-            # Pause for 2 seconds to avoid potential race conditions.
-            Start-Sleep 2
-        }
-        # ADUser Properties to search for.
+        # Create Directory Path if it does not exist.
+        Build-DirectoryPath -DirectoryPath $AttachmentFolderPath
+        # Gather ADUser Properties to search for.
         $propsArray =
         "SamAccountName",
         "GivenName",

@@ -61,18 +61,7 @@ function Get-ADHostAudit {
         # Calculate the time that is considered a host inactive
         $time = (Get-Date).Adddays( - ($DaystoConsiderAHostInactive))
         # Check if the attachment folder exists and create it if it does not
-        $AttachmentFolderPathCheck = Test-Path -Path $AttachmentFolderPath
-        If (!($AttachmentFolderPathCheck)) {
-            $Script:LogString += Write-AuditLog -Message "Would you like to create the directory $($AttachmentFolderPath)?" -Severity Warning
-            Try {
-                # If not present then create the dir
-                New-Item -ItemType Directory $AttachmentFolderPath -Force -ErrorAction Stop -ErrorVariable CreateDirErr | Out-Null
-            }
-            Catch {
-                $Script:LogString += Write-AuditLog -Message "Unable to create output directory $($AttachmentFolderPath)" -Severity Error
-                throw $CreateDirErr
-            }
-        }
+        Build-DirectoryPath -DirectoryPath $AttachmentFolderPath
         # Determine the host type and set the appropriate search criteria
         switch ($PsCmdlet.ParameterSetName) {
             'HostType' {
