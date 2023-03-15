@@ -1,9 +1,17 @@
-Remove-Module ADAuditTasks
-Remove-Item .\output\ADAuditTasks -Recurse
-Remove-Item ".\output\ADAuditTasks.*.nupkg"
-Remove-Item .\output\ReleaseNotes.md
-Remove-Item .\output\CHANGELOG.md
-.\build.ps1 -tasks build -CodeCoverageThreshold 0
+function Build-TestBuildFunc {
+    Remove-Module ADAuditTasks
+    Remove-Item .\output\ADAuditTasks -Recurse
+    Remove-Item ".\output\ADAuditTasks.*.nupkg"
+    Remove-Item .\output\ReleaseNotes.md
+    Remove-Item .\output\CHANGELOG.md
+    .\build.ps1 -tasks build -CodeCoverageThreshold 0
+}
+function Build-Docs {
+    Import-Module .\output\ADAuditTasks\*\*.psd1
+    .\ModdedModules\psDoc-master\src\psDoc.ps1 -moduleName ADAuditTasks -outputDir docs -template ".\ModdedModules\psDoc-master\src\out-html-template.ps1"
+}
+Build-TestBuildFunc
+Build-Docs
 #Remove-Item C:\temp\ADDS* -Recurse
 
 #.\build.ps1 -ResolveDependency -tasks noop
@@ -18,11 +26,11 @@ Remove-Item .\output\CHANGELOG.md
 7. Run the build using the pack task to create the NuGet package: `.\build.ps1 -tasks pack -CodeCoverageThreshold 0`.
 8. Upload the NuGet package to the PowerShell Gallery using the publish task: `.\build.ps1 -tasks publish -CodeCoverageThreshold 0`.
 #>
-$ver = "v0.3.2"
+$ver = "v0.3.4"
 git checkout main
 git pull origin main
 git tag -a $ver -m "Release version $ver Fix"
-"Fix: Issues #28 #30 #32"
+"Fix: PR #35 Issue #34"
 git push origin $ver
 # git tag -d $ver
 
@@ -33,7 +41,7 @@ $activeUsers        = Get-ADActiveUserAudit -Report -Verbose
 $privilegedUsers    = Get-ADUserPrivilegeAudit -Report -Verbose
 $wildcardUsers      = Get-ADUserWildCardAudit -WildCardIdentifier "svc" -Report -Verbose
 $netaudit           = Get-NetworkAudit -LocalSubnets -Report -Verbose
-Merge-ADAuditZip -FilePaths $workstations, $servers, $nonWindows, $activeUsers, $privilegedUsers, $wildcardUsers,$netaudit -OpenDirectory
+Merge-ADAuditZip -FilePaths $workstations, $servers, $nonWindows, $activeUsers, $privilegedUsers, $wildcardUsers, $netaudit -OpenDirectory
 
 Get-HostTag -PhysicalOrVirtual Physical -Prefix "CSN" -SystemOS 'Windows Server' -DeviceFunction 'Application Server' -HostCount 5
 Get-ADUserLogonAudit -SamAccountName "<USERNAME>" -Verbose
@@ -48,6 +56,6 @@ Get-NetworkAudit -LocalSubnets -Report -Verbose
 # Add Api Variables to session.
 # Build / Publish
 
-.\build.ps1 -tasks build,pack,publish -CodeCoverageThreshold 0
+.\build.ps1 -tasks build, pack, publish -CodeCoverageThreshold 0
 
-.\build.ps1 -tasks Build,Test -CodeCoverageThreshold 0
+.\build.ps1 -tasks Build, Test -CodeCoverageThreshold 0
