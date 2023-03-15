@@ -5,6 +5,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Fixed missing comment help block in `Get-ADHostAudit`
+
+## [0.3.3] - 2023-03-15
+
 ### Added
 
 - Added private function `Build-DirectoryPath`.

@@ -1,42 +1,42 @@
 function Get-HostTag {
     <#
     .SYNOPSIS
-        Creates a host name or tag based on predetermined criteria for as many as 999 hosts at a time.
+    Creates a host name or tag based on predetermined criteria for as many as 999 hosts at a time.
     .DESCRIPTION
-        A longer description of the function, its purpose, common use cases, etc.
+    A longer description of the function, its purpose, common use cases, etc.
     .EXAMPLE
-        Get-HostTag -PhysicalOrVirtual Physical -Prefix "CSN" -SystemOS 'Windows Server' -DeviceFunction 'Application Server' -HostCount 5
-            CSN-PWSVAPP001
-            CSN-PWSVAPP002
-            CSN-PWSVAPP003
-            CSN-PWSVAPP004
-            CSN-PWSVAPP005
-        This creates the name of the host under 15 characters and numbers them. Prefix can be 2-3 characters.
+    Get-HostTag -PhysicalOrVirtual Physical -Prefix "CSN" -SystemOS 'Windows Server' -DeviceFunction 'Application Server' -HostCount 5
+        CSN-PWSVAPP001
+        CSN-PWSVAPP002
+        CSN-PWSVAPP003
+        CSN-PWSVAPP004
+        CSN-PWSVAPP005
+    This creates the name of the host under 15 characters and numbers them. Prefix can be 2-3 characters.
     .PARAMETER PhysicalOrVirtual
-        Tab through selections to add 'P' or 'V' for physical or virtual to host tag.
+    Tab through selections to add 'P' or 'V' for physical or virtual to host tag.
     .PARAMETER Prefix
-        Enter the 2-3 letter prefix. Good for prefixing company initials, locations, or other.
+    Enter the 2-3 letter prefix. Good for prefixing company initials, locations, or other.
     .PARAMETER SystemOS
-        Use tab to cycle through the following options:
-            "Cisco ASA", "Android", "Apple IOS",
-            "Dell Storage Center", "MACOSX",
-            "Dell Power Edge", "Embedded", "Embedded Firmware",
-            "Cisco IOS", "Linux", "Qualys", "Citrix ADC (Netscaler)",
-            "Windows Thin Client", "VMWare",
-            "Nutanix", "TrueNas", "FreeNas",
-            "ProxMox", "Windows Workstation", "Windows Server",
-            "Windows Server Core", "Generic OS", "Generic HyperVisor"
+    Use tab to cycle through the following options:
+        "Cisco ASA", "Android", "Apple IOS",
+        "Dell Storage Center", "MACOSX",
+        "Dell Power Edge", "Embedded", "Embedded Firmware",
+        "Cisco IOS", "Linux", "Qualys", "Citrix ADC (Netscaler)",
+        "Windows Thin Client", "VMWare",
+        "Nutanix", "TrueNas", "FreeNas",
+        "ProxMox", "Windows Workstation", "Windows Server",
+        "Windows Server Core", "Generic OS", "Generic HyperVisor"
     .PARAMETER DeviceFunction
-        Use tab to cycle through the following options:
-            "Application Server", "Backup Server", "Directory Server",
-            "Email Server", "Firewall", "FTP Server",
-            "Hypervisor", "File Server", "NAS File Server",
-            "Power Distribution Unit", "Redundant Power Supply", "SAN Appliance",
-            "SQL Server", "Uninteruptable Power Supply", "Web Server",
-            "Management", "Blade Enclosure", "Blade Enclosure Switch",
-            "SAN specific switch", "General server/Network switch", "Generic Function Device"
+    Use tab to cycle through the following options:
+        "Application Server", "Backup Server", "Directory Server",
+        "Email Server", "Firewall", "FTP Server",
+        "Hypervisor", "File Server", "NAS File Server",
+        "Power Distribution Unit", "Redundant Power Supply", "SAN Appliance",
+        "SQL Server", "Uninteruptable Power Supply", "Web Server",
+        "Management", "Blade Enclosure", "Blade Enclosure Switch",
+        "SAN specific switch", "General server/Network switch", "Generic Function Device"
     .PARAMETER HostCount
-        Enter a number from 1 to 999 for how many hostnames you'd like to create.
+    Enter a number from 1 to 999 for how many hostnames you'd like to create.
     #>
     # Define the output type of the function
     [OutputType([string[]])]

@@ -1,34 +1,34 @@
 function Get-NetworkAudit {
     <#
     .SYNOPSIS
-        Discovers local network and runs port scans on all hosts found for specific or default sets of ports and displays MAC ID vendor info.
+    Discovers local network and runs port scans on all hosts found for specific or default sets of ports and displays MAC ID vendor info.
     .DESCRIPTION
-        Scans the network for open ports specified by the user or default ports if no ports are specified.
-        Creates reports if report switch is active. Adds MACID vendor info if found.
+    Scans the network for open ports specified by the user or default ports if no ports are specified.
+    Creates reports if report switch is active. Adds MACID vendor info if found.
     .NOTES
-        Installs PSnmap if not found and can output a report, or just the results.
+    Installs PSnmap if not found and can output a report, or just the results.
     .LINK
-        Specify a URI to a help page, this will show when Get-Help -Online is used.
+    Specify a URI to a help page, this will show when Get-Help -Online is used.
     .EXAMPLE
-        Get-NetworkAudit -report
+    Get-NetworkAudit -report
     .PARAMETER Ports
-        Default ports are:
-        "21", "22", "23", "25", "53", "67", "68", "80", "443",
-        "88", "464", "123", "135", "137", "138", "139",
-        "445", "389", "636", "514", "587", "1701",
-        "3268", "3269", "3389", "5985", "5986"
+    Default ports are:
+    "21", "22", "23", "25", "53", "67", "68", "80", "443",
+    "88", "464", "123", "135", "137", "138", "139",
+    "445", "389", "636", "514", "587", "1701",
+    "3268", "3269", "3389", "5985", "5986"
 
-        If you want to supply a port, do so as an integer or an array of integers.
-        "22","80","443", etc.
+    If you want to supply a port, do so as an integer or an array of integers.
+    "22","80","443", etc.
     .PARAMETER Report
-        Specify this switch if you would like a report generated in C:\temp.
+    Specify this switch if you would like a report generated in C:\temp.
     .PARAMETER LocalSubnets
-        Specify this switch to automatically scan subnets on the local network of the scanning device.
-        Will not scan outside of the hosting device's subnet.
+    Specify this switch to automatically scan subnets on the local network of the scanning device.
+    Will not scan outside of the hosting device's subnet.
     .PARAMETER Computers
-        Scan single host or array of hosts using Subet ID in CIDR Notation, IP, NETBIOS, or FQDN in "quotes"'
-        For Example:
-            "10.11.1.0/24","10.11.2.0/24"
+    Scan single host or array of hosts using Subet ID in CIDR Notation, IP, NETBIOS, or FQDN in "quotes"'
+    For Example:
+        "10.11.1.0/24","10.11.2.0/24"
     #>
     [OutputType([pscustomobject])]
     [CmdletBinding(DefaultParameterSetName = 'Default')]
