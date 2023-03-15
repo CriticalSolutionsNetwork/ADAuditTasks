@@ -7,7 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added 
 
-- Private function for computer class. 
+- Added private builder function for `ADAuditTasksComputer` class [#30](https://github.com/CriticalSolutionsNetwork/ADAuditTasks/issues/30).
+- Created tester function called `New-RandomFiles` to assist with testing the `Merge-ADAudit` function.[#32](https://github.com/CriticalSolutionsNetwork/ADAuditTasks/issues/32)
+- Added private builder function for NetScan, and MacID OUI List objects. [#28](https://github.com/CriticalSolutionsNetwork/ADAuditTasks/issues/28)
+  
+
+# Fixed 
+
+- Fixed `Merge-ADAudit` function's creation of file parts for files over default 25MB size. [#32](https://github.com/CriticalSolutionsNetwork/ADAuditTasks/issues/32)
 
 ## [0.3.1] - 2023-03-13
 

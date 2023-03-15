@@ -22,7 +22,7 @@ $ver = "v0.3.1"
 git checkout main
 git pull origin main
 git tag -a $ver -m "Release version $ver Fix"
-"Fix: Issues #25 #26"
+"Fix: Issues #28 #30 #32"
 git push origin $ver
 # git tag -d $ver
 
@@ -32,7 +32,8 @@ $nonWindows         = Get-ADHostAudit -HostType "Non-Windows" -Report -Verbose
 $activeUsers        = Get-ADActiveUserAudit -Report -Verbose
 $privilegedUsers    = Get-ADUserPrivilegeAudit -Report -Verbose
 $wildcardUsers      = Get-ADUserWildCardAudit -WildCardIdentifier "svc" -Report -Verbose
-Merge-ADAuditZip -FilePaths $workstations, $servers, $nonWindows, $activeUsers, $privilegedUsers, $wildcardUsers -OpenDirectory
+$netaudit           = Get-NetworkAudit -LocalSubnets -Report -Verbose
+Merge-ADAuditZip -FilePaths $workstations, $servers, $nonWindows, $activeUsers, $privilegedUsers, $wildcardUsers,$netaudit -OpenDirectory
 
 Get-HostTag -PhysicalOrVirtual Physical -Prefix "CSN" -SystemOS 'Windows Server' -DeviceFunction 'Application Server' -HostCount 5
 Get-ADUserLogonAudit -SamAccountName "<USERNAME>" -Verbose
