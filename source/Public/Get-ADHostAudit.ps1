@@ -142,27 +142,6 @@ function Get-ADHostAudit {
             Get-ADComputer -Filter { OperatingSystem -like "*windows*" -and OperatingSystem -notlike "*server*" -and Enabled -eq $Enabled -and lastlogontimestamp -gt $time } `
             -Properties $propsArray | Select-Object $propsArray -OutVariable ADComps | Out-Null
         }
-        <#
-        PS C:\Users\dougrios\GitHub\ADAuditTasks> $adcomp | gm -MemberType NoteProperty
-
-            TypeName: Selected.Microsoft.ActiveDirectory.Management.ADComputer
-
-            Name                   MemberType   Definition
-            ----                   ----------   ----------
-            Created                NoteProperty datetime Created=10/10/2021 8:56:08 AM
-            Description            NoteProperty object Description=null
-            DistinguishedName      NoteProperty string DistinguishedName=CN=BG-IT-VD-00,OU=Desktops,OU=Virtual,OU=Devices,OU=Desktops,OU=IT,OU=Workstations,OU=CSN Computers,DC=ad,DC=criticalsolutions,DC=net
-            DNSHostName            NoteProperty string DNSHostName=BG-IT-VD-00.ad.criticalsolutions.net
-            Enabled                NoteProperty bool Enabled=True
-            IPv4Address            NoteProperty string IPv4Address=10.11.10.33
-            IPv6Address            NoteProperty string IPv6Address=fd75:17af:1d1f:cb0e:469f:844:c832:bbd0
-            KerberosEncryptionType NoteProperty ADPropertyValueCollection KerberosEncryptionType=Microsoft.ActiveDirectory.Management.ADPropertyValueCollection
-            lastLogonTimestamp     NoteProperty long lastLogonTimestamp=133225098031791481
-            Name                   NoteProperty string Name=BG-IT-VD-00
-            OperatingSystem        NoteProperty string OperatingSystem=Windows 11 Enterprise
-            servicePrincipalName   NoteProperty ADPropertyValueCollection servicePrincipalName=Microsoft.ActiveDirectory.Management.ADPropertyValueCollection
-            whenChanged            NoteProperty datetime whenChanged=3/5/2023 11:10:03 AM
-        #>
         # Create a new object for each Active Directory computer with the selected properties and store the results in an array
         $ADCompExport = foreach ($item in $ADComps) {
             Build-ADAuditTasksComputer -ADComputer $item

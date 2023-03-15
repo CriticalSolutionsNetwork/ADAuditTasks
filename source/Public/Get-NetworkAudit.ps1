@@ -78,8 +78,6 @@ function Get-NetworkAudit {
                 "445", "389", "636", "514", "587", "1701", `
                 "3268", "3269", "3389", "5985", "5986"
         }
-        # Download and store the OUI CSV file from IEEE website
-        $ouiobject = Invoke-RestMethod https://standards-oui.ieee.org/oui/oui.csv | ConvertFrom-Csv
     } # End of begin block
     process {
         if ($LocalSubnets) {
@@ -97,36 +95,17 @@ function Get-NetworkAudit {
                     $Script:LogString += Write-AuditLog -Message "Beggining scan of subnet $($subnet) for the following ports:"
                     $Script:LogString += Write-AuditLog -Message "$(($ports | Out-String -Stream) -join ",")"
                     $NetworkAudit = Invoke-PSnmap -ComputerName $subnet -Port $ports -Dns -NoSummary -AddService
-                    # Filter devices that don't ping as no results will be found.
-                    $scan = $NetworkAudit | Where-Object { $_.Ping -eq $true }
                     # Write out information about the network scan.
                     $Script:LogString += Write-AuditLog -Message "##########################################"
                     $Script:LogString += Write-AuditLog -Message "Network scan for Subnet $($Subnet) completed."
                     $Script:LogString += Write-AuditLog -Message "DHCP Server: $($DHCPServer)"
                     $Script:LogString += Write-AuditLog -Message "Gateway: $($network.IPv4DefaultGateway.nexthop)"
                     $Script:LogString += Write-AuditLog -Message "##########################################"
-                    $Script:LogString += Write-AuditLog -Message "Creating $(($scan).count) output objects."
-                    # For each device in the scan, get MAC ID vendor information and add it as a NoteProperty to the object.
-                    $scan | ForEach-Object {
-                        $org = ""
-                        $SaveErrorPref = $Script:ErrorActionPreference
-                        $Script:ErrorActionPreference = 'SilentlyContinue'
-                        $macid = ((arp -a "$($_.ComputerName)" | Select-String '([0-9a-f]{2}-){5}[0-9a-f]{2}').Matches.Value).Replace("-", ":")
-                        $macpop = $macid.replace(":", "")
-                        $macsubstr = $macpop.Substring(0, 6)
-                        $org = ($ouiobject | Where-Object { $_.assignment -eq $macsubstr })."Organization Name"
-                        $Script:ErrorActionPreference = $SaveErrorPref
-                        Add-Member -InputObject $_ -MemberType NoteProperty -Name MacID -Value $macid
-                        if ($org) {
-                            Add-Member -InputObject $_ -MemberType NoteProperty -Name ManufacturerName -Value $org
-                        }
-                        else {
-                            Add-Member -InputObject $_ -MemberType NoteProperty -Name ManufacturerName -Value "Not Found"
-                        }
-                    }
+                    $Script:LogString += Write-AuditLog -Message "Starting with $(($NetworkAudit).count) output objects."
+                    # Filter devices that don't ping as no results will be found.
+                    $scan = Build-NetScanObject -NetScanObject $NetworkAudit #-IncludeNoPing
                     $Script:LogString += Write-AuditLog -Message "Created $(($scan).count) output objects for the following hosts:"
-                    $Script:LogString += Write-AuditLog -Message "$(($scan | select-object "IP/DNS")."IP/DNS" -join ", ")"
-
+                    $Script:LogString += Write-AuditLog -Message "$(($scan | Select-Object "IP/DNS")."IP/DNS" -join ", ")"
                     # Normalize Subnet text for filename.
                     $subnetText = $(($subnet.Replace("/", "_")))
                     # If report switch is true, export the scan to a CSV file with a timestamped filename.
@@ -143,7 +122,8 @@ function Get-NetworkAudit {
         } # End If $LocalSubnets
         elseif ($Computers) {
             $Subnet = $Computers
-            $results = Invoke-PSnmap -ComputerName $subnet -Port $ports -Dns -NoSummary -AddService | Where-Object { $_.Ping -eq $true }
+            $scan = Invoke-PSnmap -ComputerName $subnet -Port $ports -Dns -NoSummary -AddService
+            $results = Build-NetScanObject -NetScanObject $scan
             if ($Report) {
                 $csv = "C:\temp\$((Get-Date).ToString('yyyy-MM-dd_hh.mm.ss')).$($env:USERDNSDOMAIN)_HostScan.csv"
                 $zip = $csv -replace ".csv", ".zip"
@@ -151,15 +131,6 @@ function Get-NetworkAudit {
                 return Build-ReportArchive -Export $results -csv $csv -zip $zip -log $log -ErrorVariable BuildErr
             }
         }
-    <#
-        try {
-            ##
-        }
-        catch {
-            throw $_.Exception
-        }
-    #>
-
     } # Process Close
     end {
         return $results
