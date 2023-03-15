@@ -30,7 +30,7 @@ $ver = "v0.3.4"
 git checkout main
 git pull origin main
 git tag -a $ver -m "Release version $ver Fix"
-"Fix: PR #35 Issue #34"
+"Fix: PR #37"
 git push origin $ver
 # git tag -d $ver
 

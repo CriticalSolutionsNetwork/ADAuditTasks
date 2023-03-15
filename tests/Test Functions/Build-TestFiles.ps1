@@ -60,5 +60,4 @@ function Build-TestFiles {
 	end {
 		Write-Output $GeneratedFiles
 	}
-
 }
