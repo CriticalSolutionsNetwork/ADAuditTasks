@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Added public function `Get-WebCert`.
+- Added public function `New-GraphEmailApp`.
+- Added public function `Send-GraphAppEmail`.
 
 ### Fixed
 
