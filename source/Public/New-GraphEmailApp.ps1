@@ -7,7 +7,9 @@ function New-GraphEmailApp {
     It requires a 2 to 4 character long prefix ID for the app, files and certs that are created, as well as the
     email address of the sender and the email of the Group the sender is a part of to assign app policy restrictions.
     .PARAMETER Prefix
-    The 2 to 4 character long prefix ID of the app, files and certs that are created.
+    The 2 to 4 character long prefix ID of the app, files and certs that are created. Meant to group multiple runs
+    so that if run in different environments, they will stack naturally in Azure. Ensure you use the same prefix each
+    time if you'd like this behavior.
     .PARAMETER UserId
     The email address of the sender.
     .PARAMETER MailEnabledSendingGroup
