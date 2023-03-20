@@ -1,5 +1,6 @@
 # ADAuditTasks Module
-
+[![PSScriptAnalyzer](https://github.com/CriticalSolutionsNetwork/ADAuditTasks/actions/workflows/powershell.yml/badge.svg)](https://github.com/CriticalSolutionsNetwork/ADAuditTasks/actions/workflows/powershell.yml)
+[![pages-build-deployment](https://github.com/CriticalSolutionsNetwork/ADAuditTasks/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/CriticalSolutionsNetwork/ADAuditTasks/actions/workflows/pages/pages-build-deployment)
 ## Summary
 
 - The module contains various Active Directory auditing tasks that generate logs, CSV output and report objects. 
@@ -11,6 +12,7 @@ See the [ADAuditTasks help documentation](https://criticalsolutionsnetwork.githu
 
 ## Public Functions
  The following Public Functions are available to the user executing the tasks: 
+
 - `Get-ADActiveUserAudit`
 - `Get-ADHostAudit`
 - `Get-ADUserLogonAudit`
@@ -20,8 +22,31 @@ See the [ADAuditTasks help documentation](https://criticalsolutionsnetwork.githu
 - `Get-NetworkAudit`
 - `Get-WebCert`
 - `Merge-ADAuditZip`
+- `New-GraphEmailApp`
+- `New-PatchTuesdayReport`
 - `Send-AuditEmail`
+- `Send-GraphAppEmail`
 - `Submit-FTPUpload`
+
+## Private Functions
+The following Private Functions support the functions in this module:
+
+- `Build-ADAuditTasksComputer.ps1`
+- `Build-ADAuditTasksUser.ps1`
+- `Build-DirectoryPath.ps1`
+- `Build-MacIdOUIList.ps1`
+- `Build-NetScanObject.ps1`
+- `Build-ReportArchive.ps1`
+- `Get-AdExtendedRight.ps1`
+- `Get-ADGroupMemberof.ps1`
+- `Group-UpdateByProduct.ps1`
+- `Initialize-ModuleEnv.ps1`
+- `Install-ADModule.ps1`
+- `Read-FileContent.ps1`
+- `Show-OSUpdateSection.ps1`
+- `Test-IsAdmin.ps1`
+- `Write-AuditLog.ps1`
+
 ### Example 1: Creating a zip file of various host types
 
 The following example demonstrates how to create a zip file of different host types:
@@ -32,6 +57,7 @@ $servers = Get-ADHostAudit -HostType WindowsServers
 $nonWindows = Get-ADHostAudit -HostType "Non-Windows"
 
 Merge-ADAuditZip -FilePaths $workstations, $servers, $nonWindows
+
 ```
 ### Example 2: Sending Email with **Attachment**
 
