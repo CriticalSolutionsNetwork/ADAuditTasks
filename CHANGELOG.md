@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added private function Read-FileContent.
 - Added private function Show-OSUpdateSection.
 
+## [0.3.4] - 2023-03-15
+
 ### Fixed
 
 - Fixed missing comment help block in `Get-ADHostAudit`
