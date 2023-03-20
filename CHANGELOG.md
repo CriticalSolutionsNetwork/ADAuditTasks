@@ -7,13 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Added public function Get-WebCert.
-- Added public function New-GraphEmailApp.
-- Added public function Send-GraphAppEmail.
-- Added public function New-PatchTuesdayReport.
-- Added private function Group-UpdateByProduct.
-- Added private function Read-FileContent.
-- Added private function Show-OSUpdateSection.
+- Added public function Get-WebCert. #40
+- Added public function New-GraphEmailApp. #38
+- Added public function Send-GraphAppEmail. #39
+- Added public function New-PatchTuesdayReport. #42
+- Added private function Group-UpdateByProduct. #42
+- Added private function Read-FileContent. #42
+- Added private function Show-OSUpdateSection. #42
 
 ## [0.3.4] - 2023-03-15
 
