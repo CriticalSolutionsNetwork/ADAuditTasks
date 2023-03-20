@@ -1,5 +1,6 @@
 # ADAuditTasks Module
 [![PSScriptAnalyzer](https://github.com/CriticalSolutionsNetwork/ADAuditTasks/actions/workflows/powershell.yml/badge.svg)](https://github.com/CriticalSolutionsNetwork/ADAuditTasks/actions/workflows/powershell.yml)
+[![pages-build-deployment](https://github.com/CriticalSolutionsNetwork/ADAuditTasks/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/CriticalSolutionsNetwork/ADAuditTasks/actions/workflows/pages/pages-build-deployment)
 ## Summary
 
 - The module contains various Active Directory auditing tasks that generate logs, CSV output and report objects. 
