@@ -18,6 +18,7 @@ See the [ADAuditTasks help documentation](https://criticalsolutionsnetwork.githu
 - `Get-ADUserWildCardAudit`
 - `Get-HostTag`
 - `Get-NetworkAudit`
+- `Get-WebCert`
 - `Merge-ADAuditZip`
 - `Send-AuditEmail`
 - `Submit-FTPUpload`

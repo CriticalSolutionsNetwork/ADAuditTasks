@@ -30,7 +30,7 @@ $ver = "v0.3.4"
 git checkout main
 git pull origin main
 git tag -a $ver -m "Release version $ver Fix"
-"Fix: PR #35 Issue #34"
+"Fix: PR #37"
 git push origin $ver
 # git tag -d $ver
 
@@ -43,7 +43,13 @@ $wildcardUsers      = Get-ADUserWildCardAudit -WildCardIdentifier "svc" -Report 
 $netaudit           = Get-NetworkAudit -LocalSubnets -Report -Verbose
 Merge-ADAuditZip -FilePaths $workstations, $servers, $nonWindows, $activeUsers, $privilegedUsers, $wildcardUsers, $netaudit -OpenDirectory
 
-Get-HostTag -PhysicalOrVirtual Physical -Prefix "CSN" -SystemOS 'Windows Server' -DeviceFunction 'Application Server' -HostCount 5
+$CsvPath = "C:\Users\$User\Downloads\Security Updates 2023-03-17-063046pm.csv"
+# Generate email content
+$HTMLReport = New-PatchTuesdayReport -csvpath $CsvPath -DateId "2023-Mar" -LogoUrl $logo -Verbose
+$HTMLReport | Out-File C:\temp\reports.html
+Start-Process C:\temp\reports.html
+
+Get-HostTag -PhysicalOrVirtual Physical -Prefix "NY" -SystemOS 'Windows Server' -DeviceFunction 'Directory Server' -HostCount 5
 Get-ADUserLogonAudit -SamAccountName "<USERNAME>" -Verbose
 Get-NetworkAudit -LocalSubnets -Report -Verbose
 
@@ -59,3 +65,4 @@ Get-NetworkAudit -LocalSubnets -Report -Verbose
 .\build.ps1 -tasks build, pack, publish -CodeCoverageThreshold 0
 
 .\build.ps1 -tasks Build, Test -CodeCoverageThreshold 0
+.\build.ps1 -BuildConfig .\.git
