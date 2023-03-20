@@ -93,7 +93,8 @@ function Get-HostTag {
             "Power Distribution Unit", "Redundant Power Supply", "SAN Appliance",
             "SQL Server", "Uninteruptable Power Supply", "Web Server",
             "Management", "Blade Enclosure", "Blade Enclosure Switch",
-            "SAN specific switch", "General server/Network switch", "Generic Function Device"
+            "SAN specific switch", "General server/Network switch", "Generic Function Device",
+            "Cache Server","Load Balancer"
         )]
         [string]$DeviceFunction,
         [Parameter(
@@ -122,6 +123,8 @@ function Get-HostTag {
             "Uninteruptable Power Supply" { $DFunction = "UPS" }
             "Web Server" { $DFunction = "WEB" }
             "Management" { $DFunction = "MGT" }
+            "Cache Server" { $DFunction = "CSH" }
+            "Load Balancer" { $DFunction = "BAL" }
             "Blade Enclosure" { $DFunction = "BLDENC" }
             "Blade Enclosure Switch" { $DFunction = "SW-BLD" }
             "SAN specific Switch" { $DFunction = "SW-SAN" }

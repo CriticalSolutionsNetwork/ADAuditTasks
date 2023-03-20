@@ -5,6 +5,7 @@
 
 CopyPaths:
   - en-US
+  - assets
 #  - DSCResources
   # - Modules
 Encoding: UTF8
