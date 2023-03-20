@@ -26,10 +26,11 @@ Build-Docs
 7. Run the build using the pack task to create the NuGet package: `.\build.ps1 -tasks pack -CodeCoverageThreshold 0`.
 8. Upload the NuGet package to the PowerShell Gallery using the publish task: `.\build.ps1 -tasks publish -CodeCoverageThreshold 0`.
 #>
-$ver = "v0.3.4"
+$ver = "v0.3.5"
 git checkout main
 git pull origin main
 git tag -a $ver -m "Release version $ver Fix"
+git push origin $ver
 "Fix: PR #37"
 git push origin $ver
 # git tag -d $ver
