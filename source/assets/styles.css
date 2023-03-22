@@ -81,7 +81,6 @@ body {
     margin: 0 auto; /* Center the content horizontally */
     padding: 0 20px; /* Add some padding to the left and right of the content */
 }
-
 .rotated {
     transform: rotate(90deg);
 }
