@@ -15,7 +15,7 @@ function Show-OSUpdateSection {
             $tableId = "table_" + (New-Guid).ToString()
             $arrowId = "arrow_" + (New-Guid).ToString()
             $sectionHtml += @"
-<h4 onclick='toggleTable("$tableId", "$arrowId")' style='cursor:pointer;'><span id='$arrowId' class='arrow'>▶</span><span class='kb-number'>KB$($group.Name)</span> - Max Severity: $($firstUpdate.'Max Severity') - <a href='$($firstUpdate.ArticleUrl)'>Article URL</a> | Type: $($firstUpdate.Download) - <a href='$($firstUpdate.'Download Url')'>Download URL</a></h4>
+<h4 onclick='toggleTable("$tableId", "$arrowId")' style='cursor:pointer;'><span id='$arrowId' class='arrow'>▶</span><span class='kb-number'>KB$($group.Name)</span> - Max Severity: $($firstUpdate.'Max Severity') - <a href='$($firstUpdate.ArticleUrl)' target='_parent'>Article URL</a> | Type: $($firstUpdate.Download) - <a href='$($firstUpdate.'Download Url')' target='_parent'>Download URL</a></h4>
 <table id='$tableId' style='display:none;'>
 <tr>
     <th onclick='onHeaderClick("$tableId", 0)'>Release Date</th>
@@ -34,7 +34,7 @@ function Show-OSUpdateSection {
     <td>$($update.Impact)</td>
     <td>$($update.'Build Number')</td>
     <td>$($update.Details)</td>
-    <td><a href='$($update.'Details Url' -replace "//","/")'>Link</a></td>
+    <td><a href='$($update.'Details Url' -replace "(?<=https://)(.*)//", '$1/')' target='_parent'>Link</a></td>
     <td>$($update.'Base Score')</td>
 </tr>
 "@

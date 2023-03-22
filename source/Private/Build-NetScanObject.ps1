@@ -7,15 +7,16 @@ function Build-NetScanObject {
     $Script:LogString += Write-AuditLog -Message "Begin NetScan object creation."
     switch ($IncludeNoPing) {
         $true {
-            $scan = $NetworkAudit
+            $scan = $NetSCanObject
         }
         Default {
-            $scan = $NetworkAudit | Where-Object { $_.Ping -eq $true }
+            $scan = $NetSCanObject | Where-Object { $_.Ping -eq $true }
         }
     }
     $Export = @()
     foreach ($Item in $scan) {
         $portsenabled = ($item.PSObject.Properties | Where-Object { $_.Value -eq $true -and $_.name -ne "Ping" }).Name -join " | "
+        $portsenabled = $portsenabled.Replace("Port ", "")
         $SaveErrorPref = $Script:ErrorActionPreference
         $Script:ErrorActionPreference = 'SilentlyContinue'
         $macid = ((arp -a "$($item.ComputerName)" | Select-String '([0-9a-f]{2}-){5}[0-9a-f]{2}').Matches.Value).Replace("-", ":")
@@ -47,4 +48,4 @@ function Build-NetScanObject {
     else {
         throw "The ExportObject was Blank"
     }
-}###
+}

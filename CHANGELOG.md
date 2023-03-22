@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Added option to scan local subnets without a hop.
+- Added public function `Get-QuickPing`
+- Added additional logging to `Merge-ADAuditZip` function.
+
+### Fixed
+
+- Fixed subnet calculation in `Get-NetworkAudit`.
+- Fixed `Build-NetScanObject` so `$NetworkAudit` is replaced with `$NetSCanObject` in `switch ($IncludeNoPing)`
+- Fixed `Build-NetScanObject` so output columns are port numbers without the word "Port "
+
+
+## [0.3.5] - 2023-03-19
+
+### Added
+
 - Added public function Get-WebCert. #40
 - Added public function New-GraphEmailApp. #38
 - Added public function Send-GraphAppEmail. #39
