@@ -2,7 +2,7 @@
 [![PSScriptAnalyzer](https://github.com/CriticalSolutionsNetwork/ADAuditTasks/actions/workflows/powershell.yml/badge.svg)](https://github.com/CriticalSolutionsNetwork/ADAuditTasks/actions/workflows/powershell.yml)
 [![pages-build-deployment](https://github.com/CriticalSolutionsNetwork/ADAuditTasks/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/CriticalSolutionsNetwork/ADAuditTasks/actions/workflows/pages/pages-build-deployment)
 
-[Patch Tuesday Newsletter 2023-Mar](https://patchtuesday.criticalsolutions.net/)
+[Patch Tuesday Newsletter](https://patchtuesday.criticalsolutions.net/)
 ## Summary
 
 - The module contains various Active Directory auditing tasks that generate logs, CSV output and report objects. 
