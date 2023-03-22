@@ -85,6 +85,7 @@ function Merge-ADAuditZip {
     }
     # Create a zip file with the remaining files
     if ($filesToAdd) {
+        $Script:LogString += Write-AuditLog -Message "Compressing Archive with files $filesToAdd."
         Compress-Archive -Path $filesToAdd -DestinationPath $outputPath
     }
 
@@ -96,10 +97,12 @@ function Merge-ADAuditZip {
     # Remove the original files
     if ($OpenDirectory) {
         # If the OpenDirectory switch is used
+        $Script:LogString += Write-AuditLog -Message "Build Complete. Opening output directory."
         Invoke-Item (Split-Path $outputPath) # Open the directory of the merged zip file
         return $outputPath
     }
     else {
+        $Script:LogString += Write-AuditLog -Message "Build Complete. Returning output file path."
         return $outputPath # Otherwise, only return the path of the merged zip file
     }
 }

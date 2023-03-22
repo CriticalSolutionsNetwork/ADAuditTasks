@@ -12,10 +12,33 @@ function Build-Docs {
 }
 Build-TestBuildFunc
 Build-Docs
-#Remove-Item C:\temp\ADDS* -Recurse
 
-#.\build.ps1 -ResolveDependency -tasks noop
-#.\build.ps1 -tasks build -CodeCoverageThreshold 0
+
+$workstations       = Get-ADHostAudit -HostType WindowsWorkstations -Report -Verbose
+$servers            = Get-ADHostAudit -HostType WindowsServers -Report -Verbose
+$nonWindows         = Get-ADHostAudit -HostType "Non-Windows" -Report -Verbose
+$activeUsers        = Get-ADActiveUserAudit -Report -Verbose
+$privilegedUsers    = Get-ADUserPrivilegeAudit -Report -Verbose
+$wildcardUsers      = Get-ADUserWildCardAudit -WildCardIdentifier "svc" -Report -Verbose
+$netaudit           = Get-NetworkAudit -LocalSubnets -Report -Verbose
+Merge-ADAuditZip -FilePaths  $workstations, $servers, $nonWindows, $activeUsers, $privilegedUsers, $wildcardUsers,$netaudit -OpenDirectory
+
+$netaudit           = Get-NetworkAudit -LocalSubnets -Report -Verbose
+Merge-ADAuditZip -FilePaths $netaudit -OpenDirectory
+
+
+
+Get-NetworkAudit -Ports 443 -Computers $test1
+Get-NetworkAudit -Ports 443 -Computers $test1 -Report
+Get-NetworkAudit -Ports 443 -Computers $test2 -NoHops -AddService
+Get-NetworkAudit -Ports 443 -Computers $test2 -Report -NoHops -AddService
+
+
+# .\build.ps1 -tasks build, pack, publish -CodeCoverageThreshold 0
+# .\build.ps1 -tasks Build, Test -CodeCoverageThreshold 0
+# .\build.ps1 -BuildConfig .\.git
+# .\build.ps1 -ResolveDependency -tasks noop
+# .\build.ps1 -tasks build -CodeCoverageThreshold 0
 <#
 1. Merge the pull request that contains the code documentation and comments.
 2. Switch to the main branch in your local repository using `git checkout main`.
@@ -26,6 +49,8 @@ Build-Docs
 7. Run the build using the pack task to create the NuGet package: `.\build.ps1 -tasks pack -CodeCoverageThreshold 0`.
 8. Upload the NuGet package to the PowerShell Gallery using the publish task: `.\build.ps1 -tasks publish -CodeCoverageThreshold 0`.
 #>
+
+<#
 $ver = "v0.3.5"
 git checkout main
 git pull origin main
@@ -34,15 +59,11 @@ git push origin $ver
 "Fix: PR #37"
 git push origin $ver
 # git tag -d $ver
+#>
 
-$workstations       = Get-ADHostAudit -HostType WindowsWorkstations -Report -Verbose
-$servers            = Get-ADHostAudit -HostType WindowsServers -Report -Verbose
-$nonWindows         = Get-ADHostAudit -HostType "Non-Windows" -Report -Verbose
-$activeUsers        = Get-ADActiveUserAudit -Report -Verbose
-$privilegedUsers    = Get-ADUserPrivilegeAudit -Report -Verbose
-$wildcardUsers      = Get-ADUserWildCardAudit -WildCardIdentifier "svc" -Report -Verbose
-$netaudit           = Get-NetworkAudit -LocalSubnets -Report -Verbose
-Merge-ADAuditZip -FilePaths $workstations, $servers, $nonWindows, $activeUsers, $privilegedUsers, $wildcardUsers, $netaudit -OpenDirectory
+
+
+
 
 $CsvPath = "C:\Users\$User\Downloads\Security Updates 2023-03-17-063046pm.csv"
 # Generate email content
@@ -53,17 +74,12 @@ Start-Process C:\temp\reports.html
 Get-HostTag -PhysicalOrVirtual Physical -Prefix "NY" -SystemOS 'Windows Server' -DeviceFunction 'Directory Server' -HostCount 5
 Get-ADUserLogonAudit -SamAccountName "<USERNAME>" -Verbose
 Get-NetworkAudit -LocalSubnets -Report -Verbose
+Get-NetworkAudit -LocalSubnets -NoHops -AddService -Report -Verbose
 
-
-# Update Changelog
-# Update Manifest from Previous Module
-# git tag -a v1.0.0 -m "v1.0.0 Release"
-# git tag -a v0.0.2 -m "v0.0.1 Release"
-# Build / Test
-# Add Api Variables to session.
-# Build / Publish
-
-.\build.ps1 -tasks build, pack, publish -CodeCoverageThreshold 0
-
-.\build.ps1 -tasks Build, Test -CodeCoverageThreshold 0
-.\build.ps1 -BuildConfig .\.git
+$workstations
+$servers
+$nonWindows
+$activeUsers
+$privilegedUsers
+$wildcardUsers
+$netaudit

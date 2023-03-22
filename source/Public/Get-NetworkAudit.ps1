@@ -25,10 +25,15 @@ function Get-NetworkAudit {
     .PARAMETER LocalSubnets
     Specify this switch to automatically scan subnets on the local network of the scanning device.
     Will not scan outside of the hosting device's subnet.
+    .PARAMETER NoHops
+    Don't allow scans across a gateway.
+    .PARAMETER AddService
+    Add the service typically associated with the port to the output.
     .PARAMETER Computers
     Scan single host or array of hosts using Subet ID in CIDR Notation, IP, NETBIOS, or FQDN in "quotes"'
     For Example:
         "10.11.1.0/24","10.11.2.0/24"
+
     #>
     [OutputType([pscustomobject])]
     [CmdletBinding(DefaultParameterSetName = 'Default')]
@@ -55,6 +60,8 @@ function Get-NetworkAudit {
             Position = 1
         )]
         [string[]]$Computers,
+        [switch]$NoHops,
+        [switch]$AddService,
         [switch]$Report
     )
     begin {
@@ -82,57 +89,101 @@ function Get-NetworkAudit {
     process {
         if ($LocalSubnets) {
             # Get connected networks on the local device.
-            $ConnectedNetworks = Get-NetIPConfiguration -Detailed | Where-Object { $_.Netadapter.status -eq "up" }
-            $results = @()
-            foreach ($network in $ConnectedNetworks) {
-                # Get DHCP server for the network
-                $DHCPServer = (Get-CimInstance -ClassName Win32_NetworkAdapterConfiguration | Where-Object { $_.IPAddress -eq $network.IPv4Address }).DHCPServer
-                # Get subnet in CIDR format
-                $Subnet = "$($network.IPv4DefaultGateway.nexthop)/$($network.IPv4Address.PrefixLength)"
-                # Validate the subnet format for IPv4 and IPv6
-                if (($subnet -match '^([0-9]{1,3}\.){3}[0-9]{1,3}(\/([0-9]|[1-2][0-9]|3[0-2]))?$') -or ($subnet -match '^s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]d|1dd|[1-9]?d)(.(25[0-5]|2[0-4]d|1dd|[1-9]?d)){3}))|:)))(%.+)?s*(\/([0-9]|[1-9][0-9]|1[0-1][0-9]|12[0-8]))?$')) {
-                    # Create Network Scan Object
-                    $Script:LogString += Write-AuditLog -Message "Beggining scan of subnet $($subnet) for the following ports:"
-                    $Script:LogString += Write-AuditLog -Message "$(($ports | Out-String -Stream) -join ",")"
-                    $NetworkAudit = Invoke-PSnmap -ComputerName $subnet -Port $ports -Dns -NoSummary -AddService
-                    # Write out information about the network scan.
-                    $Script:LogString += Write-AuditLog -Message "##########################################"
-                    $Script:LogString += Write-AuditLog -Message "Network scan for Subnet $($Subnet) completed."
-                    $Script:LogString += Write-AuditLog -Message "DHCP Server: $($DHCPServer)"
-                    $Script:LogString += Write-AuditLog -Message "Gateway: $($network.IPv4DefaultGateway.nexthop)"
-                    $Script:LogString += Write-AuditLog -Message "##########################################"
-                    $Script:LogString += Write-AuditLog -Message "Starting with $(($NetworkAudit).count) output objects."
-                    # Filter devices that don't ping as no results will be found.
-                    $scan = Build-NetScanObject -NetScanObject $NetworkAudit #-IncludeNoPing
-                    $Script:LogString += Write-AuditLog -Message "Created $(($scan).count) output objects for the following hosts:"
-                    $Script:LogString += Write-AuditLog -Message "$(($scan | Select-Object "IP/DNS")."IP/DNS" -join ", ")"
-                    # Normalize Subnet text for filename.
-                    $subnetText = $(($subnet.Replace("/", "_")))
-                    # If report switch is true, export the scan to a CSV file with a timestamped filename.
-                    if ($report) {
-                        $csv = "C:\temp\$((Get-Date).ToString('yyyy.MM.dd_hhmm.ss')).$($env:USERDOMAIN)_Subnet.$($subnetText)_DHCP.$($DHCPServer)_GW.$($network.IPv4DefaultGateway.nexthop).NetScan.csv"
-                        $zip = $csv -replace ".csv", ".zip"
-                        $log = $csv -replace ".csv", ".AuditLog.csv"
-                        return Build-ReportArchive -Export $scan -csv $csv -zip $zip -log $log -ErrorVariable BuildErr
-                    }
-                    # Add the scan to the function output.
-                    $results += $scan
-                } # IF Subnet Match End
-            } # End Foreach
+            $internetadapter = Get-NetIPConfiguration -Detailed | Where-Object { $_.NetProfile.IPv4Connectivity -eq "Internet" }
+            $subnetcidr = "$($internetadapter.IPv4Address.IPAddress)/$($internetadapter.IPv4Address.PrefixLength)"
+            $CalcSub = Invoke-PSipcalc -NetworkAddress $subnetcidr -Enumerate
+            # Get subnet in CIDR format
+            $subnet = "$($CalcSub.NetworkAddress)/$($CalcSub.NetworkLength)"
+            # Get DHCP server for the network
+            $DHCPServer = (Get-CimInstance -ClassName Win32_NetworkAdapterConfiguration | Where-Object { $_.IPAddress -eq $($internetadapter.IPv4Address.IPAddress) }).DHCPServer
+            # Create Network Scan Object
+            $Script:LogString += Write-AuditLog -Message "Beggining scan of subnet $($subnet) for the following ports:"
+            $Script:LogString += Write-AuditLog -Message "$(($ports | Out-String -Stream) -join ",")"
+            # Begin Reigion Build NetworkAudit Object
+            if ($NoHops) {
+                $IPRange = $CalcSub.IPEnumerated
+                # Use a foreach loop to test each IP address
+                $NonRoutedIPs,$FailedIps = Get-QuickPing -IPRange $IPRange -TTL 1
+                if ($null -ne $NonRoutedIPs) {
+                    $Script:LogString += Write-AuditLog -Message "Local IPs object is populated."
+                    $Script:LogString += Write-AuditLog -Message "Scan found $($NonRoutedIPs.count) IPs to scan."
+                    $Script:LogString += Write-AuditLog -Message "There were $($FailedIps.count) IPs that failed."
+                    $Script:LogString += Write-AuditLog -Message "Begin Invoke-PSnmap"
+                    $NetworkAudit = Invoke-PSnmap -ComputerName $NonRoutedIPs -Port $ports -Dns -NoSummary -AddService:$AddService
+                }
+                else {
+                    throw "No Hosts found to scan!"
+                }
+            }
+            else {
+                $NetworkAudit = Invoke-PSnmap -ComputerName $subnet -Port $ports -Dns -NoSummary -AddService:$AddService
+            }
+            # End Reigion Build Network Audit Object
+            # Write out information about the network scan.
+            $Script:LogString += Write-AuditLog -Message "##########################################"
+            $Script:LogString += Write-AuditLog -Message "Network scan for Subnet $($Subnet) completed."
+            $Script:LogString += Write-AuditLog -Message "DHCP Server: $($DHCPServer)"
+            $Script:LogString += Write-AuditLog -Message "Gateway: $($internetadapter.IPv4DefaultGateway.nexthop)"
+            $Script:LogString += Write-AuditLog -Message "##########################################"
+            $Script:LogString += Write-AuditLog -Message "Starting with $(($NetworkAudit).count) output objects."
+            # Filter devices that don't ping as no results will be found.
+            $scan = Build-NetScanObject -NetScanObject $NetworkAudit #-IncludeNoPing
+            $Script:LogString += Write-AuditLog -Message "Created $(($scan).count) output objects for the following hosts:"
+            $Script:LogString += Write-AuditLog -Message "$(($scan | Select-Object "IP/DNS")."IP/DNS" -join ", ")"
+            # Normalize Subnet text for filename.
+            $subnetText = $(($subnet.Replace("/", "_")))
+            # If report switch is true, export the scan to a CSV file with a timestamped filename.
+            <#
+            if ($report) {
+                $csv = "C:\temp\$((Get-Date).ToString('yyyy.MM.dd_hhmm.ss')).$($env:USERDOMAIN)_Subnet.$($subnetText).NetScan.csv"
+                $zip = $csv -replace ".csv", ".zip"
+                $log = $csv -replace ".csv", ".AuditLog.csv"
+                Build-ReportArchive -Export $scan -csv $csv -zip $zip -log $log -ErrorVariable BuildErr
+            }
+            #>
+            # Add the scan to the function output.
+            $results = $scan
         } # End If $LocalSubnets
         elseif ($Computers) {
             $Subnet = $Computers
-            $scan = Invoke-PSnmap -ComputerName $subnet -Port $ports -Dns -NoSummary -AddService
-            $results = Build-NetScanObject -NetScanObject $scan
-            if ($Report) {
-                $csv = "C:\temp\$((Get-Date).ToString('yyyy-MM-dd_hh.mm.ss')).$($env:USERDNSDOMAIN)_HostScan.csv"
-                $zip = $csv -replace ".csv", ".zip"
-                $log = $csv -replace ".csv", ".AuditLog.csv"
-                return Build-ReportArchive -Export $results -csv $csv -zip $zip -log $log -ErrorVariable BuildErr
+            if ($NoHops) {
+                $IPRange = $Subnet
+                $NonRoutedIPs,$FailedIps = Get-QuickPing -IPRange $IPRange -TTL 1
+                if ($null -ne $NonRoutedIPs ) {
+                    $Script:LogString += Write-AuditLog -Message "Local IPs object is populated."
+                    $Script:LogString += Write-AuditLog -Message "Scan found $($NonRoutedIPs.count) IPs to scan."
+                    if ($FailedIps -eq "NoIPs") {
+                        $FailedIpsCount = 0
+                    }
+                    else {
+                        $FailedIpsCount = $FailedIps.count
+                    }
+                    $Script:LogString += Write-AuditLog -Message "There were $FailedIpsCount IPs that failed."
+                    $Script:LogString += Write-AuditLog -Message "Begin Invoke-PSnmap"
+                    $scan = Invoke-PSnmap -ComputerName $NonRoutedIPs -Port $ports -Dns -NoSummary -AddService:$AddService
+                    $results = Build-NetScanObject -NetScanObject $scan
+                }
+                else {
+                    throw "No Hosts found to scan!"
+                }
+            }
+            else {
+                $Script:LogString += Write-AuditLog -Message "Begin Invoke-PSnmap"
+                $scan = Invoke-PSnmap -ComputerName $Subnet -Port $ports -Dns -NoSummary -AddService:$AddService
+                $results = Build-NetScanObject -NetScanObject $scan
             }
         }
-    } # Process Close
+    }
+    # Process Close
     end {
-        return $results
+        if ($Report) {
+            $csv = "C:\temp\$((Get-Date).ToString('yyyy-MM-dd_hh.mm.ss')).$($env:USERDOMAIN)_HostScan_$subnetText.csv"
+            $zip = $csv -replace ".csv", ".zip"
+            $log = $csv -replace ".csv", ".AuditLog.csv"
+            Build-ReportArchive -Export $results -csv $csv -zip $zip -log $log -ErrorVariable BuildErr
+        }
+        else {
+            return $results
+        }
     }# End Close
 }
