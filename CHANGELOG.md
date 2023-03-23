@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Throttle Limit to `Get-NetworkAudit`.
+
+### Fixed
+
+- Fix confirm preference IP output that was going off screen.
+- Fix `Initialize-ModuleEnv` so that it installs latest powershell get and adds TLS to the session.
+
+
+### Added
+
 - Added option to confirm scan if `-NoHops` selected in `Get-NetworkAudit`.
 - Added progress bar to `Get-QuickPing`.
 
