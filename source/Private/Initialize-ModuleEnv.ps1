@@ -66,9 +66,37 @@ function Initialize-ModuleEnv {
         [string]$Scope,
         [string[]]$ImportModuleNames = $null
     )
+    [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
     if ($global:MaximumFunctionCount -lt 8192) {
         $global:MaximumFunctionCount = 8192
     }
+    # PowerShellGet check and install.
+    ### https://learn.microsoft.com/en-us/powershell/scripting/gallery/installing-psget?view=powershell-7.3
+
+    Install-Module PowerShellGet -AllowClobber -Force
+
+    Get-Module powershellget -OutVariable PwshGetVer
+
+    $PwshGetVer.Version.ToString()
+    if ((Get-Module -Name PowerShellGet -ListAvailable).Version.ToString() -eq "1.0.0.1") {
+        switch (Test-IsAdmin) {
+            $false {
+                $Script:LogString += Write-AuditLog -Message "Powershell Get is version 1.0.0.1. Please run this once as an administrator, to update PowershellGet." -Severity Error
+                throw "Elevation required to update PowerShellGet!"
+            }
+            Default {
+                $Script:LogString += Write-AuditLog -Message "You have sufficient privileges to install to the PowershellGet"
+            }
+        }
+        Install-Module PowershellGet -
+    }
+
+    if ((Get-Module -Name PowerShellGet -ListAvailable) -ne $null) {
+        Write-Host "PowerShellGet module found. Importing PowerShellGet module..."
+        Import-Module -Name PowerShellGet
+    }
+
+    ###
     if ($Scope -eq "AllUsers") {
         switch (Test-IsAdmin) {
             $false {
