@@ -60,8 +60,26 @@ function Get-NetworkAudit {
             Position = 1
         )]
         [string[]]$Computers,
+        [Parameter(
+            HelpMessage = 'Number of concurrent threads. Default: 32.',
+            ValueFromPipelineByPropertyName = $true,
+            Position = 2
+        )]
+        [Int32]$ThrottleLimit =32,
+        [Parameter(
+            HelpMessage = 'Build a list of IPs that are not beyond 1 hop.',
+            ValueFromPipelineByPropertyName = $true
+        )]
         [switch]$NoHops,
+        [Parameter(
+            HelpMessage = 'Add Service Name to Port Number in output.',
+            ValueFromPipelineByPropertyName = $true
+        )]
         [switch]$AddService,
+        [Parameter(
+            HelpMessage = 'Output a report to C:\temp. The function will output the full path to the report as a string.',
+            ValueFromPipelineByPropertyName = $true
+        )]
         [switch]$Report
     )
     begin {
@@ -108,9 +126,9 @@ function Get-NetworkAudit {
                     $Script:LogString += Write-AuditLog -Message "Local IPs object is populated."
                     $Script:LogString += Write-AuditLog -Message "Scan found $($NonRoutedIPs.count) IPs to scan."
                     $Script:LogString += Write-AuditLog -Message "There were $($FailedIps.count) IPs that failed to scan."
-                    if ( $PSCmdlet.ShouldProcess( "NoHops", "Please confirm the following ips are ok to scan before proceeding:`n$($NonRoutedIPs -join "`n")" ) ) {
+                    if ( $PSCmdlet.ShouldProcess( "NoHops", "Please confirm the following ips are ok to scan before proceeding:`n$($NonRoutedIPs -join ",")" ) ) {
                         $Script:LogString += Write-AuditLog -Message "Begin Invoke-PSnmap"
-                        $NetworkAudit = Invoke-PSnmap -ComputerName $NonRoutedIPs -Port $ports -Dns -NoSummary -AddService:$AddService
+                        $NetworkAudit = Invoke-PSnmap -ComputerName $NonRoutedIPs -Port $ports -ThrottleLimit $ThrottleLimit -Dns -NoSummary -AddService:$AddService
                     } # End Region If $PSCmdlet.ShouldProcess
 
                 }
@@ -120,7 +138,7 @@ function Get-NetworkAudit {
 
             }
             else {
-                $NetworkAudit = Invoke-PSnmap -ComputerName $subnet -Port $ports -Dns -NoSummary -AddService:$AddService
+                $NetworkAudit = Invoke-PSnmap -ComputerName $subnet -Port $ports -ThrottleLimit $ThrottleLimit -Dns -NoSummary -AddService:$AddService
             }
             # End Reigion Build Network Audit Object
             # Write out information about the network scan.
@@ -163,9 +181,9 @@ function Get-NetworkAudit {
                         $FailedIpsCount = $FailedIps.count
                     }
                     $Script:LogString += Write-AuditLog -Message "There were $FailedIpsCount IPs that failed to scan."
-                    if ( $PSCmdlet.ShouldProcess( "NoHops", "Please confirm the following ips are ok to scan before proceeding:`n$($NonRoutedIPs -join "`n")" ) ) {
+                    if ( $PSCmdlet.ShouldProcess( "NoHops", "Please confirm the following ips are ok to scan before proceeding:`n$($NonRoutedIPs -join ",")" ) ) {
                         $Script:LogString += Write-AuditLog -Message "Begin Invoke-PSnmap"
-                        $scan = Invoke-PSnmap -ComputerName $NonRoutedIPs -Port $ports -Dns -NoSummary -AddService:$AddService
+                        $scan = Invoke-PSnmap -ComputerName $NonRoutedIPs -Port $ports -ThrottleLimit $ThrottleLimit -Dns -NoSummary -AddService:$AddService
                     } # End Region If $PSCmdlet.ShouldProcess
                     $results = Build-NetScanObject -NetScanObject $scan
                 }
@@ -175,7 +193,7 @@ function Get-NetworkAudit {
             }
             else {
                 $Script:LogString += Write-AuditLog -Message "Begin Invoke-PSnmap"
-                $scan = Invoke-PSnmap -ComputerName $Subnet -Port $ports -Dns -NoSummary -AddService:$AddService
+                $scan = Invoke-PSnmap -ComputerName $Subnet -Port $ports -ThrottleLimit $ThrottleLimit -Dns -NoSummary -AddService:$AddService
                 $results = Build-NetScanObject -NetScanObject $scan
             }
         }

@@ -20,7 +20,7 @@ $nonWindows         = Get-ADHostAudit -HostType "Non-Windows" -Report -Verbose
 $activeUsers        = Get-ADActiveUserAudit -Report -Verbose
 $privilegedUsers    = Get-ADUserPrivilegeAudit -Report -Verbose
 $wildcardUsers      = Get-ADUserWildCardAudit -WildCardIdentifier "svc" -Report -Verbose
-$netaudit           = Get-NetworkAudit -LocalSubnets -Report -Verbose
+$netaudit           = Get-NetworkAudit -LocalSubnets -NoHops -AddService -Report -Verbose
 Merge-ADAuditZip -FilePaths  $workstations, $servers, $nonWindows, $activeUsers, $privilegedUsers, $wildcardUsers,$netaudit -OpenDirectory -Verbose
 
 $netaudit           = Get-NetworkAudit -LocalSubnets -Report -Verbose
@@ -51,10 +51,10 @@ Get-NetworkAudit -Ports 443 -Computers $test2 -Report -NoHops -AddService
 #>
 
 <#
-$ver = "v0.3.6"
+$ver = "v0.3.7"
 git checkout main
 git pull origin main
-git tag -a $ver -m "Release version $ver Fix"
+git tag -a $ver -m "Release version $ver Update"
 git push origin $ver
 "Fix: PR #37"
 git push origin $ver
