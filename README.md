@@ -20,9 +20,10 @@ See the [ADAuditTasks help documentation](https://criticalsolutionsnetwork.githu
 - `Get-ADUserLogonAudit`
 - `Get-ADUserPrivilegeAudit`
 - `Get-ADUserWildCardAudit`
-- `Get-HostTag`
 - `Get-NetworkAudit`
-- `Get-WebCert`
+- `Get-WebCertAudit`
+- `Get-HostTag`
+- `Get-QuickPing`
 - `Merge-ADAuditZip`
 - `New-GraphEmailApp`
 - `New-PatchTuesdayReport`
@@ -33,21 +34,21 @@ See the [ADAuditTasks help documentation](https://criticalsolutionsnetwork.githu
 ## Private Functions
 The following Private Functions support the functions in this module:
 
-- `Build-ADAuditTasksComputer.ps1`
-- `Build-ADAuditTasksUser.ps1`
-- `Build-DirectoryPath.ps1`
-- `Build-MacIdOUIList.ps1`
-- `Build-NetScanObject.ps1`
-- `Build-ReportArchive.ps1`
-- `Get-AdExtendedRight.ps1`
-- `Get-ADGroupMemberof.ps1`
-- `Group-UpdateByProduct.ps1`
-- `Initialize-ModuleEnv.ps1`
-- `Install-ADModule.ps1`
-- `Read-FileContent.ps1`
-- `Show-OSUpdateSection.ps1`
-- `Test-IsAdmin.ps1`
-- `Write-AuditLog.ps1`
+- `Build-ADAuditTasksComputer`
+- `Build-ADAuditTasksUser`
+- `Build-DirectoryPath`
+- `Build-MacIdOUIList`
+- `Build-NetScanObject`
+- `Build-ReportArchive`
+- `Get-AdExtendedRight`
+- `Get-ADGroupMemberof`
+- `Group-UpdateByProduct`
+- `Initialize-ModuleEnv`
+- `Install-ADModule`
+- `Read-FileContent`
+- `Show-OSUpdateSection`
+- `Test-IsAdmin`
+- `Write-AuditLog`
 
 ### Example 1: Creating a zip file of various host types
 
