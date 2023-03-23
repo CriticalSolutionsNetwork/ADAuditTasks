@@ -21,7 +21,7 @@ $activeUsers        = Get-ADActiveUserAudit -Report -Verbose
 $privilegedUsers    = Get-ADUserPrivilegeAudit -Report -Verbose
 $wildcardUsers      = Get-ADUserWildCardAudit -WildCardIdentifier "svc" -Report -Verbose
 $netaudit           = Get-NetworkAudit -LocalSubnets -Report -Verbose
-Merge-ADAuditZip -FilePaths  $workstations, $servers, $nonWindows, $activeUsers, $privilegedUsers, $wildcardUsers,$netaudit -OpenDirectory
+Merge-ADAuditZip -FilePaths  $workstations, $servers, $nonWindows, $activeUsers, $privilegedUsers, $wildcardUsers,$netaudit -OpenDirectory -Verbose
 
 $netaudit           = Get-NetworkAudit -LocalSubnets -Report -Verbose
 Merge-ADAuditZip -FilePaths $netaudit -OpenDirectory
