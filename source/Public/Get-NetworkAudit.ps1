@@ -36,7 +36,7 @@ function Get-NetworkAudit {
 
     #>
     [OutputType([pscustomobject])]
-    [CmdletBinding(DefaultParameterSetName = 'Default')]
+    [CmdletBinding(DefaultParameterSetName = 'Default', SupportsShouldProcess = $true, ConfirmImpact = 'High')]
     param (
         [Parameter(
             ValueFromPipelineByPropertyName = $true,
@@ -103,17 +103,21 @@ function Get-NetworkAudit {
             if ($NoHops) {
                 $IPRange = $CalcSub.IPEnumerated
                 # Use a foreach loop to test each IP address
-                $NonRoutedIPs,$FailedIps = Get-QuickPing -IPRange $IPRange -TTL 1
+                $NonRoutedIPs, $FailedIps = Get-QuickPing -IPRange $IPRange -TTL 1
                 if ($null -ne $NonRoutedIPs) {
                     $Script:LogString += Write-AuditLog -Message "Local IPs object is populated."
                     $Script:LogString += Write-AuditLog -Message "Scan found $($NonRoutedIPs.count) IPs to scan."
-                    $Script:LogString += Write-AuditLog -Message "There were $($FailedIps.count) IPs that failed."
-                    $Script:LogString += Write-AuditLog -Message "Begin Invoke-PSnmap"
-                    $NetworkAudit = Invoke-PSnmap -ComputerName $NonRoutedIPs -Port $ports -Dns -NoSummary -AddService:$AddService
+                    $Script:LogString += Write-AuditLog -Message "There were $($FailedIps.count) IPs that failed to scan."
+                    if ( $PSCmdlet.ShouldProcess( "NoHops", "Please confirm the following ips are ok to scan before proceeding:`n$($NonRoutedIPs -join "`n")" ) ) {
+                        $Script:LogString += Write-AuditLog -Message "Begin Invoke-PSnmap"
+                        $NetworkAudit = Invoke-PSnmap -ComputerName $NonRoutedIPs -Port $ports -Dns -NoSummary -AddService:$AddService
+                    } # End Region If $PSCmdlet.ShouldProcess
+
                 }
                 else {
                     throw "No Hosts found to scan!"
                 }
+
             }
             else {
                 $NetworkAudit = Invoke-PSnmap -ComputerName $subnet -Port $ports -Dns -NoSummary -AddService:$AddService
@@ -148,7 +152,7 @@ function Get-NetworkAudit {
             $Subnet = $Computers
             if ($NoHops) {
                 $IPRange = $Subnet
-                $NonRoutedIPs,$FailedIps = Get-QuickPing -IPRange $IPRange -TTL 1
+                $NonRoutedIPs, $FailedIps = Get-QuickPing -IPRange $IPRange -TTL 1
                 if ($null -ne $NonRoutedIPs ) {
                     $Script:LogString += Write-AuditLog -Message "Local IPs object is populated."
                     $Script:LogString += Write-AuditLog -Message "Scan found $($NonRoutedIPs.count) IPs to scan."
@@ -158,9 +162,11 @@ function Get-NetworkAudit {
                     else {
                         $FailedIpsCount = $FailedIps.count
                     }
-                    $Script:LogString += Write-AuditLog -Message "There were $FailedIpsCount IPs that failed."
-                    $Script:LogString += Write-AuditLog -Message "Begin Invoke-PSnmap"
-                    $scan = Invoke-PSnmap -ComputerName $NonRoutedIPs -Port $ports -Dns -NoSummary -AddService:$AddService
+                    $Script:LogString += Write-AuditLog -Message "There were $FailedIpsCount IPs that failed to scan."
+                    if ( $PSCmdlet.ShouldProcess( "NoHops", "Please confirm the following ips are ok to scan before proceeding:`n$($NonRoutedIPs -join "`n")" ) ) {
+                        $Script:LogString += Write-AuditLog -Message "Begin Invoke-PSnmap"
+                        $scan = Invoke-PSnmap -ComputerName $NonRoutedIPs -Port $ports -Dns -NoSummary -AddService:$AddService
+                    } # End Region If $PSCmdlet.ShouldProcess
                     $results = Build-NetScanObject -NetScanObject $scan
                 }
                 else {

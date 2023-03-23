@@ -41,7 +41,12 @@ function Get-QuickPing {
     )
     $FailedToPing = @()
     $Success = @()
+    $TotalIPs = $IPRange.Count
+    $ProcessedIPs = 0
     foreach ($IP in $IPRange) {
+        $ProcessedIPs++
+        $ProgressPercentage = ($ProcessedIPs / $TotalIPs) * 100
+        Write-Progress -Activity "Scanning IP addresses" -Status "Scanning $IP ($ProcessedIPs of $TotalIPs)" -PercentComplete $ProgressPercentage
         try {
             if ($PSVersionTable.PSVersion.Major -ge 7) {
                 [void](Test-Connection $IP -BufferSize $BufferSize -TimeToLive $TTL -Count $Count -ErrorAction Stop -OutVariable test)

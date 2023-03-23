@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Added option to confirm scan if `-NoHops` selected in `Get-NetworkAudit`.
+- Added progress bar to `Get-QuickPing`.
+
+## [0.3.6] - 2023-03-22
+
+### Added
+
 - Added option to scan local subnets without a hop.
 - Added public function `Get-QuickPing`
 - Added additional logging to `Merge-ADAuditZip` function.
