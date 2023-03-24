@@ -13,13 +13,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fix confirm preference IP output that was going off screen.
 - Fix `Initialize-ModuleEnv` so that it installs latest powershell get and adds TLS to the session.
+- Fix `Initialize-ModuleEnv` so that it only sets the `$script:MaximumFunctionCount = 8192` at the script scope instead of globally.
 
+## [0.3.7] - 2023-03-23
 
 ### Added
 
 - Added option to confirm scan if `-NoHops` selected in `Get-NetworkAudit`.
 - Added progress bar to `Get-QuickPing`.
-
 ## [0.3.6] - 2023-03-22
 
 ### Added
