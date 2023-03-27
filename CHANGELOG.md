@@ -5,10 +5,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Added option for throttle limit to network audit. 
+- Added powershellget installation to module installer. 
+
+## [0.3.7] - 2023-03-23
+
 ### Added
 
 - Added option to confirm scan if `-NoHops` selected in `Get-NetworkAudit`.
 - Added progress bar to `Get-QuickPing`.
+## [0.3.6] - 2023-03-22
+
 
 ## [0.3.6] - 2023-03-22
 
