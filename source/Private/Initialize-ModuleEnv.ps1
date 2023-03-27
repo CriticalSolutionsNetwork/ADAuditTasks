@@ -66,9 +66,37 @@ function Initialize-ModuleEnv {
         [string]$Scope,
         [string[]]$ImportModuleNames = $null
     )
-    if ($global:MaximumFunctionCount -lt 8192) {
-        $global:MaximumFunctionCount = 8192
+    # Function limit needs to be set higher if installing graph module and if powershell is version 5.1.
+    if ($PublicModuleNames -match 'Microsoft.Graph' -or $PrereleaseModuleNames -match "Microsoft.Graph") {
+        if ($script:MaximumFunctionCount -lt 8192) {
+            $script:MaximumFunctionCount = 8192
+        }
     }
+    # PowerShellGet check and install.
+    ### https://learn.microsoft.com/en-us/powershell/scripting/gallery/installing-psget?view=powershell-7.3
+        $PSGetVer = Get-Module -Name PowerShellGet -ListAvailable
+    if ($($PSGetVer[0].Version.ToString()) -eq "1.0.0.1") {
+        switch (Test-IsAdmin) {
+            $false {
+                $Script:LogString += Write-AuditLog -Message "PowerShellGet is version 1.0.0.1. Please run this once as an administrator, to update PowershellGet." -Severity Error
+                throw "Elevation required to update PowerShellGet!"
+            }
+            Default {
+                $Script:LogString += Write-AuditLog -Message "You have sufficient privileges to install to the PowershellGet"
+            }
+        }
+        try {
+            $Script:LogString += Write-AuditLog -Message "Install the latest version of PowershellGet from the PSGallery?" -Severity Warning
+            [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
+            Install-Module PowerShellGet -AllowClobber -Force -ErrorAction Stop
+            $Script:LogString += Write-AuditLog -Message "PowerShellGet was installed successfully!"
+            Import-Module -Name PowerShellGet -ErrorAction Stop
+        }
+        catch {
+            throw $_.Exception
+        }
+    }
+    # End Region PowershellGet Install
     if ($Scope -eq "AllUsers") {
         switch (Test-IsAdmin) {
             $false {

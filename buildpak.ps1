@@ -20,7 +20,7 @@ $nonWindows         = Get-ADHostAudit -HostType "Non-Windows" -Report -Verbose
 $activeUsers        = Get-ADActiveUserAudit -Report -Verbose
 $privilegedUsers    = Get-ADUserPrivilegeAudit -Report -Verbose
 $wildcardUsers      = Get-ADUserWildCardAudit -WildCardIdentifier "svc" -Report -Verbose
-$netaudit           = Get-NetworkAudit -LocalSubnets -Report -Verbose
+$netaudit           = Get-NetworkAudit -LocalSubnets -NoHops -AddService -Report -Verbose
 Merge-ADAuditZip -FilePaths  $workstations, $servers, $nonWindows, $activeUsers, $privilegedUsers, $wildcardUsers,$netaudit -OpenDirectory -Verbose
 
 $netaudit           = Get-NetworkAudit -LocalSubnets -Report -Verbose
@@ -39,6 +39,7 @@ Get-NetworkAudit -Ports 443 -Computers $test2 -Report -NoHops -AddService
 # .\build.ps1 -BuildConfig .\.git
 # .\build.ps1 -ResolveDependency -tasks noop
 # .\build.ps1 -tasks build -CodeCoverageThreshold 0
+
 <#
 1. Merge the pull request that contains the code documentation and comments.
 2. Switch to the main branch in your local repository using `git checkout main`.
@@ -51,17 +52,17 @@ Get-NetworkAudit -Ports 443 -Computers $test2 -Report -NoHops -AddService
 #>
 
 <#
-$ver = "v0.3.6"
+$ver = "v0.3.7"
 git checkout main
 git pull origin main
-git tag -a $ver -m "Release version $ver Fix"
+git tag -a $ver -m "Release version $ver Update"
 git push origin $ver
 "Fix: PR #37"
 git push origin $ver
 # git tag -d $ver
 #>
 
-
+# https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.csv
 
 
 
