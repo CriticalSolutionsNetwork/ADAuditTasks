@@ -71,7 +71,7 @@ function Get-NetworkAudit {
             ValueFromPipelineByPropertyName = $true,
             Position = 2
         )]
-        [Int32]$ThrottleLimit =32,
+        [Int32]$ThrottleLimit = 32,
         [Parameter(
             HelpMessage = 'Build a list of IPs that are not beyond 1 hop.',
             ValueFromPipelineByPropertyName = $true
@@ -86,7 +86,12 @@ function Get-NetworkAudit {
             HelpMessage = 'Output a report to C:\temp. The function will output the full path to the report as a string.',
             ValueFromPipelineByPropertyName = $true
         )]
-        [switch]$Report
+        [switch]$Report,
+        [Parameter(
+            HelpMessage = 'Scan all hosts even if ping fails.',
+            ValueFromPipelineByPropertyName = $true
+        )]
+        [switch]$ScanOnPingFail
     )
     begin {
         # Create logging object
@@ -108,6 +113,10 @@ function Get-NetworkAudit {
                 "88", "464", "123", "135", "137", "138", "139", `
                 "445", "389", "636", "514", "587", "1701", `
                 "3268", "3269", "3389", "5985", "5986"
+        }
+        switch ($ScanOnPingFail) {
+            $true { $noping = $true }
+            Default { $noping = $false }
         }
     } # End of begin block
     process {
@@ -134,7 +143,7 @@ function Get-NetworkAudit {
                     $Script:LogString += Write-AuditLog -Message "There were $($FailedIps.count) IPs that failed to scan."
                     if ( $PSCmdlet.ShouldProcess( "NoHops", "Please confirm the following ips are ok to scan before proceeding:`n$($NonRoutedIPs -join ",")" ) ) {
                         $Script:LogString += Write-AuditLog -Message "Begin Invoke-PSnmap"
-                        $NetworkAudit = Invoke-PSnmap -ComputerName $NonRoutedIPs -Port $ports -ThrottleLimit $ThrottleLimit -Dns -NoSummary -AddService:$AddService
+                        $NetworkAudit = Invoke-PSnmap -ComputerName $NonRoutedIPs -Port $ports -ThrottleLimit $ThrottleLimit -Dns -NoSummary -ScanOnPingFail:$ScanOnPingFail -AddService:$AddService
                     } # End Region If $PSCmdlet.ShouldProcess
                 }
                 else {
@@ -142,7 +151,7 @@ function Get-NetworkAudit {
                 }
             }
             else {
-                $NetworkAudit = Invoke-PSnmap -ComputerName $subnet -Port $ports -ThrottleLimit $ThrottleLimit -Dns -NoSummary -AddService:$AddService
+                $NetworkAudit = Invoke-PSnmap -ComputerName $subnet -Port $ports -ThrottleLimit $ThrottleLimit -Dns -NoSummary -ScanOnPingFail:$ScanOnPingFail -AddService:$AddService
             }
             # End Reigion Build Network Audit Object
             # Write out information about the network scan.
@@ -153,7 +162,7 @@ function Get-NetworkAudit {
             $Script:LogString += Write-AuditLog -Message "##########################################"
             $Script:LogString += Write-AuditLog -Message "Starting with $(($NetworkAudit).count) output objects."
             # Filter devices that don't ping as no results will be found.
-            $scan = Build-NetScanObject -NetScanObject $NetworkAudit #-IncludeNoPing
+            $scan = Build-NetScanObject -NetScanObject $NetworkAudit -IncludeNoPing:$noping #-IncludeNoPing
             $Script:LogString += Write-AuditLog -Message "Created $(($scan).count) output objects for the following hosts:"
             $Script:LogString += Write-AuditLog -Message "$(($scan | Select-Object "IP/DNS")."IP/DNS" -join ", ")"
             # Normalize Subnet text for filename.
@@ -181,16 +190,20 @@ function Get-NetworkAudit {
                         $Script:LogString += Write-AuditLog -Message "Begin Invoke-PSnmap"
                         $scan = Invoke-PSnmap -ComputerName $NonRoutedIPs -Port $ports -ThrottleLimit $ThrottleLimit -Dns -NoSummary -AddService:$AddService
                     } # End Region If $PSCmdlet.ShouldProcess
-                    $results = Build-NetScanObject -NetScanObject $scan
+                    $results = Build-NetScanObject -NetScanObject $scan -IncludeNoPing:$noping
                 }
                 else {
                     throw "No Hosts found to scan!"
                 }
             }
             else {
+                switch ($ScanOnPingFail) {
+                    $true { $noping = $true }
+                    Default { $noping = $false }
+                }
                 $Script:LogString += Write-AuditLog -Message "Begin Invoke-PSnmap"
                 $scan = Invoke-PSnmap -ComputerName $Subnet -Port $ports -ThrottleLimit $ThrottleLimit -Dns -NoSummary -AddService:$AddService
-                $results = Build-NetScanObject -NetScanObject $scan
+                $results = Build-NetScanObject -NetScanObject $scan -IncludeNoPing:$noping
             }
         }
     }

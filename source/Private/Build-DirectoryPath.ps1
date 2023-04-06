@@ -8,10 +8,10 @@ function Build-DirectoryPath {
         Try {
             # If not present then create the dir
             New-Item -ItemType Directory $DirectoryPath -Force -ErrorAction Stop | Out-Null
-            $Script:LogString += Write-AuditLog -Message $("Directory: " + $DirectoryPath + "was created.")
+            $Script:LogString += Write-AuditLog -Message $("Directory: " + $DirectoryPath + " was created.")
         }
         Catch {
-            $Script:LogString += Write-AuditLog -Message $("Directory: " + $DirectoryPath + "was not created.") -Severity Error
+            $Script:LogString += Write-AuditLog -Message $("Directory: " + $DirectoryPath + " was not created.") -Severity Error
             $Script:LogString += Write-AuditLog -Message "End Log"
             throw $_.Exception
         }
