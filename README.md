@@ -15,6 +15,7 @@ See the [ADAuditTasks help documentation](https://criticalsolutionsnetwork.githu
 ## Public Functions
  The following Public Functions are available to the user executing the tasks: 
 
+- `Convert-NmapXMLToCSV`
 - `Get-ADActiveUserAudit`
 - `Get-ADHostAudit`
 - `Get-ADUserLogonAudit`
@@ -24,7 +25,9 @@ See the [ADAuditTasks help documentation](https://criticalsolutionsnetwork.githu
 - `Get-WebCertAudit`
 - `Get-HostTag`
 - `Get-QuickPing`
+- `Join-CSVFiles`
 - `Merge-ADAuditZip`
+- `Merge-NmapToADHostAUdit`
 - `New-GraphEmailApp`
 - `New-PatchTuesdayReport`
 - `Send-AuditEmail`

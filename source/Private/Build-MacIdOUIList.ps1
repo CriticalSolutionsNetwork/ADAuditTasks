@@ -6,6 +6,7 @@ function Build-MacIdOUIList {
         return $ouiobject
     }
     catch {
-        Write-Warning "List not downloaded. Continuing without MACID OUI list." -WarningAction Continue
+        Write-Warning "List not downloaded. Continuing with local MACID OUI list." -WarningAction Continue
+        $ouiobject = Import-Csv source\assets\oui.csv
     }
 }

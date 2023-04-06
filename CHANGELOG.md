@@ -5,8 +5,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Public function `Join-CSVFiles` to join csv files.
+- Public function `Convert-NmapXMLToCSV` to convert nmap xml data to csv. 
+- Public function `Merge-NmapToADHostAudit` to merge nmap csv output to ADHostAudit data.
+- Added scan on ping fail to `Get-NetworkAudit`
+- Added local MAC OUI list in case of failed download in `Build-MacIdOUIList`
+
+### Fixed
+
+- Private function `Build-DirectoryPath` verbose output.
+
+## [0.3.8] - 2023-03-27
+
 - Added option for throttle limit to network audit. 
-- Added powershellget installation to module installer. 
+- Added powershellget installation to module installer.
 
 ## [0.3.7] - 2023-03-23
 

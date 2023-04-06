@@ -24,14 +24,20 @@ $netaudit           = Get-NetworkAudit -LocalSubnets -NoHops -AddService -Report
 Merge-ADAuditZip -FilePaths  $workstations, $servers, $nonWindows, $activeUsers, $privilegedUsers, $wildcardUsers,$netaudit -OpenDirectory -Verbose
 
 $netaudit           = Get-NetworkAudit -LocalSubnets -Report -Verbose
+
+$script = {Get-NetworkAudit -LocalSubnets -NoHops -Report -Verbose}
+$script2 = {Get-NetworkAudit -LocalSubnets -Report -ThrottleLimit 320 -Verbose}
+Measure-Command -Expression $script -Verbose
+Measure-Command -Expression $script2 -Verbose
+
 Merge-ADAuditZip -FilePaths $netaudit -OpenDirectory
 
 
 
-Get-NetworkAudit -Ports 443 -Computers $test1
+Get-NetworkAudit -Ports 443 -Computers $test1 -Verbose
 Get-NetworkAudit -Ports 443 -Computers $test1 -Report
-Get-NetworkAudit -Ports 443 -Computers $test2 -NoHops -AddService
-Get-NetworkAudit -Ports 443 -Computers $test2 -Report -NoHops -AddService
+Get-NetworkAudit -Ports 443 -Computers $test1 -NoHops -AddService
+Get-NetworkAudit -Ports 443 -Computers $test1 -Report -NoHops -AddService
 
 
 # .\build.ps1 -tasks build, pack, publish -CodeCoverageThreshold 0
@@ -52,7 +58,7 @@ Get-NetworkAudit -Ports 443 -Computers $test2 -Report -NoHops -AddService
 #>
 
 <#
-$ver = "v0.3.7"
+$ver = "v0.3.8"
 git checkout main
 git pull origin main
 git tag -a $ver -m "Release version $ver Update"
