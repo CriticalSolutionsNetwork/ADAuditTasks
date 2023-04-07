@@ -36,7 +36,7 @@ function Get-ADUserPrivilegeAudit {
     .NOTES
     This function requires the ActiveDirectory module.
     #>
-    [CmdletBinding(HelpURI = "https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-ADUserPrivilegeAudit")]
+    [CmdletBinding()]
     param (
         # Input parameter: output folder path for generated reports
         [Parameter(

@@ -24,7 +24,7 @@ function Get-ADUserWildCardAudit {
     Do not add a wildcard (*) as it will do this automatically.
     #>
     [OutputType([ADAuditTasksUser])]
-    [CmdletBinding(HelpURI = "https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-ADUserWildCardAudit")]
+    [CmdletBinding()]
     param (
         [Parameter(
             HelpMessage = 'Active Directory User Enabled or not. Default $true',

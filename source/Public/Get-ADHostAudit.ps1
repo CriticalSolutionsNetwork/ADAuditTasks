@@ -34,7 +34,7 @@ function Get-ADHostAudit {
         For help type: help Get-ADHostAudit -ShowWindow
     #>
     [OutputType([pscustomobject])]
-    [CmdletBinding(DefaultParameterSetName = 'HostType',HelpURI = "https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-ADHostAudit")]
+    [CmdletBinding(DefaultParameterSetName = 'HostType')]
     param (
         [ValidateSet("WindowsServers", "WindowsWorkstations", "Non-Windows")]
         [Parameter(

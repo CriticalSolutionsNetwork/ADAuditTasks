@@ -21,7 +21,7 @@ function Join-CSVFiles {
     Make sure the input CSV files have the same headers and formatting for
     the function to work properly.
     #>
-    [CmdletBinding(HelpURI = "https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Join-CSVFiles")]
+    [CmdletBinding()]
     param(
         [Parameter(
             Mandatory = $true,

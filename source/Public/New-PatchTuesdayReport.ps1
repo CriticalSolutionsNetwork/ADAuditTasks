@@ -41,7 +41,7 @@ function New-PatchTuesdayReport {
     None.
     #>
 
-    [CmdletBinding(HelpURI = "https://criticalsolutionsnetwork.github.io/ADAuditTasks/#New-PatchTuesdayReport")]
+    [CmdletBinding()]
     param(
         [ValidateNotNull()]
         [string]$CsvPath,

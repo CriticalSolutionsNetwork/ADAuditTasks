@@ -75,9 +75,8 @@ TROUBLESHOOTING NOTE
     There are currently no known issues with this module.
 
 SEE ALSO
-    For more information on this module and how to use it, see the
-    ADAuditTasks help documentation
-    .
+    For more information on this module and how to use it, see: -
+    https://criticalsolutionsnetwork.github.io/ADAuditTasks/
 
 KEYWORDS
     The following alternate names or titles for this topic that readers might use:

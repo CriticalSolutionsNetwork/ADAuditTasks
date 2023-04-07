@@ -24,7 +24,7 @@ function Merge-NmapToADHostAudit {
     .NOTES
     Make sure the input CSV files have the correct headers and formatting for the function to work properly.
     #>
-    [CmdletBinding(HelpURI = "https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Merge-NmapToADHostAudit")]
+    [CmdletBinding()]
     param (
         [Parameter(
             Mandatory = $true,

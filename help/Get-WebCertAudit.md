@@ -1,7 +1,7 @@
-﻿---
+---
 external help file: ADAuditTasks-help.xml
 Module Name: ADAuditTasks
-online version:
+online version: https://github.com/CriticalSolutionsNetwork/ADAuditTasks/tree/main/help/Get-WebCertAudit.md
 schema: 2.0.0
 ---
 

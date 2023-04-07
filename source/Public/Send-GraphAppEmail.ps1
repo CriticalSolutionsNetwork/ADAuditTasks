@@ -25,7 +25,7 @@ function Send-GraphAppEmail {
     .NOTES
     The function requires the Microsoft.Graph and MSAL.PS modules to be installed and imported.
     #>
-    [CmdletBinding(HelpURI = "https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Send-GraphAppEmail")]
+    [CmdletBinding()]
     param (
         [Parameter(HelpMessage = "The Pre-created New-GraphEmailApp Name for sending the email.")]
         [ValidateNotNullOrEmpty()]
