@@ -37,7 +37,7 @@ function New-GraphEmailApp {
     #>
 
     [OutputType([pscustomobject])]
-    [CmdletBinding()]
+    [CmdletBinding(HelpURI = "https://criticalsolutionsnetwork.github.io/ADAuditTasks/#New-GraphEmailApp")]
     param (
         [Parameter(Mandatory = $true, HelpMessage = "The 2 to 4 character long prefix ID of the app, files and certs that are created.")]
         [ValidatePattern('^[A-Z]{2,4}$')]

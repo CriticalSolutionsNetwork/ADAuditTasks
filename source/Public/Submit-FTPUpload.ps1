@@ -35,7 +35,7 @@ function Submit-FTPUpload {
     .LINK
     https://winscp.net/eng/docs/library_powershell
     #>
-    [CmdletBinding()]
+    [CmdletBinding(HelpURI = "https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Submit-FTPUpload")]
     param (
         [string]$FTPUserName, # FTP username
         [securestring]$Password, # FTP password

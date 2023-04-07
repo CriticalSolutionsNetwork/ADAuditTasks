@@ -25,7 +25,7 @@ function Get-ADUserLogonAudit {
     The function may take some time to complete if the Active Directory environment is large or the domain
     controllers are geographically distributed.
     #>
-    [CmdletBinding()]
+    [CmdletBinding(HelpURI = "https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-ADUserLogonAudit")]
     [OutputType([datetime])]
     param (
         [Alias("Identity", "UserName", "Account")]

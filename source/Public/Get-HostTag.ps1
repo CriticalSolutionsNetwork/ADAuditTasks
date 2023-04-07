@@ -41,7 +41,7 @@ function Get-HostTag {
     # Define the output type of the function
     [OutputType([string[]])]
     # Define the binding for the cmdlet
-    [CmdletBinding()]
+    [CmdletBinding(HelpURI = "https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-HostTag")]
     # Define the parameters for the function
     param (
         # Define the first parameter, which is mandatory

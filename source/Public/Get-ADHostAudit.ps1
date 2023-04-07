@@ -34,7 +34,7 @@ function Get-ADHostAudit {
         For help type: help Get-ADHostAudit -ShowWindow
     #>
     [OutputType([pscustomobject])]
-    [CmdletBinding(DefaultParameterSetName = 'HostType')]
+    [CmdletBinding(DefaultParameterSetName = 'HostType',HelpURI = "https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-ADHostAudit")]
     param (
         [ValidateSet("WindowsServers", "WindowsWorkstations", "Non-Windows")]
         [Parameter(
@@ -128,20 +128,21 @@ function Get-ADHostAudit {
             }
         }
         # Set the properties to retrieve for the host objects
-        $propsArray = `
-            "Created", `
-            "Description", `
-            "DNSHostName", `
-            "Enabled", `
-            "IPv4Address", `
-            "IPv6Address", `
-            "KerberosEncryptionType", `
-            "lastLogonTimestamp", `
-            "Name", `
-            "OperatingSystem", `
-            "DistinguishedName", `
-            "servicePrincipalName", `
-            "whenChanged"
+        $propsArray =
+        "Created",
+        "Description",
+        "DNSHostName",
+        "Enabled",
+        "IPv4Address",
+        "IPv6Address",
+        "KerberosEncryptionType",
+        "lastLogonTimestamp",
+        "Name",
+        "OperatingSystem",
+        "DistinguishedName",
+        "servicePrincipalName",
+        "whenChanged"
+
     } # End Begin
     process {
         # Log the search criteria
@@ -152,23 +153,22 @@ function Get-ADHostAudit {
         if ($OSPicked) {
             $Script:LogString += Write-AuditLog -Message "And Operating System is like: $OSPicked."
             Get-ADComputer -Filter { (LastLogonTimeStamp -gt $time) -and (Enabled -eq $Enabled) -and (OperatingSystem -like $OSPicked) }`
-            -Properties $propsArray | Select-Object $propsArray -OutVariable ADComps | Out-Null
+                -Properties $propsArray | Select-Object $propsArray -OutVariable ADComps | Out-Null
         }
         elseif ($POSIX) {
             $Script:LogString += Write-AuditLog -Message "And Operating System is: Non-Windows(POSIX)."
             Get-ADComputer -Filter { OperatingSystem -notlike "*windows*" -and OperatingSystem -notlike "*server*" -and Enabled -eq $Enabled -and lastlogontimestamp -gt $time }`
-            -Properties $propsArray | Select-Object $propsArray -OutVariable ADComps | Out-Null
+                -Properties $propsArray | Select-Object $propsArray -OutVariable ADComps | Out-Null
         }
         else {
             $Script:LogString += Write-AuditLog -Message "And Operating System is -like `"*windows*`" -and Operating System -notlike `"*server*`" (Workstations)."
             Get-ADComputer -Filter { OperatingSystem -like "*windows*" -and OperatingSystem -notlike "*server*" -and Enabled -eq $Enabled -and lastlogontimestamp -gt $time } `
-            -Properties $propsArray | Select-Object $propsArray -OutVariable ADComps | Out-Null
+                -Properties $propsArray | Select-Object $propsArray -OutVariable ADComps | Out-Null
         }
         # Create a new object for each Active Directory computer with the selected properties and store the results in an array
         $ADCompExport = foreach ($item in $ADComps) {
             Build-ADAuditTasksComputer -ADComputer $item
         } # End foreach Item in ADComps
-        # Convert the objects to PSCustomObjects and store the results in an array
         # Convert the objects to PSCustomObjects and store the results in an array
         $Export = @()
         foreach ($Comp in $ADCompExport) {

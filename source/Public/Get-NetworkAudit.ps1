@@ -42,7 +42,7 @@ function Get-NetworkAudit {
         "10.11.1.0/24","10.11.2.0/24"
     #>
     [OutputType([pscustomobject])]
-    [CmdletBinding(DefaultParameterSetName = 'Default', SupportsShouldProcess = $true, ConfirmImpact = 'High')]
+    [CmdletBinding(DefaultParameterSetName = 'Default', SupportsShouldProcess = $true, ConfirmImpact = 'High',HelpURI = "https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-NetworkAudit")]
     param (
         [Parameter(
             ValueFromPipelineByPropertyName = $true,
