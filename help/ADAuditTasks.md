@@ -1,14 +1,14 @@
-﻿---
+---
 Module Name: ADAuditTasks
 Module Guid: 6b72cdb3-2101-4a7e-b0d0-968a70018809
-Download Help Link: {{ Update Download Link }}
-Help Version: {{ Please enter version of help manually (X.X.X.X) format }}
+Download Help Link: https://criticalsolutionsnetwork.github.io/ADAuditTasks/CAB
+Help Version: 1.0.0.0
 Locale: en-US
 ---
 
 # ADAuditTasks Module
 ## Description
-{{ Fill in the Description }}
+The ADAuditTasks module is a PowerShell module that provides a set of cmdlets for auditing Active Directory environments. The cmdlets in this module can be used to perform various audit tasks, including user and host auditing, logon auditing, privilege auditing, network auditing, and web certificate auditing. The module is designed to simplify the process of auditing Active Directory environments and provides easy-to-use cmdlets that can be run from a PowerShell console or script. With the ADAuditTasks module, you can easily gather and analyze data about your Active Directory environment to identify potential security risks and improve the overall security of your organization.
 
 ## ADAuditTasks Cmdlets
 ### [Convert-NmapXMLToCSV](Convert-NmapXMLToCSV.md)
@@ -65,4 +65,3 @@ Sends an email using the Microsoft Graph API.
 
 ### [Submit-FTPUpload](Submit-FTPUpload.md)
 Uploads a file to an FTP server using the WinSCP module.
-
