@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Added Help documentation xml and cab files.
+
+## [0.3.9] - 2023-04-07
+
+### Added
+
 - Public function `Join-CSVFiles` to join csv files.
 - Public function `Convert-NmapXMLToCSV` to convert nmap xml data to csv. 
 - Public function `Merge-NmapToADHostAudit` to merge nmap csv output to ADHostAudit data.

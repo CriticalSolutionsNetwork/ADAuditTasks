@@ -28,7 +28,7 @@ function Get-ADActiveUserAudit {
         For help type: help Get-ADActiveUserAudit -ShowWindow
     #>
     [OutputType([ADAuditTasksUser])]
-    [CmdletBinding()]
+    [CmdletBinding(HelpURI = "https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-ADActiveUserAudit")]
     param (
         [Parameter(
             HelpMessage = 'Active Directory User Enabled or not. Default $true',
