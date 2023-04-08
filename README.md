@@ -5,15 +5,15 @@
 [Patch Tuesday Newsletter](https://patchtuesday.criticalsolutions.net/)
 ## Summary
 
-- The module contains various Active Directory auditing tasks that generate logs, CSV output and report objects. 
-Most reports can be sent via Send-AuditEmail by using them as the -AttachmentFiles parameter. 
+The ADAuditTasks module provides a comprehensive set of tools for auditing and reporting on Active Directory resources, including users, computers, and network devices. The module generates logs, CSV output, and report objects, which can be sent via email using the `Send-AuditEmail` function.
 
 ## Help Documentation
 
 See the [ADAuditTasks help documentation](https://criticalsolutionsnetwork.github.io/ADAuditTasks/) for more information on this module and how to use it.
 
 ## Public Functions
- The following Public Functions are available to the user executing the tasks: 
+
+The following Public Functions are available to the user executing the tasks:
 
 - `Convert-NmapXMLToCSV`
 - `Get-ADActiveUserAudit`
@@ -27,7 +27,7 @@ See the [ADAuditTasks help documentation](https://criticalsolutionsnetwork.githu
 - `Get-QuickPing`
 - `Join-CSVFiles`
 - `Merge-ADAuditZip`
-- `Merge-NmapToADHostAUdit`
+- `Merge-NmapToADHostAudit`
 - `New-GraphEmailApp`
 - `New-PatchTuesdayReport`
 - `Send-AuditEmail`
@@ -35,6 +35,7 @@ See the [ADAuditTasks help documentation](https://criticalsolutionsnetwork.githu
 - `Submit-FTPUpload`
 
 ## Private Functions
+
 The following Private Functions support the functions in this module:
 
 - `Build-ADAuditTasksComputer`
@@ -53,6 +54,7 @@ The following Private Functions support the functions in this module:
 - `Test-IsAdmin`
 - `Write-AuditLog`
 
+
 ### Example 1: Creating a zip file of various host types
 
 The following example demonstrates how to create a zip file of different host types:
@@ -63,7 +65,6 @@ $servers = Get-ADHostAudit -HostType WindowsServers
 $nonWindows = Get-ADHostAudit -HostType "Non-Windows"
 
 Merge-ADAuditZip -FilePaths $workstations, $servers, $nonWindows
-
 ```
 ### Example 2: Sending Email with **Attachment**
 
