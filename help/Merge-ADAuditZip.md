@@ -1,7 +1,7 @@
 ---
 external help file: ADAuditTasks-help.xml
 Module Name: ADAuditTasks
-online version: https://github.com/CriticalSolutionsNetwork/ADAuditTasks/tree/main/help/Merge-ADAuditZip.md
+online version: https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Merge-ADAuditZip
 schema: 2.0.0
 ---
 
@@ -128,3 +128,8 @@ created with an incremental number added to the file name.
 This function may or may not work with various types of input.
 
 ## RELATED LINKS
+
+[https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Merge-ADAuditZip](https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Merge-ADAuditZip)
+
+[https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Merge-ADAuditZip](https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Merge-ADAuditZip)
+

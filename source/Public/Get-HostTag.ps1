@@ -11,7 +11,8 @@ function Get-HostTag {
         CSN-PWSVAPP003
         CSN-PWSVAPP004
         CSN-PWSVAPP005
-    This creates the name of the host under 15 characters and numbers them. Prefix can be 2-3 characters.
+
+        This creates the name of the host under 15 characters and numbers them. Prefix can be 2-3 characters.
     .PARAMETER PhysicalOrVirtual
     Tab through selections to add 'P' or 'V' for physical or virtual to host tag.
     .PARAMETER Prefix
@@ -37,8 +38,13 @@ function Get-HostTag {
         "SAN specific switch", "General server/Network switch", "Generic Function Device"
     .PARAMETER HostCount
     Enter a number from 1 to 999 for how many hostnames you'd like to create.
+    .NOTES
+    Additional information about the function, usage tips, etc.
+    .LINK
+    https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-HostTag
+    .LINK
+    https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-HostTag
     #>
-    # Define the output type of the function
     [OutputType([string[]])]
     # Define the binding for the cmdlet
     [CmdletBinding()]

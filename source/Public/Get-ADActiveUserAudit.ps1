@@ -1,34 +1,38 @@
 function Get-ADActiveUserAudit {
     <#
     .SYNOPSIS
-        Gets active but stale AD User accounts that haven't logged in within the last 90 days by default.
+    Gets active but stale AD User accounts that haven't logged in within the last 90 days by default.
     .DESCRIPTION
-        Audit's Active Directory taking "days" as the input for how far back to check for a user's last sign in.
-        Output can be piped to a csv manually, or automatically to C:\temp\ADActiveUserAudit or a specified path
-        in "AttachmentFolderPath" using the -Report Switch.
+    Audit's Active Directory taking "days" as the input for how far back to check for a user's last sign in.
+    Output can be piped to a csv manually, or automatically to C:\temp\ADActiveUserAudit or a specified path
+    in "AttachmentFolderPath" using the -Report Switch.
 
-        Any user account that is enabled and not signed in over 90 days is a candidate for removal.
+    Any user account that is enabled and not signed in over 90 days is a candidate for removal.
     .EXAMPLE
-        PS C:\> Get-ADActiveUserAudit
+    PS C:\> Get-ADActiveUserAudit
     .EXAMPLE
-        PS C:\> Get-ADActiveUserAudit -Report -Verbose
+    PS C:\> Get-ADActiveUserAudit -Report -Verbose
     .EXAMPLE
-        PS C:\> Get-ADActiveUserAudit -Enabled $false -DaysInactive 30 -AttachmentFolderPath "C:\temp\MyNewFolderName" -Report -Verbose
+    PS C:\> Get-ADActiveUserAudit -Enabled $false -DaysInactive 30 -AttachmentFolderPath "C:\temp\MyNewFolderName" -Report -Verbose
     .PARAMETER Report
-        Add report output as csv to DirPath directory.
+    Add report output as csv to DirPath directory.
     .PARAMETER AttachmentFolderPath
-        Default path is C:\temp\ADActiveUserAudit.
-        This is the folder where attachments are going to be saved.
+    Default path is C:\temp\ADActiveUserAudit.
+    This is the folder where attachments are going to be saved.
     .PARAMETER Enabled
-        If "$false", will also search disabled users.
+    If "$false", will also search disabled users.
     .PARAMETER DaysInactive
-        How far back in days to look for sign ins. Outside of this window, users are considered "Inactive"
+    How far back in days to look for sign ins. Outside of this window, users are considered "Inactive"
     .NOTES
-        Outputs to C:\temp\ADActiveUserAudit by default.
-        For help type: help Get-ADActiveUserAudit -ShowWindow
+    Outputs to C:\temp\ADActiveUserAudit by default.
+    For help type: help Get-ADActiveUserAudit -ShowWindow
+    .LINK
+    https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-ADActiveUserAudit
+    .LINK
+    https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-ADActiveUserAudit
     #>
     [OutputType([ADAuditTasksUser])]
-    [CmdletBinding(HelpURI = "https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-ADActiveUserAudit")]
+    [CmdletBinding()]
     param (
         [Parameter(
             HelpMessage = 'Active Directory User Enabled or not. Default $true',
@@ -120,7 +124,7 @@ function Get-ADActiveUserAudit {
             $zip = "$ExportFileName.zip"
             $log = "$ExportFileName.AuditLog.csv"
             # Call the Build-ReportArchive function to create the archive.
-            Build-ReportArchive -Export $Export -csv $csv -zip $zip -log $log -ErrorAction SilentlyContinue -ErrorVariable BuildErr
+            Build-ReportArchive -Export $Export -csv $csv -zip $zip -log $log -AttachmentFolderPath $AttachmentFolderPath -ErrorAction SilentlyContinue -ErrorVariable BuildErr
         }
         else {
             # Log message indicating that the function is returning the output object.

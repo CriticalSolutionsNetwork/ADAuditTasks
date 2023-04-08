@@ -1,7 +1,7 @@
 ---
 external help file: ADAuditTasks-help.xml
 Module Name: ADAuditTasks
-online version: https://github.com/CriticalSolutionsNetwork/ADAuditTasks/tree/main/help/Get-ADUserWildCardAudit.md
+online version: https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-ADUserWildCardAudit
 schema: 2.0.0
 ---
 
@@ -19,17 +19,18 @@ Get-ADUserWildCardAudit [[-Enabled] <Boolean>] [[-DaysInactive] <Int32>] -WildCa
 
 ## DESCRIPTION
 Takes a search string to find commonly named accounts.
-For example:
-    If you commonly name service accounts with the prefix "svc",
-    Use "svc" for the WildCardIdentifier to search for names that contain "svc"
+For example, if you
+commonly name service accounts with the prefix "svc", use "svc" for the
+WildCardIdentifier to search for names that contain "svc".
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
 Get-ADUserWildCardAudit -WildCardIdentifier "svc" -Report -Verbose
-Searches for all user accounts that are named like the search string "svc".
 ```
+
+Searches for all user accounts that are named like the search string "svc".
 
 ## PARAMETERS
 
@@ -67,7 +68,8 @@ Accept wildcard characters: False
 ### -WildCardIdentifier
 The search string to look for in the name of the account.
 Case does not matter.
-Do not add a wildcard (*) as it will do this automatically.
+Do not add a
+wildcard (*) as it will do this automatically.
 
 ```yaml
 Type: String
@@ -121,5 +123,11 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ### ADAuditTasksUser
 ## NOTES
+This function requires the ActiveDirectory module.
 
 ## RELATED LINKS
+
+[https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-ADUserWildCardAudit](https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-ADUserWildCardAudit)
+
+[https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-ADUserWildCardAudit](https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-ADUserWildCardAudit)
+

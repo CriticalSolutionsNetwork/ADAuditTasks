@@ -1,7 +1,7 @@
 ---
 external help file: ADAuditTasks-help.xml
 Module Name: ADAuditTasks
-online version: https://github.com/CriticalSolutionsNetwork/ADAuditTasks/tree/main/help/New-GraphEmailApp.md
+online version: https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/New-GraphEmailApp
 schema: 2.0.0
 ---
 
@@ -120,3 +120,8 @@ In addition, a mail-enabled security
 group must already exist in Exchange Online for the MailEnabledSendingGroup parameter.
 
 ## RELATED LINKS
+
+[https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/New-GraphEmailApp](https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/New-GraphEmailApp)
+
+[https://criticalsolutionsnetwork.github.io/ADAuditTasks/#New-GraphEmailApp](https://criticalsolutionsnetwork.github.io/ADAuditTasks/#New-GraphEmailApp)
+

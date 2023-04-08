@@ -1,7 +1,7 @@
 ---
 external help file: ADAuditTasks-help.xml
 Module Name: ADAuditTasks
-online version: https://github.com/CriticalSolutionsNetwork/ADAuditTasks/tree/main/help/Get-QuickPing.md
+online version: https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-QuickPing
 schema: 2.0.0
 ---
 
@@ -31,7 +31,7 @@ of IP addresses that failed to respond.
 ```
 Get-QuickPing -IPRange 192.168.1.1
 Performs a quick ping on the IP address 192.168.1.1 with a TTL of 128 and returns an
-array of IP addresses that responded to the ping and anget- array of IP addresses that
+array of IP addresses that responded to the ping and an array of IP addresses that
 failed to respond.
 ```
 
@@ -87,7 +87,8 @@ Accept wildcard characters: False
 ```
 
 ### -BufferSize
-{{ Fill BufferSize Description }}
+Specifies the size of the buffer to use for the ping.
+The default value is 16.
 
 ```yaml
 Type: Int32
@@ -102,7 +103,8 @@ Accept wildcard characters: False
 ```
 
 ### -Count
-{{ Fill Count Description }}
+Specifies the number of times to send the ping request.
+The default value is 1.
 
 ```yaml
 Type: Int32
@@ -124,6 +126,10 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ## NOTES
-Author: DrIOSx
 
 ## RELATED LINKS
+
+[https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-QuickPing](https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-QuickPing)
+
+[https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-QuickPing](https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-QuickPing)
+

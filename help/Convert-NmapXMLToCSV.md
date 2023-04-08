@@ -1,7 +1,7 @@
 ---
 external help file: ADAuditTasks-help.xml
 Module Name: ADAuditTasks
-online version: https://github.com/CriticalSolutionsNetwork/ADAuditTasks/tree/main/help/Convert-NmapXMLToCSV.md
+online version: https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Convert-NmapXMLToCSV
 schema: 2.0.0
 ---
 
@@ -30,10 +30,8 @@ C:\temp\NmapXMLToCSV by default.
 ### EXAMPLE 1
 ```
 Convert-NmapXMLToCSV -InputXml "C:\path\to\nmap.xml" -AttachmentFolderPath "C:\path\to\output"
+This example will convert the contents of "C:\path\to\nmap.xml" into a CSV file and save it in "C:\path\to\output".
 ```
-
-This example will convert the contents of "C:\path\to\nmap.xml" into a CSV
-file and save it in "C:\path\to\output".
 
 ## PARAMETERS
 
@@ -80,3 +78,8 @@ Make sure the input Nmap XML file is properly formatted and contains the necessa
 information for the conversion to work correctly.
 
 ## RELATED LINKS
+
+[https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Convert-NmapXMLToCSV](https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Convert-NmapXMLToCSV)
+
+[https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Convert-NmapXMLToCSV](https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Convert-NmapXMLToCSV)
+

@@ -33,6 +33,10 @@ function Submit-FTPUpload {
     .NOTES
     This function requires the WinSCP PowerShell module.
     .LINK
+    https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Submit-FTPUpload
+    .LINK
+    https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Submit-FTPUpload
+    .LINK
     https://winscp.net/eng/docs/library_powershell
     #>
     [CmdletBinding()]

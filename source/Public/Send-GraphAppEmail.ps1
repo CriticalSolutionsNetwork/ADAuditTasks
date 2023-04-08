@@ -24,6 +24,10 @@ function Send-GraphAppEmail {
     Send-GraphAppEmail -AppName "GraphEmailApp" -To "recipient@example.com" -FromAddress "sender@example.com" -Subject "Test Email" -EmailBody "This is a test email."
     .NOTES
     The function requires the Microsoft.Graph and MSAL.PS modules to be installed and imported.
+    .LINK
+    https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Send-GraphAppEmail
+    .LINK
+    https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Send-GraphAppEmail
     #>
     [CmdletBinding()]
     param (

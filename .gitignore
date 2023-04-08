@@ -17,3 +17,4 @@ node_modules
 package-lock.json
 Test-Scratch.ps1
 Test-Scratch2.ps1
+log.txt

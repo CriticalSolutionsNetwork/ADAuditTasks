@@ -1,28 +1,34 @@
 function Get-ADUserWildCardAudit {
-    <#
-    .SYNOPSIS
-    Takes a search string to find commonly named accounts.
-    .DESCRIPTION
-    Takes a search string to find commonly named accounts.
-    For example:
-        If you commonly name service accounts with the prefix "svc",
-        Use "svc" for the WildCardIdentifier to search for names that contain "svc"
-    .EXAMPLE
-    Get-ADUserWildCardAudit -WildCardIdentifier "svc" -Report -Verbose
-    Searches for all user accounts that are named like the search string "svc".
-    .PARAMETER Report
-    Add report output as csv to AttachmentFolderPath directory.
-    .PARAMETER AttachmentFolderPath
-    Default path is C:\temp\ADUserWildCardAudit.
-    This is the folder where attachments are going to be saved.
-    .PARAMETER Enabled
-    If "$false", will also search disabled users.
-    .PARAMETER DaysInactive
-    How far back in days to look for sign ins. Outside of this window, users are considered "Inactive"
-    .PARAMETER WildCardIdentifier
-    The search string to look for in the name of the account. Case does not matter.
-    Do not add a wildcard (*) as it will do this automatically.
-    #>
+<#
+.SYNOPSIS
+Takes a search string to find commonly named accounts.
+.DESCRIPTION
+Takes a search string to find commonly named accounts. For example, if you
+commonly name service accounts with the prefix "svc", use "svc" for the
+WildCardIdentifier to search for names that contain "svc".
+.EXAMPLE
+Get-ADUserWildCardAudit -WildCardIdentifier "svc" -Report -Verbose
+
+Searches for all user accounts that are named like the search string "svc".
+.PARAMETER Report
+Add report output as csv to AttachmentFolderPath directory.
+.PARAMETER AttachmentFolderPath
+Default path is C:\temp\ADUserWildCardAudit. This is the folder where attachments are going to be saved.
+.PARAMETER Enabled
+If "$false", will also search disabled users.
+.PARAMETER DaysInactive
+How far back in days to look for sign ins. Outside of this window, users are considered "Inactive"
+.PARAMETER WildCardIdentifier
+The search string to look for in the name of the account. Case does not matter. Do not add a
+wildcard (*) as it will do this automatically.
+.NOTES
+This function requires the ActiveDirectory module.
+.LINK
+https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-ADUserWildCardAudit
+.LINK
+https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-ADUserWildCardAudit
+#>
+
     [OutputType([ADAuditTasksUser])]
     [CmdletBinding()]
     param (
@@ -113,7 +119,7 @@ function Get-ADUserWildCardAudit {
             $csv = "$ExportFileName.csv"
             $zip = "$ExportFileName.zip"
             $log = "$ExportFileName.AuditLog.csv"
-            Build-ReportArchive -Export $Export -csv $csv -zip $zip -log $log -ErrorVariable BuildErr
+            Build-ReportArchive -Export $Export -csv $csv -zip $zip -log $log -AttachmentFolderPath $AttachmentFolderPath -ErrorVariable BuildErr
         }
         else {
             $Script:LogString += Write-AuditLog -Message "Returning output object."

@@ -1,7 +1,7 @@
 ---
 external help file: ADAuditTasks-help.xml
 Module Name: ADAuditTasks
-online version: https://github.com/CriticalSolutionsNetwork/ADAuditTasks/tree/main/help/Send-GraphAppEmail.md
+online version: https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Send-GraphAppEmail
 schema: 2.0.0
 ---
 
@@ -135,3 +135,8 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 The function requires the Microsoft.Graph and MSAL.PS modules to be installed and imported.
 
 ## RELATED LINKS
+
+[https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Send-GraphAppEmail](https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Send-GraphAppEmail)
+
+[https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Send-GraphAppEmail](https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Send-GraphAppEmail)
+

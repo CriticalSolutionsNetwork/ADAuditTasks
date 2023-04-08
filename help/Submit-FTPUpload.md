@@ -1,7 +1,7 @@
 ---
 external help file: ADAuditTasks-help.xml
 Module Name: ADAuditTasks
-online version: https://github.com/CriticalSolutionsNetwork/ADAuditTasks/tree/main/help/Submit-FTPUpload.md
+online version: https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Submit-FTPUpload
 schema: 2.0.0
 ---
 
@@ -172,6 +172,9 @@ This function requires the WinSCP PowerShell module.
 
 ## RELATED LINKS
 
-[https://winscp.net/eng/docs/library_powershell](https://winscp.net/eng/docs/library_powershell)
+[https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Submit-FTPUpload](https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Submit-FTPUpload)
 
+[https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Submit-FTPUpload](https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Submit-FTPUpload)
+
+[https://winscp.net/eng/docs/library_powershell](https://winscp.net/eng/docs/library_powershell)
 

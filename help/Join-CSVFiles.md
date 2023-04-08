@@ -1,7 +1,7 @@
 ---
 external help file: ADAuditTasks-help.xml
 Module Name: ADAuditTasks
-online version: https://github.com/CriticalSolutionsNetwork/ADAuditTasks/tree/main/help/Join-CSVFiles.md
+online version: https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Join-CSVFiles
 schema: 2.0.0
 ---
 
@@ -74,8 +74,13 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
+### None. The function outputs a merged CSV file to the specified folder.
 ## NOTES
-Make sure the input CSV files have the same headers and formatting for
-the function to work properly.
+Make sure the input CSV files have the same headers and formatting for the function to work properly.
 
 ## RELATED LINKS
+
+[https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Join-CSVFiles](https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Join-CSVFiles)
+
+[https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Join-CSVFiles](https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Join-CSVFiles)
+

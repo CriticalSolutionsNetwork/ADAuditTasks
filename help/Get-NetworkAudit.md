@@ -1,7 +1,7 @@
 ---
 external help file: ADAuditTasks-help.xml
 Module Name: ADAuditTasks
-online version: https://github.com/CriticalSolutionsNetwork/ADAuditTasks/tree/main/help/Get-NetworkAudit.md
+online version: https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-NetworkAudit
 schema: 2.0.0
 ---
 
@@ -220,6 +220,7 @@ Throttle Limit Notes:
 
 ## RELATED LINKS
 
-[Specify a URI to a help page, this will show when Get-Help -Online is used.]()
+[https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-NetworkAudit](https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-NetworkAudit)
 
+[https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-NetworkAudit](https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-NetworkAudit)
 

@@ -34,8 +34,11 @@ function New-GraphEmailApp {
     This cmdlet requires that the user running the cmdlet have the necessary permissions
     to create the app and connect to Exchange Online. In addition, a mail-enabled security
     group must already exist in Exchange Online for the MailEnabledSendingGroup parameter.
+    .LINK
+    https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/New-GraphEmailApp
+    .LINK
+    https://criticalsolutionsnetwork.github.io/ADAuditTasks/#New-GraphEmailApp
     #>
-
     [OutputType([pscustomobject])]
     [CmdletBinding()]
     param (

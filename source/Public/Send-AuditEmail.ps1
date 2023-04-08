@@ -59,6 +59,10 @@ function Send-AuditEmail {
     .PARAMETER Token
     If you are using the optional function feature, this is the api token for the specific function.
     Ensure you are using the "Function Key" and NOT the "Host Key" to ensure access is only to the specific funtion.
+    .LINK
+    https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Send-AuditEmail
+    .LINK
+    https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Send-AuditEmail
     #>
     [CmdletBinding(DefaultParameterSetName = 'Pass')]
     param (

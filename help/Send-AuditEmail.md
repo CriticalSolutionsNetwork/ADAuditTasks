@@ -1,7 +1,7 @@
 ---
 external help file: ADAuditTasks-help.xml
 Module Name: ADAuditTasks
-online version: https://github.com/CriticalSolutionsNetwork/ADAuditTasks/tree/main/help/Send-AuditEmail.md
+online version: https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Send-AuditEmail
 schema: 2.0.0
 ---
 
@@ -280,3 +280,8 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+
+[https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Send-AuditEmail](https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Send-AuditEmail)
+
+[https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Send-AuditEmail](https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Send-AuditEmail)
+

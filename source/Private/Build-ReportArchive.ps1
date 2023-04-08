@@ -9,6 +9,8 @@ function Build-ReportArchive {
     $csv (the name of the CSV file to create), $zip (the name of the zip file to create), and $log
     (the name of the log file to create). The function writes information about the export and archive process
     to the log file, and any errors that occur are also logged.
+    .PARAMETER AttachmentFolderPath
+    Specifies the path to the directory where the CSV, zip, and log files will be created.
     .PARAMETER Export
     Specifies the data to export.
     .PARAMETER csv
@@ -59,7 +61,12 @@ function Build-ReportArchive {
             HelpMessage = 'Log File Name',
             Position = 3,
             ValueFromPipelineByPropertyName = $true
-        )][string]$log
+        )][string]$log,
+        [Parameter(
+            HelpMessage = 'Attachment Folder Path',
+            Position = 4,
+            ValueFromPipelineByPropertyName = $true
+        )][string]$AttachmentFolderPath
     )
     # Initialize variables
     begin {

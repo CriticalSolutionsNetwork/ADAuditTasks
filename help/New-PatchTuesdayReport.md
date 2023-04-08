@@ -1,7 +1,7 @@
 ---
 external help file: ADAuditTasks-help.xml
 Module Name: ADAuditTasks
-online version: https://github.com/CriticalSolutionsNetwork/ADAuditTasks/tree/main/help/New-PatchTuesdayReport.md
+online version: https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/New-PatchTuesdayReport
 schema: 2.0.0
 ---
 
@@ -136,3 +136,8 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 None.
 
 ## RELATED LINKS
+
+[https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/New-PatchTuesdayReport](https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/New-PatchTuesdayReport)
+
+[https://criticalsolutionsnetwork.github.io/ADAuditTasks/#New-PatchTuesdayReport](https://criticalsolutionsnetwork.github.io/ADAuditTasks/#New-PatchTuesdayReport)
+
