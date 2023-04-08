@@ -36,11 +36,13 @@ function New-PatchTuesdayReport {
     None.
     .OUTPUTS
     A string value containing the HTML code for the Patch Tuesday report.
-
     .NOTES
     None.
+    .LINK
+    https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/New-PatchTuesdayReport
+    .LINK
+    https://criticalsolutionsnetwork.github.io/ADAuditTasks/#New-PatchTuesdayReport
     #>
-
     [CmdletBinding()]
     param(
         [ValidateNotNull()]

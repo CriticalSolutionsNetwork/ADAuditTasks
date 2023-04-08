@@ -3,39 +3,31 @@ function Get-ADUserPrivilegeAudit {
     .SYNOPSIS
     Produces three object outputs: PrivilegedGroups, AdExtendedRights, and possible service accounts.
     .DESCRIPTION
-    The Get-ADUserPrivilegeAudit function produces reports on privileged groups,
-    AD extended rights, and possible service accounts. If the -Report switch is
-    used, the reports will be created in the specified folder. To instantiate
-    variables with the objects, provide three objects on the left side of the
-    assignment:
+    The Get-ADUserPrivilegeAudit function produces reports on privileged groups, AD extended rights, and possible service accounts. If the -Report switch is used, the reports will be created in the specified folder. To instantiate variables with the objects, provide three objects on the left side of the assignment:
 
     Example: $a,$b,$c = Get-ADUserPrivilegeAudit -Verbose
 
-    The objects will be populated with privileged groups, AD extended rights,
-    and possible service accounts, respectively.
+    The objects will be populated with privileged groups, AD extended rights, and possible service accounts, respectively.
     .EXAMPLE
     Get-ADUserPrivilegeAudit -Verbose
-
-    Gets the reports as three separate objects. To instantiate variables with
-    the objects, provide three objects on the left side of the assignment:
-
+    Gets the reports as three separate objects. To instantiate variables with the objects, provide three objects on the left side of the assignment:
     Example: $a,$b,$c = Get-ADUserPrivilegeAudit -Verbose
-
-    The objects will be populated with privileged groups, AD extended rights,
-    and possible service accounts, respectively.
+    The objects will be populated with privileged groups, AD extended rights, and possible service accounts, respectively.
     .EXAMPLE
     Get-ADUserPrivilegeAudit -Report -Verbose
-
-    Returns three reports to the default folder, C:\temp\ADUserPrivilegeAudit,
-    in a single zip file.
+    Returns three reports to the default folder, C:\temp\ADUserPrivilegeAudit, in a single zip file.
     .PARAMETER AttachmentFolderPath
-    Specifies the path of the folder where you want to save attachments.
-    The default path is C:\temp\ADUserPrivilegeAudit.
+    Specifies the path of the folder where you want to save attachments. The default path is C:\temp\ADUserPrivilegeAudit.
     .PARAMETER Report
     Adds report output as CSV to the directory specified by AttachmentFolderPath.
     .NOTES
     This function requires the ActiveDirectory module.
+    .LINK
+    https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-ADUserPrivilegeAudit
+    .LINK
+    https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-ADUserPrivilegeAudit
     #>
+
     [CmdletBinding()]
     param (
         # Input parameter: output folder path for generated reports

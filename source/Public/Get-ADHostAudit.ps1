@@ -1,38 +1,41 @@
 function Get-ADHostAudit {
-    <#
-    .SYNOPSIS
-        Active Directory Server and Workstation Audit with Report export option (Can also be piped to CSV if Report isn't specified).
-    .DESCRIPTION
-        Audit's Active Directory taking "days" as the input for how far back to check for a device's last sign in.
-        Output can be piped to a csv manually, or automatically to C:\temp\ADHostAudit or a specified path in
-        "AttachmentFolderPath" using the -Report Switch.
+<#
+.SYNOPSIS
+    Active Directory Server and Workstation Audit with Report export option (Can also be piped to CSV if Report isn't specified).
+.DESCRIPTION
+    Audits Active Directory for hosts that haven't signed in for a specified number of days. Output can be piped to a CSV manually, or automatically saved to C:\temp\ADHostAudit or a specified directory using the -Report switch.
 
-        Use the Tab key to cycle through the -HostType Parameter.
-    .EXAMPLE
-        PS C:\> Get-ADHostAudit -HostType WindowsServers -Report -Verbose
-    .EXAMPLE
-        PS C:\> Get-ADHostAudit -HostType WindowsWorkstations -Report -Verbose
-    .EXAMPLE
-        PS C:\> Get-ADHostAudit -HostType "Non-Windows" -Report -Verbose
-    .EXAMPLE
-        PS C:\> Get-ADHostAudit -OSType "2008" -DirPath "C:\Temp\" -Report -Verbose
-    .PARAMETER HostType
-        Select from WindowsServers, WindowsWorkstations or Non-Windows.
-    .PARAMETER OSType
-        Search an OS String. There is no need to add wildcards.
-    .PARAMETER DaystoConsiderAHostInactive
-        How far back in days to look for sign ins. Outside of this window, hosts are considered "Inactive"
-    .PARAMETER Report
-        Add report output as csv to DirPath directory.
-    .PARAMETER AttachmentFolderPath
-        Default path is C:\temp\ADHostAudit.
-        This is the folder where attachments are going to be saved.
-    .PARAMETER Enabled
-        If "$false", will also search disabled computers.
-    .NOTES
-        Outputs to C:\temp\ADHostAudit by default.
-        For help type: help Get-ADHostAudit -ShowWindow
-    #>
+    Use the Tab key to cycle through the -HostType parameter.
+.EXAMPLE
+    PS C:\> Get-ADHostAudit -HostType WindowsServers -Report -Verbose
+.EXAMPLE
+    PS C:\> Get-ADHostAudit -HostType WindowsWorkstations -Report -Verbose
+.EXAMPLE
+    PS C:\> Get-ADHostAudit -HostType "Non-Windows" -Report -Verbose
+.EXAMPLE
+    PS C:\> Get-ADHostAudit -OSType "2008" -DirPath "C:\Temp\" -Report -Verbose
+.PARAMETER HostType
+    Specifies the type of hosts to search for. Valid values are WindowsServers, WindowsWorkstations, and Non-Windows.
+.PARAMETER OSType
+    Specifies the operating system to search for. There is no need to add wildcards.
+.PARAMETER DaystoConsiderAHostInactive
+    Specifies the number of days to consider a host as inactive.
+.PARAMETER Report
+    Saves a CSV report to the specified directory.
+.PARAMETER AttachmentFolderPath
+    Specifies the directory where attachments will be saved.
+.PARAMETER Enabled
+    If set to $false, the function will also search for disabled computers.
+.NOTES
+    By default, output is saved to C:\temp\ADHostAudit.
+    For more information, type: Get-Help Get-ADHostAudit -ShowWindow
+.LINK
+https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-ADHostAudit
+.LINK
+https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-ADHostAudit
+#>
+
+
     [OutputType([pscustomobject])]
     [CmdletBinding(DefaultParameterSetName = 'HostType')]
     param (

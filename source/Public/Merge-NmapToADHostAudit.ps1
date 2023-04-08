@@ -23,6 +23,10 @@ function Merge-NmapToADHostAudit {
     separate CSV file in the same output folder.
     .NOTES
     Make sure the input CSV files have the correct headers and formatting for the function to work properly.
+    .LINK
+    https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Merge-NmapToADHostAudit
+    .LINK
+    https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Merge-NmapToADHostAudit
     #>
     [CmdletBinding()]
     param (

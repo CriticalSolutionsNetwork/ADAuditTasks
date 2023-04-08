@@ -1,7 +1,7 @@
 ---
 external help file: ADAuditTasks-help.xml
 Module Name: ADAuditTasks
-online version: https://github.com/CriticalSolutionsNetwork/ADAuditTasks/tree/main/help/Get-ADActiveUserAudit.md
+online version: https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-ADActiveUserAudit
 schema: 2.0.0
 ---
 
@@ -118,3 +118,8 @@ Outputs to C:\temp\ADActiveUserAudit by default.
 For help type: help Get-ADActiveUserAudit -ShowWindow
 
 ## RELATED LINKS
+
+[https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-ADActiveUserAudit](https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-ADActiveUserAudit)
+
+[https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-ADActiveUserAudit](https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-ADActiveUserAudit)
+

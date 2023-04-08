@@ -14,8 +14,6 @@ function Get-NetworkAudit {
         Total scan time: 2,048 seconds (65,536 / 32 = 2,048)
         Total data transferred: 65,536 kilobytes (1 kilobyte per host)
         Average network bandwidth: 32 kilobits per second (65,536 kilobytes / 2,048 seconds = 32 kilobits per second)
-    .LINK
-    Specify a URI to a help page, this will show when Get-Help -Online is used.
     .EXAMPLE
     Get-NetworkAudit -report
     .PARAMETER Ports
@@ -40,6 +38,10 @@ function Get-NetworkAudit {
     Scan single host or array of hosts using Subet ID in CIDR Notation, IP, NETBIOS, or FQDN in "quotes"'
     For Example:
         "10.11.1.0/24","10.11.2.0/24"
+    .LINK
+    https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-NetworkAudit
+    .LINK
+    https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-NetworkAudit
     #>
     [OutputType([pscustomobject])]
     [CmdletBinding(DefaultParameterSetName = 'Default', SupportsShouldProcess = $true, ConfirmImpact = 'High')]

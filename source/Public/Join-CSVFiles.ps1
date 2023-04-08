@@ -10,16 +10,20 @@ function Join-CSVFiles {
     .PARAMETER CSVFilePaths
     An array of strings containing the file paths of the CSV files to be merged.
     .PARAMETER AttachmentFolderPath
-    The output folder path where the merged CSV file will be saved.
-    Default location is "C:\temp\MergedCSV".
+    The output folder path where the merged CSV file will be saved. Default location is "C:\temp\MergedCSV".
     .EXAMPLE
     Join-CSVFiles -CSVFilePaths @("C:\path\to\csv1.csv", "C:\path\to\csv2.csv") -AttachmentFolderPath "C:\path\to\output.csv"
 
     This example will merge the contents of "C:\path\to\csv1.csv" and
     "C:\path\to\csv2.csv" into a single CSV file and save it in "C:\path\to\output.csv".
     .NOTES
-    Make sure the input CSV files have the same headers and formatting for
-    the function to work properly.
+    Make sure the input CSV files have the same headers and formatting for the function to work properly.
+    .OUTPUTS
+    None. The function outputs a merged CSV file to the specified folder.
+    .LINK
+    https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Join-CSVFiles
+    .LINK
+    https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Join-CSVFiles
     #>
     [CmdletBinding()]
     param(

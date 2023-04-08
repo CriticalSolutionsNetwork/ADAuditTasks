@@ -1,7 +1,7 @@
 ---
 external help file: ADAuditTasks-help.xml
 Module Name: ADAuditTasks
-online version: https://github.com/CriticalSolutionsNetwork/ADAuditTasks/tree/main/help/Merge-NmapToADHostAudit.md
+online version: https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Merge-NmapToADHostAudit
 schema: 2.0.0
 ---
 
@@ -97,3 +97,8 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 Make sure the input CSV files have the correct headers and formatting for the function to work properly.
 
 ## RELATED LINKS
+
+[https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Merge-NmapToADHostAudit](https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Merge-NmapToADHostAudit)
+
+[https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Merge-NmapToADHostAudit](https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Merge-NmapToADHostAudit)
+

@@ -1,8 +1,8 @@
----
+﻿---
 Module Name: ADAuditTasks
 Module Guid: 6b72cdb3-2101-4a7e-b0d0-968a70018809
 Download Help Link: https://criticalsolutionsnetwork.github.io/ADAuditTasks/CAB
-Help Version: 1.0.0.0
+Help Version: 1.0.0.1
 Locale: en-US
 ---
 
@@ -21,7 +21,8 @@ Gets active but stale AD User accounts that haven't logged in within the last 90
 Active Directory Server and Workstation Audit with Report export option (Can also be piped to CSV if Report isn't specified).
 
 ### [Get-ADUserLogonAudit](Get-ADUserLogonAudit)
-Retrieves the most recent LastLogon timestamp for a specified Active Directory user account from all domain controllers and outputs it as a DateTime object.
+Retrieves the most recent LastLogon timestamp for a specified Active Directory user
+account from all domain controllers and outputs it as a DateTime object.
 
 ### [Get-ADUserPrivilegeAudit](Get-ADUserPrivilegeAudit)
 Produces three object outputs: PrivilegedGroups, AdExtendedRights, and possible service accounts.
@@ -65,3 +66,4 @@ Sends an email using the Microsoft Graph API.
 
 ### [Submit-FTPUpload](Submit-FTPUpload)
 Uploads a file to an FTP server using the WinSCP module.
+

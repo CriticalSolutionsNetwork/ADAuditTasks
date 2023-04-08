@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Added links to comment-based help.
+
+## [0.4.0] - 2023-04-07
+
+### Added
+
 - Added Help documentation xml and cab files.
 
 ## [0.3.9] - 2023-04-07

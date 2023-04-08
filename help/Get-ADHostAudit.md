@@ -1,7 +1,7 @@
 ---
 external help file: ADAuditTasks-help.xml
 Module Name: ADAuditTasks
-online version: https://github.com/CriticalSolutionsNetwork/ADAuditTasks/tree/main/help/Get-ADHostAudit.md
+online version: https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-ADHostAudit
 schema: 2.0.0
 ---
 
@@ -25,11 +25,10 @@ Get-ADHostAudit [-OSType] <String> [[-DaystoConsiderAHostInactive] <Int32>] [-Re
 ```
 
 ## DESCRIPTION
-Audit's Active Directory taking "days" as the input for how far back to check for a device's last sign in.
-Output can be piped to a csv manually, or automatically to C:\temp\ADHostAudit or a specified path in
-"AttachmentFolderPath" using the -Report Switch.
+Audits Active Directory for hosts that haven't signed in for a specified number of days.
+Output can be piped to a CSV manually, or automatically saved to C:\temp\ADHostAudit or a specified directory using the -Report switch.
 
-Use the Tab key to cycle through the -HostType Parameter.
+Use the Tab key to cycle through the -HostType parameter.
 
 ## EXAMPLES
 
@@ -56,7 +55,8 @@ Get-ADHostAudit -OSType "2008" -DirPath "C:\Temp\" -Report -Verbose
 ## PARAMETERS
 
 ### -HostType
-Select from WindowsServers, WindowsWorkstations or Non-Windows.
+Specifies the type of hosts to search for.
+Valid values are WindowsServers, WindowsWorkstations, and Non-Windows.
 
 ```yaml
 Type: String
@@ -71,7 +71,7 @@ Accept wildcard characters: False
 ```
 
 ### -OSType
-Search an OS String.
+Specifies the operating system to search for.
 There is no need to add wildcards.
 
 ```yaml
@@ -87,8 +87,7 @@ Accept wildcard characters: False
 ```
 
 ### -DaystoConsiderAHostInactive
-How far back in days to look for sign ins.
-Outside of this window, hosts are considered "Inactive"
+Specifies the number of days to consider a host as inactive.
 
 ```yaml
 Type: Int32
@@ -103,7 +102,7 @@ Accept wildcard characters: False
 ```
 
 ### -Report
-Add report output as csv to DirPath directory.
+Saves a CSV report to the specified directory.
 
 ```yaml
 Type: SwitchParameter
@@ -118,8 +117,7 @@ Accept wildcard characters: False
 ```
 
 ### -AttachmentFolderPath
-Default path is C:\temp\ADHostAudit.
-This is the folder where attachments are going to be saved.
+Specifies the directory where attachments will be saved.
 
 ```yaml
 Type: String
@@ -134,7 +132,7 @@ Accept wildcard characters: False
 ```
 
 ### -Enabled
-If "$false", will also search disabled computers.
+If set to $false, the function will also search for disabled computers.
 
 ```yaml
 Type: Boolean
@@ -157,7 +155,12 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ### System.Management.Automation.PSObject
 ## NOTES
-Outputs to C:\temp\ADHostAudit by default.
-For help type: help Get-ADHostAudit -ShowWindow
+By default, output is saved to C:\temp\ADHostAudit.
+For more information, type: Get-Help Get-ADHostAudit -ShowWindow
 
 ## RELATED LINKS
+
+[https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-ADHostAudit](https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-ADHostAudit)
+
+[https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-ADHostAudit](https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-ADHostAudit)
+

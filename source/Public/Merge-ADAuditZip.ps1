@@ -37,6 +37,10 @@ function Merge-ADAuditZip {
     created with an incremental number added to the file name.
 
     This function may or may not work with various types of input.
+    .LINK
+    https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Merge-ADAuditZip
+    .LINK
+    https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Merge-ADAuditZip
     #>
     param(
         [string[]]$FilePaths,

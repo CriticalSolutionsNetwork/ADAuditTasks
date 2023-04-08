@@ -1,7 +1,7 @@
 ---
 external help file: ADAuditTasks-help.xml
 Module Name: ADAuditTasks
-online version: https://github.com/CriticalSolutionsNetwork/ADAuditTasks/tree/main/help/Get-HostTag.md
+online version: https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-HostTag
 schema: 2.0.0
 ---
 
@@ -30,8 +30,10 @@ Get-HostTag -PhysicalOrVirtual Physical -Prefix "CSN" -SystemOS 'Windows Server'
     CSN-PWSVAPP003
     CSN-PWSVAPP004
     CSN-PWSVAPP005
-This creates the name of the host under 15 characters and numbers them. Prefix can be 2-3 characters.
 ```
+
+This creates the name of the host under 15 characters and numbers them.
+Prefix can be 2-3 characters.
 
 ## PARAMETERS
 
@@ -114,8 +116,6 @@ Accept wildcard characters: False
 ### -HostCount
 Enter a number from 1 to 999 for how many hostnames you'd like to create.
 
-Define the output type of the function
-
 ```yaml
 Type: Int32
 Parameter Sets: (All)
@@ -137,5 +137,11 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ### System.String[]
 ## NOTES
+Additional information about the function, usage tips, etc.
 
 ## RELATED LINKS
+
+[https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-HostTag](https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-HostTag)
+
+[https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-HostTag](https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-HostTag)
+

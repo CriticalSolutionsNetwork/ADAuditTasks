@@ -1,14 +1,15 @@
----
+﻿---
 external help file: ADAuditTasks-help.xml
 Module Name: ADAuditTasks
-online version: https://github.com/CriticalSolutionsNetwork/ADAuditTasks/tree/main/help/Get-ADUserLogonAudit.md
+online version: https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-ADUserLogonAudit
 schema: 2.0.0
 ---
 
 # Get-ADUserLogonAudit
 
 ## SYNOPSIS
-Retrieves the most recent LastLogon timestamp for a specified Active Directory user account from all domain controllers and outputs it as a DateTime object.
+Retrieves the most recent LastLogon timestamp for a specified Active Directory user
+account from all domain controllers and outputs it as a DateTime object.
 
 ## SYNTAX
 
@@ -17,20 +18,21 @@ Get-ADUserLogonAudit [-SamAccountName] <Object> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-This function takes a SamAccountName input parameter for a specific user account and retrieves the most recent
-LastLogon timestamp for that user from all domain controllers in the Active Directory environment.
-It then returns the LastLogon timestamp as a DateTime object.
-The function also checks the availability
-of each domain controller before querying it, and writes an audit log with a list of available and
-unavailable domain controllers.
+This function takes a SamAccountName input parameter for a specific user account and
+retrieves the most recent LastLogon timestamp for that user from all domain controllers
+in the Active Directory environment.
+It then returns the LastLogon timestamp as a DateTime
+object.
+The function also checks the availability of each domain controller before querying
+it, and writes an audit log with a list of available and unavailable domain controllers.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
 Get-ADUserLogonAudit -SamAccountName "jdoe"
-Retrieves the most recent LastLogon timestamp for the user account with the SamAccountName "jdoe" from all
-domain controllers in the Active Directory environment.
+Retrieves the most recent LastLogon timestamp for the user account with the SamAccountName
+"jdoe" from all domain controllers in the Active Directory environment.
 ```
 
 ## PARAMETERS
@@ -60,10 +62,16 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ### A DateTime object representing the most recent LastLogon timestamp for the specified user account.
 ## NOTES
-This function is designed to be run on the primary domain controller, but it can be run on any domain
-controller in the environment.
-It requires the Active Directory PowerShell module and appropriate permissions to read user account data.
-The function may take some time to complete if the Active Directory environment is large or the domain
-controllers are geographically distributed.
+This function is designed to be run on the primary domain controller, but it can be run on
+any domain controller in the environment.
+It requires the Active Directory PowerShell module
+and appropriate permissions to read user account data.
+The function may take some time to complete
+if the Active Directory environment is large or the domain controllers are geographically distributed.
 
 ## RELATED LINKS
+
+[https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-ADUserLogonAudit](https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-ADUserLogonAudit)
+
+[https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-ADUserLogonAudit](https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-ADUserLogonAudit)
+

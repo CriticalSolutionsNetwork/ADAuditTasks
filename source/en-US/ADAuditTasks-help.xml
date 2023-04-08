@@ -77,16 +77,21 @@
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>Convert-NmapXMLToCSV -InputXml "C:\path\to\nmap.xml" -AttachmentFolderPath "C:\path\to\output"</dev:code>
+        <dev:code>Convert-NmapXMLToCSV -InputXml "C:\path\to\nmap.xml" -AttachmentFolderPath "C:\path\to\output"
+This example will convert the contents of "C:\path\to\nmap.xml" into a CSV file and save it in "C:\path\to\output".</dev:code>
         <dev:remarks>
-          <maml:para>This example will convert the contents of "C:\path\to\nmap.xml" into a CSV file and save it in "C:\path\to\output".</maml:para>
+          <maml:para></maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/tree/main/help/Convert-NmapXMLToCSV.md</maml:uri>
+        <maml:linkText>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Convert-NmapXMLToCSV</maml:linkText>
+        <maml:uri>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Convert-NmapXMLToCSV</maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Convert-NmapXMLToCSV</maml:linkText>
+        <maml:uri>https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Convert-NmapXMLToCSV</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -246,8 +251,12 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/tree/main/help/Get-ADActiveUserAudit.md</maml:uri>
+        <maml:linkText>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-ADActiveUserAudit</maml:linkText>
+        <maml:uri>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-ADActiveUserAudit</maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-ADActiveUserAudit</maml:linkText>
+        <maml:uri>https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-ADActiveUserAudit</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -261,8 +270,8 @@
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>Audit's Active Directory taking "days" as the input for how far back to check for a device's last sign in. Output can be piped to a csv manually, or automatically to C:\temp\ADHostAudit or a specified path in "AttachmentFolderPath" using the -Report Switch.</maml:para>
-      <maml:para>Use the Tab key to cycle through the -HostType Parameter.</maml:para>
+      <maml:para>Audits Active Directory for hosts that haven't signed in for a specified number of days. Output can be piped to a CSV manually, or automatically saved to C:\temp\ADHostAudit or a specified directory using the -Report switch.</maml:para>
+      <maml:para>Use the Tab key to cycle through the -HostType parameter.</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -270,7 +279,7 @@
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="none">
           <maml:name>HostType</maml:name>
           <maml:description>
-            <maml:para>Select from WindowsServers, WindowsWorkstations or Non-Windows.</maml:para>
+            <maml:para>Specifies the type of hosts to search for. Valid values are WindowsServers, WindowsWorkstations, and Non-Windows.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -282,7 +291,7 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
           <maml:name>DaystoConsiderAHostInactive</maml:name>
           <maml:description>
-            <maml:para>How far back in days to look for sign ins. Outside of this window, hosts are considered "Inactive"</maml:para>
+            <maml:para>Specifies the number of days to consider a host as inactive.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
@@ -294,7 +303,7 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="3" aliases="none">
           <maml:name>Report</maml:name>
           <maml:description>
-            <maml:para>Add report output as csv to DirPath directory.</maml:para>
+            <maml:para>Saves a CSV report to the specified directory.</maml:para>
           </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
@@ -305,7 +314,7 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
           <maml:name>AttachmentFolderPath</maml:name>
           <maml:description>
-            <maml:para>Default path is C:\temp\ADHostAudit. This is the folder where attachments are going to be saved.</maml:para>
+            <maml:para>Specifies the directory where attachments will be saved.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -317,7 +326,7 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>Enabled</maml:name>
           <maml:description>
-            <maml:para>If "$false", will also search disabled computers.</maml:para>
+            <maml:para>If set to $false, the function will also search for disabled computers.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
           <dev:type>
@@ -332,7 +341,7 @@
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="none">
           <maml:name>OSType</maml:name>
           <maml:description>
-            <maml:para>Search an OS String. There is no need to add wildcards.</maml:para>
+            <maml:para>Specifies the operating system to search for. There is no need to add wildcards.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -344,7 +353,7 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
           <maml:name>DaystoConsiderAHostInactive</maml:name>
           <maml:description>
-            <maml:para>How far back in days to look for sign ins. Outside of this window, hosts are considered "Inactive"</maml:para>
+            <maml:para>Specifies the number of days to consider a host as inactive.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
@@ -356,7 +365,7 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="3" aliases="none">
           <maml:name>Report</maml:name>
           <maml:description>
-            <maml:para>Add report output as csv to DirPath directory.</maml:para>
+            <maml:para>Saves a CSV report to the specified directory.</maml:para>
           </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
@@ -367,7 +376,7 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
           <maml:name>AttachmentFolderPath</maml:name>
           <maml:description>
-            <maml:para>Default path is C:\temp\ADHostAudit. This is the folder where attachments are going to be saved.</maml:para>
+            <maml:para>Specifies the directory where attachments will be saved.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -379,7 +388,7 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
           <maml:name>Enabled</maml:name>
           <maml:description>
-            <maml:para>If "$false", will also search disabled computers.</maml:para>
+            <maml:para>If set to $false, the function will also search for disabled computers.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
           <dev:type>
@@ -394,7 +403,7 @@
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="none">
         <maml:name>HostType</maml:name>
         <maml:description>
-          <maml:para>Select from WindowsServers, WindowsWorkstations or Non-Windows.</maml:para>
+          <maml:para>Specifies the type of hosts to search for. Valid values are WindowsServers, WindowsWorkstations, and Non-Windows.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -406,7 +415,7 @@
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="none">
         <maml:name>OSType</maml:name>
         <maml:description>
-          <maml:para>Search an OS String. There is no need to add wildcards.</maml:para>
+          <maml:para>Specifies the operating system to search for. There is no need to add wildcards.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -418,7 +427,7 @@
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
         <maml:name>DaystoConsiderAHostInactive</maml:name>
         <maml:description>
-          <maml:para>How far back in days to look for sign ins. Outside of this window, hosts are considered "Inactive"</maml:para>
+          <maml:para>Specifies the number of days to consider a host as inactive.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
@@ -430,7 +439,7 @@
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="3" aliases="none">
         <maml:name>Report</maml:name>
         <maml:description>
-          <maml:para>Add report output as csv to DirPath directory.</maml:para>
+          <maml:para>Saves a CSV report to the specified directory.</maml:para>
         </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
@@ -442,7 +451,7 @@
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
         <maml:name>AttachmentFolderPath</maml:name>
         <maml:description>
-          <maml:para>Default path is C:\temp\ADHostAudit. This is the folder where attachments are going to be saved.</maml:para>
+          <maml:para>Specifies the directory where attachments will be saved.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -454,7 +463,7 @@
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
         <maml:name>Enabled</maml:name>
         <maml:description>
-          <maml:para>If "$false", will also search disabled computers.</maml:para>
+          <maml:para>If set to $false, the function will also search for disabled computers.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
         <dev:type>
@@ -477,7 +486,7 @@
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para>Outputs to C:\temp\ADHostAudit by default. For help type: help Get-ADHostAudit -ShowWindow</maml:para>
+        <maml:para>By default, output is saved to C:\temp\ADHostAudit. For more information, type: Get-Help Get-ADHostAudit -ShowWindow</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -512,8 +521,12 @@
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/tree/main/help/Get-ADHostAudit.md</maml:uri>
+        <maml:linkText>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-ADHostAudit</maml:linkText>
+        <maml:uri>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-ADHostAudit</maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-ADHostAudit</maml:linkText>
+        <maml:uri>https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-ADHostAudit</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -589,8 +602,8 @@
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
         <dev:code>Get-ADUserLogonAudit -SamAccountName "jdoe"
-Retrieves the most recent LastLogon timestamp for the user account with the SamAccountName "jdoe" from all
-domain controllers in the Active Directory environment.</dev:code>
+Retrieves the most recent LastLogon timestamp for the user account with the SamAccountName
+"jdoe" from all domain controllers in the Active Directory environment.</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
         </dev:remarks>
@@ -598,8 +611,12 @@ domain controllers in the Active Directory environment.</dev:code>
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/tree/main/help/Get-ADUserLogonAudit.md</maml:uri>
+        <maml:linkText>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-ADUserLogonAudit</maml:linkText>
+        <maml:uri>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-ADUserLogonAudit</maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-ADUserLogonAudit</maml:linkText>
+        <maml:uri>https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-ADUserLogonAudit</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -681,25 +698,31 @@ domain controllers in the Active Directory environment.</dev:code>
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>Get-ADUserPrivilegeAudit -Verbose</dev:code>
+        <dev:code>Get-ADUserPrivilegeAudit -Verbose
+Gets the reports as three separate objects. To instantiate variables with the objects, provide three objects on the left side of the assignment:
+Example: $a,$b,$c = Get-ADUserPrivilegeAudit -Verbose
+The objects will be populated with privileged groups, AD extended rights, and possible service accounts, respectively.</dev:code>
         <dev:remarks>
-          <maml:para>Gets the reports as three separate objects. To instantiate variables with the objects, provide three objects on the left side of the assignment:</maml:para>
-          <maml:para>Example: $a,$b,$c = Get-ADUserPrivilegeAudit -Verbose</maml:para>
-          <maml:para>The objects will be populated with privileged groups, AD extended rights, and possible service accounts, respectively.</maml:para>
+          <maml:para></maml:para>
         </dev:remarks>
       </command:example>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
-        <dev:code>Get-ADUserPrivilegeAudit -Report -Verbose</dev:code>
+        <dev:code>Get-ADUserPrivilegeAudit -Report -Verbose
+Returns three reports to the default folder, C:\temp\ADUserPrivilegeAudit, in a single zip file.</dev:code>
         <dev:remarks>
-          <maml:para>Returns three reports to the default folder, C:\temp\ADUserPrivilegeAudit, in a single zip file.</maml:para>
+          <maml:para></maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/tree/main/help/Get-ADUserPrivilegeAudit.md</maml:uri>
+        <maml:linkText>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-ADUserPrivilegeAudit</maml:linkText>
+        <maml:uri>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-ADUserPrivilegeAudit</maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-ADUserPrivilegeAudit</maml:linkText>
+        <maml:uri>https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-ADUserPrivilegeAudit</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -713,7 +736,7 @@ domain controllers in the Active Directory environment.</dev:code>
       </maml:description>
     </command:details>
     <maml:description>
-      <maml:para>Takes a search string to find commonly named accounts. For example:     If you commonly name service accounts with the prefix "svc",     Use "svc" for the WildCardIdentifier to search for names that contain "svc"</maml:para>
+      <maml:para>Takes a search string to find commonly named accounts. For example, if you commonly name service accounts with the prefix "svc", use "svc" for the WildCardIdentifier to search for names that contain "svc".</maml:para>
     </maml:description>
     <command:syntax>
       <command:syntaxItem>
@@ -854,23 +877,26 @@ domain controllers in the Active Directory environment.</dev:code>
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para></maml:para>
+        <maml:para>This function requires the ActiveDirectory module.</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>Get-ADUserWildCardAudit -WildCardIdentifier "svc" -Report -Verbose
-Searches for all user accounts that are named like the search string "svc".</dev:code>
+        <dev:code>Get-ADUserWildCardAudit -WildCardIdentifier "svc" -Report -Verbose</dev:code>
         <dev:remarks>
-          <maml:para></maml:para>
+          <maml:para>Searches for all user accounts that are named like the search string "svc".</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/tree/main/help/Get-ADUserWildCardAudit.md</maml:uri>
+        <maml:linkText>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-ADUserWildCardAudit</maml:linkText>
+        <maml:uri>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-ADUserWildCardAudit</maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-ADUserWildCardAudit</maml:linkText>
+        <maml:uri>https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-ADUserWildCardAudit</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -941,7 +967,6 @@ Searches for all user accounts that are named like the search string "svc".</dev
           <maml:name>HostCount</maml:name>
           <maml:description>
             <maml:para>Enter a number from 1 to 999 for how many hostnames you'd like to create.</maml:para>
-            <maml:para>Define the output type of the function</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
@@ -1005,7 +1030,6 @@ Searches for all user accounts that are named like the search string "svc".</dev
         <maml:name>HostCount</maml:name>
         <maml:description>
           <maml:para>Enter a number from 1 to 999 for how many hostnames you'd like to create.</maml:para>
-          <maml:para>Define the output type of the function</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
@@ -1028,7 +1052,7 @@ Searches for all user accounts that are named like the search string "svc".</dev
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para></maml:para>
+        <maml:para>Additional information about the function, usage tips, etc.</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -1039,17 +1063,20 @@ Searches for all user accounts that are named like the search string "svc".</dev
     CSN-PWSVAPP002
     CSN-PWSVAPP003
     CSN-PWSVAPP004
-    CSN-PWSVAPP005
-This creates the name of the host under 15 characters and numbers them. Prefix can be 2-3 characters.</dev:code>
+    CSN-PWSVAPP005</dev:code>
         <dev:remarks>
-          <maml:para></maml:para>
+          <maml:para>This creates the name of the host under 15 characters and numbers them. Prefix can be 2-3 characters.</maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/tree/main/help/Get-HostTag.md</maml:uri>
+        <maml:linkText>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-HostTag</maml:linkText>
+        <maml:uri>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-HostTag</maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-HostTag</maml:linkText>
+        <maml:uri>https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-HostTag</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -1429,12 +1456,12 @@ This creates the name of the host under 15 characters and numbers them. Prefix c
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/tree/main/help/Get-NetworkAudit.md</maml:uri>
+        <maml:linkText>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-NetworkAudit</maml:linkText>
+        <maml:uri>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-NetworkAudit</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
-        <maml:linkText>Specify a URI to a help page, this will show when Get-Help -Online is used.</maml:linkText>
-        <maml:uri></maml:uri>
+        <maml:linkText>https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-NetworkAudit</maml:linkText>
+        <maml:uri>https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-NetworkAudit</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -1480,7 +1507,7 @@ This creates the name of the host under 15 characters and numbers them. Prefix c
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
           <maml:name>BufferSize</maml:name>
           <maml:description>
-            <maml:para>{{ Fill BufferSize Description }}</maml:para>
+            <maml:para>Specifies the size of the buffer to use for the ping. The default value is 16.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
@@ -1492,7 +1519,7 @@ This creates the name of the host under 15 characters and numbers them. Prefix c
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
           <maml:name>Count</maml:name>
           <maml:description>
-            <maml:para>{{ Fill Count Description }}</maml:para>
+            <maml:para>Specifies the number of times to send the ping request. The default value is 1.</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
           <dev:type>
@@ -1531,7 +1558,7 @@ This creates the name of the host under 15 characters and numbers them. Prefix c
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
         <maml:name>BufferSize</maml:name>
         <maml:description>
-          <maml:para>{{ Fill BufferSize Description }}</maml:para>
+          <maml:para>Specifies the size of the buffer to use for the ping. The default value is 16.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
@@ -1543,7 +1570,7 @@ This creates the name of the host under 15 characters and numbers them. Prefix c
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
         <maml:name>Count</maml:name>
         <maml:description>
-          <maml:para>{{ Fill Count Description }}</maml:para>
+          <maml:para>Specifies the number of times to send the ping request. The default value is 1.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
@@ -1557,7 +1584,7 @@ This creates the name of the host under 15 characters and numbers them. Prefix c
     <command:returnValues />
     <maml:alertSet>
       <maml:alert>
-        <maml:para>Author: DrIOSx</maml:para>
+        <maml:para></maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
@@ -1565,7 +1592,7 @@ This creates the name of the host under 15 characters and numbers them. Prefix c
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
         <dev:code>Get-QuickPing -IPRange 192.168.1.1
 Performs a quick ping on the IP address 192.168.1.1 with a TTL of 128 and returns an
-array of IP addresses that responded to the ping and anget- array of IP addresses that
+array of IP addresses that responded to the ping and an array of IP addresses that
 failed to respond.</dev:code>
         <dev:remarks>
           <maml:para></maml:para>
@@ -1594,8 +1621,12 @@ of IP addresses that failed to respond.</dev:code>
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/tree/main/help/Get-QuickPing.md</maml:uri>
+        <maml:linkText>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-QuickPing</maml:linkText>
+        <maml:uri>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-QuickPing</maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-QuickPing</maml:linkText>
+        <maml:uri>https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-QuickPing</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -1687,22 +1718,27 @@ of IP addresses that failed to respond.</dev:code>
     </command:returnValues>
     <maml:alertSet>
       <maml:alert>
-        <maml:para></maml:para>
+        <maml:para>This function requires access to the target web server over port 443 (HTTPS).</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>
       <command:example>
         <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
-        <dev:code>Get-WebCert -Url "https://www.example.com"</dev:code>
+        <dev:code>Get-WebCert -Url "https://www.example.com"
+This example retrieves the certificate information for the web server at https://www.example.com.</dev:code>
         <dev:remarks>
-          <maml:para>This example retrieves the certificate information for the web server at https://www.example.com.</maml:para>
+          <maml:para></maml:para>
         </dev:remarks>
       </command:example>
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/tree/main/help/Get-WebCertAudit.md</maml:uri>
+        <maml:linkText>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-WebCertAudit</maml:linkText>
+        <maml:uri>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-WebCertAudit</maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-WebCertAudit</maml:linkText>
+        <maml:uri>https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-WebCertAudit</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -1774,7 +1810,16 @@ of IP addresses that failed to respond.</dev:code>
       </command:parameter>
     </command:parameters>
     <command:inputTypes />
-    <command:returnValues />
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>None. The function outputs a merged CSV file to the specified folder.</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
     <maml:alertSet>
       <maml:alert>
         <maml:para>Make sure the input CSV files have the same headers and formatting for the function to work properly.</maml:para>
@@ -1791,8 +1836,12 @@ of IP addresses that failed to respond.</dev:code>
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/tree/main/help/Join-CSVFiles.md</maml:uri>
+        <maml:linkText>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Join-CSVFiles</maml:linkText>
+        <maml:uri>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Join-CSVFiles</maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Join-CSVFiles</maml:linkText>
+        <maml:uri>https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Join-CSVFiles</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -1939,8 +1988,12 @@ Merge-ADAuditZip -FilePaths $workstations, $servers, $nonWindows</dev:code>
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/tree/main/help/Merge-ADAuditZip.md</maml:uri>
+        <maml:linkText>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Merge-ADAuditZip</maml:linkText>
+        <maml:uri>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Merge-ADAuditZip</maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Merge-ADAuditZip</maml:linkText>
+        <maml:uri>https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Merge-ADAuditZip</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -2053,8 +2106,12 @@ Merge-ADAuditZip -FilePaths $workstations, $servers, $nonWindows</dev:code>
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/tree/main/help/Merge-NmapToADHostAudit.md</maml:uri>
+        <maml:linkText>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Merge-NmapToADHostAudit</maml:linkText>
+        <maml:uri>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Merge-NmapToADHostAudit</maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Merge-NmapToADHostAudit</maml:linkText>
+        <maml:uri>https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Merge-NmapToADHostAudit</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -2211,8 +2268,12 @@ Merge-ADAuditZip -FilePaths $workstations, $servers, $nonWindows</dev:code>
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/tree/main/help/New-GraphEmailApp.md</maml:uri>
+        <maml:linkText>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/New-GraphEmailApp</maml:linkText>
+        <maml:uri>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/New-GraphEmailApp</maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>https://criticalsolutionsnetwork.github.io/ADAuditTasks/#New-GraphEmailApp</maml:linkText>
+        <maml:uri>https://criticalsolutionsnetwork.github.io/ADAuditTasks/#New-GraphEmailApp</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -2393,8 +2454,12 @@ Merge-ADAuditZip -FilePaths $workstations, $servers, $nonWindows</dev:code>
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/tree/main/help/New-PatchTuesdayReport.md</maml:uri>
+        <maml:linkText>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/New-PatchTuesdayReport</maml:linkText>
+        <maml:uri>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/New-PatchTuesdayReport</maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>https://criticalsolutionsnetwork.github.io/ADAuditTasks/#New-PatchTuesdayReport</maml:linkText>
+        <maml:uri>https://criticalsolutionsnetwork.github.io/ADAuditTasks/#New-PatchTuesdayReport</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -2872,8 +2937,12 @@ Merge-ADAuditZip -FilePaths $workstations, $servers, $nonWindows</dev:code>
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/tree/main/help/Send-AuditEmail.md</maml:uri>
+        <maml:linkText>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Send-AuditEmail</maml:linkText>
+        <maml:uri>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Send-AuditEmail</maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Send-AuditEmail</maml:linkText>
+        <maml:uri>https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Send-AuditEmail</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -3058,8 +3127,12 @@ Merge-ADAuditZip -FilePaths $workstations, $servers, $nonWindows</dev:code>
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/tree/main/help/Send-GraphAppEmail.md</maml:uri>
+        <maml:linkText>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Send-GraphAppEmail</maml:linkText>
+        <maml:uri>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Send-GraphAppEmail</maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Send-GraphAppEmail</maml:linkText>
+        <maml:uri>https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Send-GraphAppEmail</maml:uri>
       </maml:navigationLink>
     </command:relatedLinks>
   </command:command>
@@ -3301,8 +3374,12 @@ Merge-ADAuditZip -FilePaths $workstations, $servers, $nonWindows</dev:code>
     </command:examples>
     <command:relatedLinks>
       <maml:navigationLink>
-        <maml:linkText>Online Version:</maml:linkText>
-        <maml:uri>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/tree/main/help/Submit-FTPUpload.md</maml:uri>
+        <maml:linkText>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Submit-FTPUpload</maml:linkText>
+        <maml:uri>https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Submit-FTPUpload</maml:uri>
+      </maml:navigationLink>
+      <maml:navigationLink>
+        <maml:linkText>https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Submit-FTPUpload</maml:linkText>
+        <maml:uri>https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Submit-FTPUpload</maml:uri>
       </maml:navigationLink>
       <maml:navigationLink>
         <maml:linkText>https://winscp.net/eng/docs/library_powershell</maml:linkText>
