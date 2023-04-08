@@ -133,7 +133,3 @@ $attachments = Merge-ADAuditZip -FilePaths $workstations, $servers, $nonWindows,
 Send-AuditEmail -smtpServer $SMTPServer -port $Port -username $UserName `
 -body $Body -from $From -to $To -pass $password -attachmentfiles $attachments -ssl
 ```
-### Limitations:
-
-- The module Get-NetworkAudit does not return a string output of the filename for usage in the Send-AuditEmail function. 
-This will be added in a future update. 
