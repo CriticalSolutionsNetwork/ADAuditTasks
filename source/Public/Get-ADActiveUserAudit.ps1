@@ -124,7 +124,7 @@ function Get-ADActiveUserAudit {
             $zip = "$ExportFileName.zip"
             $log = "$ExportFileName.AuditLog.csv"
             # Call the Build-ReportArchive function to create the archive.
-            Build-ReportArchive -Export $Export -csv $csv -zip $zip -log $log -ErrorAction SilentlyContinue -ErrorVariable BuildErr
+            Build-ReportArchive -Export $Export -csv $csv -zip $zip -log $log -AttachmentFolderPath $AttachmentFolderPath -ErrorAction SilentlyContinue -ErrorVariable BuildErr
         }
         else {
             # Log message indicating that the function is returning the output object.

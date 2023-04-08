@@ -213,7 +213,7 @@ https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-ADHostAudit
                 $csv = "$ExportFileName.$FileSuffix.csv"
                 $zip = "$ExportFileName.$FileSuffix.zip"
                 $log = "$ExportFileName.$FileSuffix.AuditLog.csv"
-                Build-ReportArchive -Export $Export -csv $csv -zip $zip -log $log -ErrorVariable BuildErr
+                Build-ReportArchive -Export $Export -csv $csv -zip $zip -log $log -AttachmentFolderPath $AttachmentFolderPath -ErrorVariable BuildErr
             }
             # If the -Report switch is not used, return the output object
             else {

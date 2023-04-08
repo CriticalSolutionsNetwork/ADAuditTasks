@@ -119,7 +119,7 @@ https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-ADUserWildCardAudit
             $csv = "$ExportFileName.csv"
             $zip = "$ExportFileName.zip"
             $log = "$ExportFileName.AuditLog.csv"
-            Build-ReportArchive -Export $Export -csv $csv -zip $zip -log $log -ErrorVariable BuildErr
+            Build-ReportArchive -Export $Export -csv $csv -zip $zip -log $log -AttachmentFolderPath $AttachmentFolderPath -ErrorVariable BuildErr
         }
         else {
             $Script:LogString += Write-AuditLog -Message "Returning output object."
