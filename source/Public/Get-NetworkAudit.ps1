@@ -215,7 +215,7 @@ function Get-NetworkAudit {
             $csv = "C:\temp\$((Get-Date).ToString('yyyy-MM-dd_hh.mm.ss')).$($env:USERDOMAIN)_HostScan_$subnetText.csv"
             $zip = $csv -replace ".csv", ".zip"
             $log = $csv -replace ".csv", ".AuditLog.csv"
-            Build-ReportArchive -Export $results -csv $csv -zip $zip -log $log -AttachmentFolderPath $AttachmentFolderPath -ErrorVariable BuildErr
+            Build-ReportArchive -Export $results -csv $csv -zip $zip -log $log -AttachmentFolderPath "C:\temp" -ErrorVariable BuildErr
         }
         else {
             return $results
