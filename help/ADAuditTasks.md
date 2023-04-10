@@ -1,8 +1,8 @@
-﻿---
+---
 Module Name: ADAuditTasks
 Module Guid: 6b72cdb3-2101-4a7e-b0d0-968a70018809
-Download Help Link: https://criticalsolutionsnetwork.github.io/ADAuditTasks/CAB
-Help Version: 1.0.0.1
+Download Help Link: https://criticalsolutions.net/ADAuditTasks/CAB/
+Help Version: 1.0.0.2
 Locale: en-US
 ---
 

@@ -115,7 +115,7 @@
     } # End of PrivateData hashtable
 
     # HelpInfo URI of this module
-    HelpInfoURI = 'https://criticalsolutionsnetwork.github.io/ADAuditTasks/CAB/'
+    HelpInfoURI = 'https://criticalsolutions.net/ADAuditTasks/CAB/'
 
     # Default prefix for commands exported from this module. Override the default prefix using Import-Module -Prefix.
     # DefaultCommandPrefix = ''
