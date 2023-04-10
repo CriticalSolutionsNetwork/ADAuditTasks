@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <HelpInfo xmlns="http://schemas.microsoft.com/powershell/help/2010/05">
-  <HelpContentURI>https://criticalsolutionsnetwork.github.io/ADAuditTasks/CAB</HelpContentURI>
+  <HelpContentURI>https://criticalsolutions.net/ADAuditTasks/CAB/</HelpContentURI>
   <SupportedUICultures>
     <UICulture>
       <UICultureName>en-US</UICultureName>
-      <UICultureVersion>1.0.0.1</UICultureVersion>
+      <UICultureVersion>1.0.0.2</UICultureVersion>
     </UICulture>
   </SupportedUICultures>
 </HelpInfo>
