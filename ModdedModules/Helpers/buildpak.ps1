@@ -71,10 +71,10 @@ git push origin $ver
 # https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.csv
 
 
-
-$CsvPath = "C:\Users\$User\Downloads\Security Updates 2023-03-17-063046pm.csv"
+$logo = "https://csit.s3.amazonaws.com/PICS/Brand+CSN+Pulseqwk.png"
+$CsvPath = "C:\Users\$User\Downloads\Security Updates 2023-04-10-085240am.csv"
 # Generate email content
-$HTMLReport = New-PatchTuesdayReport -csvpath $CsvPath -DateId "2023-Mar" -LogoUrl $logo -Verbose
+$HTMLReport = New-PatchTuesdayReport -csvpath $CsvPath -DateId "2023-Apr" -LogoUrl $logo -Verbose
 $HTMLReport | Out-File C:\temp\reports.html
 Start-Process C:\temp\reports.html
 
