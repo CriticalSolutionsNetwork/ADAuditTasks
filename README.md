@@ -9,7 +9,7 @@ The ADAuditTasks module provides a comprehensive set of tools for auditing and r
 
 ## Help Documentation
 
-See the [ADAuditTasks help documentation](https://criticalsolutionsnetwork.github.io/ADAuditTasks/) or the  [Wiki](https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki) for more information on this module and how to use it.
+See the [ADAuditTasks help documentation](https://criticalsolutionsnetwork.github.io/ADAuditTasks/) or the [Wiki}(https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki) for more information on this module and how to use it.
 
 ## Public Functions
 
