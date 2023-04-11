@@ -5,6 +5,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added custom help uri. 
+
+## [0.5.0] - 2023-04-10
+
 ### Fixed
 
 - Help info Uri.
