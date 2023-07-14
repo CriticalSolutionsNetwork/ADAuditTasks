@@ -13,11 +13,16 @@ task Sign_Module_Files {
     foreach ($file in $moduleFiles) {
         Set-AuthenticodeSignature -Certificate $cert -FilePath $file.FullName -TimestampServer "http://timestamp.digicert.com"
     }
+    # Get the module version dynamically from the psd1 file
+    $manifest = Get-ChildItem -Path $modulePath -Recurse -Filter "*.psd1" | Select-Object -First 1
+    $manifestContent = Import-PowerShellDataFile -Path $manifest.FullName
+    $moduleVersion = $manifestContent.ModuleVersion
+    $versionPath = Join-Path -Path $modulePath -ChildPath $moduleVersion
     # Create the catalog file
-    $catalogPath = Join-Path -Path $modulePath -ChildPath "ADAuditTasks.cat"
-    New-FileCatalog -Path $modulePath -CatalogFilePath $catalogPath -CatalogVersion 2.0 -Verbose
+    $catalogPath = Join-Path -Path $versionPath -ChildPath "ADAuditTasks.cat"
+    New-FileCatalog -Path $versionPath -CatalogFilePath $catalogPath -CatalogVersion 2.0 -Verbose
     # Sign the catalog file
     Set-AuthenticodeSignature -Certificate $cert -FilePath $catalogPath -TimestampServer "http://timestamp.digicert.com"
     # Test the catalog file
-    Test-FileCatalog -Path $modulePath -CatalogFilePath $catalogPath -Detailed
+    Test-FileCatalog -Path $versionPath -CatalogFilePath $catalogPath -Detailed
 }

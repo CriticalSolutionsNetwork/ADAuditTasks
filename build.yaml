@@ -31,7 +31,7 @@ NestedModule:
 #    OutputDirectory: ///Modules/HelperSubmodule
 #    VersionedOutputDirectory: false
 #    AddToManifest: false
-#    SemVer: 
+#    SemVer:
 #    # suffix:
 #    # prefix:
 
@@ -58,6 +58,11 @@ BuildWorkflow:
   Sign_Module_Task:
   - build
   - Sign_Module_Files
+
+  Sign_Module_Pack:
+  - build
+  - Sign_Module_Files
+  - package_module_nupkg
 
   # Defining test task to be run when invoking `./build.ps1 -Tasks test`
   test:
