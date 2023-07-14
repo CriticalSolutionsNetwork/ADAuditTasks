@@ -5,6 +5,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Fixed catalog validation.
+
+## [0.6.0] - 2023-07-14
+
 ### Added
 
 - Signing support for enhanced security and integrity checks.
