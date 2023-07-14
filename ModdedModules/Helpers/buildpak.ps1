@@ -7,7 +7,7 @@ function Build-TestBuildFunc {
     .\build.ps1 -tasks build -CodeCoverageThreshold 0
 }
 function Build-Docs {
-    Import-Module .\output\ADAuditTasks\*\*.psd1
+    Import-Module .\output\module\ADAuditTasks\*\*.psd1
     .\ModdedModules\psDoc-master\src\psDoc.ps1 -moduleName ADAuditTasks -outputDir docs -template ".\ModdedModules\psDoc-master\src\out-html-template.ps1"
 }
 Build-TestBuildFunc
@@ -62,10 +62,10 @@ Get-NetworkAudit -Ports 443 -Computers $test1 -Report -NoHops -AddService
 #>
 
 <#
-    $ver = "v0.5.2"
+    $ver = "v0.6.0"
     git checkout main
     git pull origin main
-    git tag -a $ver -m "Release version $ver Refresh"
+    git tag -a $ver -m "Release version $ver Overhaul"
     git push origin $ver
     "Fix: PR #37"
     git push origin $ver
@@ -144,8 +144,9 @@ function Initialize-Test {
 #######################################################################################
 ################################## Execution ##########################################
 #######################################################################################
+.\build.ps1 -tasks Sign_Module_Task, pack -CodeCoverageThreshold 0
 
-Initialize-BuildFunc
+#Initialize-BuildFunc
 Initialize-Signing
 Get-Doc
 # Initialize-Test

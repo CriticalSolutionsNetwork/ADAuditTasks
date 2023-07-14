@@ -56,13 +56,13 @@ BuildWorkflow:
     - package_module_nupkg
 
   Sign_Module_Task:
-  - build
-  - Sign_Module_Files
+    - build
+    - Sign_Module_Files
 
   Sign_Module_Pack:
-  - build
-  - Sign_Module_Files
-  - package_module_nupkg
+    - build
+    - Sign_Module_Files
+    - package_module_nupkg
 
   # Defining test task to be run when invoking `./build.ps1 -Tasks test`
   test:
