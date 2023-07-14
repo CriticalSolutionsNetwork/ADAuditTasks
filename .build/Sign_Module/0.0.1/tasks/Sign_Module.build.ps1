@@ -20,7 +20,7 @@ task Sign_Module_Files {
     $versionPath = Join-Path -Path $modulePath -ChildPath $moduleVersion
     # Create the catalog file
     $catalogPath = Join-Path -Path $versionPath -ChildPath "ADAuditTasks.cat"
-    New-FileCatalog -Path $modulePath -CatalogFilePath $catalogPath -CatalogVersion 2.0 -Verbose
+    New-FileCatalog -Path $versionPath -CatalogFilePath $catalogPath -CatalogVersion 2.0 -Verbose
     # Sign the catalog file
     Set-AuthenticodeSignature -Certificate $cert -FilePath $catalogPath -TimestampServer "http://timestamp.digicert.com"
     # Test the catalog file
