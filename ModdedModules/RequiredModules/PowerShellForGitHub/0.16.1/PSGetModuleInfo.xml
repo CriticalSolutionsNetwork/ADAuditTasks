@@ -1,0 +1,407 @@
+<Objs Version="1.1.0.1" xmlns="http://schemas.microsoft.com/powershell/2004/04">
+  <Obj RefId="0">
+    <TN RefId="0">
+      <T>Microsoft.PowerShell.Commands.PSRepositoryItemInfo</T>
+      <T>System.Management.Automation.PSCustomObject</T>
+      <T>System.Object</T>
+    </TN>
+    <MS>
+      <S N="Name">PowerShellForGitHub</S>
+      <S N="Version">0.16.1</S>
+      <S N="Type">Module</S>
+      <S N="Description">PowerShell wrapper for GitHub API</S>
+      <S N="Author">Microsoft Corporation</S>
+      <Obj N="CompanyName" RefId="1">
+        <TN RefId="1">
+          <T>System.Object[]</T>
+          <T>System.Array</T>
+          <T>System.Object</T>
+        </TN>
+        <LST>
+          <S>PowerShellTeam</S>
+          <S>PowerShellForGitHubTeam</S>
+        </LST>
+      </Obj>
+      <S N="Copyright">Copyright (C) Microsoft Corporation.  All rights reserved.</S>
+      <DT N="PublishedDate">2022-07-25T18:23:36-05:00</DT>
+      <Nil N="InstalledDate" />
+      <Nil N="UpdatedDate" />
+      <URI N="LicenseUri">https://aka.ms/PowerShellForGitHub_License</URI>
+      <URI N="ProjectUri">https://aka.ms/PowerShellForGitHub</URI>
+      <Nil N="IconUri" />
+      <Obj N="Tags" RefId="2">
+        <TNRef RefId="1" />
+        <LST>
+          <S>GitHub</S>
+          <S>API</S>
+          <S>PowerShell</S>
+          <S>PSModule</S>
+        </LST>
+      </Obj>
+      <Obj N="Includes" RefId="3">
+        <TN RefId="2">
+          <T>System.Collections.Hashtable</T>
+          <T>System.Object</T>
+        </TN>
+        <DCT>
+          <En>
+            <S N="Key">Workflow</S>
+            <Obj N="Value" RefId="4">
+              <TNRef RefId="1" />
+              <LST />
+            </Obj>
+          </En>
+          <En>
+            <S N="Key">RoleCapability</S>
+            <Ref N="Value" RefId="4" />
+          </En>
+          <En>
+            <S N="Key">DscResource</S>
+            <Ref N="Value" RefId="4" />
+          </En>
+          <En>
+            <S N="Key">Function</S>
+            <Obj N="Value" RefId="5">
+              <TNRef RefId="1" />
+              <LST>
+                <S>Add-GitHubAssignee</S>
+                <S>Add-GitHubIssueLabel</S>
+                <S>Add-GitHubGistStar</S>
+                <S>Backup-GitHubConfiguration</S>
+                <S>Clear-GitHubAuthentication</S>
+                <S>ConvertFrom-GitHubMarkdown</S>
+                <S>Copy-GitHubGist</S>
+                <S>Disable-GitHubRepositorySecurityFix</S>
+                <S>Disable-GitHubRepositoryVulnerabilityAlert</S>
+                <S>Enable-GitHubRepositorySecurityFix</S>
+                <S>Enable-GitHubRepositoryVulnerabilityAlert</S>
+                <S>Get-GitHubAssignee</S>
+                <S>Get-GitHubCloneTraffic</S>
+                <S>Get-GitHubCodeOfConduct</S>
+                <S>Get-GitHubConfiguration</S>
+                <S>Get-GitHubContent</S>
+                <S>Get-GitHubEmoji</S>
+                <S>Get-GitHubEvent</S>
+                <S>Get-GitHubGist</S>
+                <S>Get-GitHubGistComment</S>
+                <S>Get-GitHubGitIgnore</S>
+                <S>Get-GitHubIssue</S>
+                <S>Get-GitHubIssueComment</S>
+                <S>Get-GitHubIssueTimeline</S>
+                <S>Get-GitHubLabel</S>
+                <S>Get-GitHubLicense</S>
+                <S>Get-GitHubMilestone</S>
+                <S>Get-GitHubOrganizationMember</S>
+                <S>Get-GitHubPathTraffic</S>
+                <S>Get-GitHubProject</S>
+                <S>Get-GitHubProjectCard</S>
+                <S>Get-GitHubProjectColumn</S>
+                <S>Get-GitHubPullRequest</S>
+                <S>Get-GitHubRateLimit</S>
+                <S>Get-GitHubReaction</S>
+                <S>Get-GitHubReferrerTraffic</S>
+                <S>Get-GitHubRelease</S>
+                <S>Get-GitHubReleaseAsset</S>
+                <S>Get-GitHubRepository</S>
+                <S>Get-GitHubRepositoryActionsPermission</S>
+                <S>Get-GitHubRepositoryBranch</S>
+                <S>Get-GitHubRepositoryBranchProtectionRule</S>
+                <S>Get-GitHubRepositoryCollaborator</S>
+                <S>Get-GitHubRepositoryContributor</S>
+                <S>Get-GitHubRepositoryFork</S>
+                <S>Get-GitHubRepositoryLanguage</S>
+                <S>Get-GitHubRepositoryTag</S>
+                <S>Get-GitHubRepositoryTeamPermission</S>
+                <S>Get-GitHubRepositoryTopic</S>
+                <S>Get-GitHubRepositoryUniqueContributor</S>
+                <S>Get-GitHubTeam</S>
+                <S>Get-GitHubTeamMember</S>
+                <S>Get-GitHubUser</S>
+                <S>Get-GitHubUserContextualInformation</S>
+                <S>Get-GitHubViewTraffic</S>
+                <S>Group-GitHubIssue</S>
+                <S>Group-GitHubPullRequest</S>
+                <S>Initialize-GitHubLabel</S>
+                <S>Invoke-GHRestMethod</S>
+                <S>Invoke-GHRestMethodMultipleResult</S>
+                <S>Join-GitHubUri</S>
+                <S>Lock-GitHubIssue</S>
+                <S>Move-GitHubProjectCard</S>
+                <S>Move-GitHubProjectColumn</S>
+                <S>Move-GitHubRepositoryOwnership</S>
+                <S>New-GitHubGist</S>
+                <S>New-GitHubGistComment</S>
+                <S>New-GitHubIssue</S>
+                <S>New-GitHubIssueComment</S>
+                <S>New-GitHubLabel</S>
+                <S>New-GitHubMilestone</S>
+                <S>New-GitHubProject</S>
+                <S>New-GitHubProjectCard</S>
+                <S>New-GitHubProjectColumn</S>
+                <S>New-GitHubPullRequest</S>
+                <S>New-GitHubRelease</S>
+                <S>New-GitHubReleaseAsset</S>
+                <S>New-GitHubRepository</S>
+                <S>New-GitHubRepositoryFromTemplate</S>
+                <S>New-GitHubRepositoryBranch</S>
+                <S>New-GitHubRepositoryBranchProtectionRule</S>
+                <S>New-GitHubRepositoryFork</S>
+                <S>New-GitHubTeam</S>
+                <S>Remove-GitHubAssignee</S>
+                <S>Remove-GitHubComment</S>
+                <S>Remove-GitHubGist</S>
+                <S>Remove-GitHubGistComment</S>
+                <S>Remove-GitHubGistFile</S>
+                <S>Remove-GitHubGistStar</S>
+                <S>Remove-GitHubIssueComment</S>
+                <S>Remove-GitHubIssueLabel</S>
+                <S>Remove-GitHubLabel</S>
+                <S>Remove-GitHubMilestone</S>
+                <S>Remove-GitHubProject</S>
+                <S>Remove-GitHubProjectCard</S>
+                <S>Remove-GitHubProjectColumn</S>
+                <S>Remove-GitHubReaction</S>
+                <S>Remove-GitHubRelease</S>
+                <S>Remove-GitHubReleaseAsset</S>
+                <S>Remove-GitHubRepository</S>
+                <S>Remove-GitHubRepositoryBranch</S>
+                <S>Remove-GitHubRepositoryBranchProtectionRule</S>
+                <S>Remove-GitHubRepositoryTeamPermission</S>
+                <S>Remove-GitHubTeam</S>
+                <S>Rename-GitHubGistFile</S>
+                <S>Rename-GitHubRepository</S>
+                <S>Rename-GitHubTeam</S>
+                <S>Reset-GitHubConfiguration</S>
+                <S>Restore-GitHubConfiguration</S>
+                <S>Set-GitHubAuthentication</S>
+                <S>Set-GitHubConfiguration</S>
+                <S>Set-GitHubContent</S>
+                <S>Set-GitHubGist</S>
+                <S>Set-GitHubGistComment</S>
+                <S>Set-GitHubGistFile</S>
+                <S>Set-GitHubGistStar</S>
+                <S>Set-GitHubIssue</S>
+                <S>Set-GitHubIssueComment</S>
+                <S>Set-GitHubIssueLabel</S>
+                <S>Set-GitHubLabel</S>
+                <S>Set-GitHubMilestone</S>
+                <S>Set-GitHubProfile</S>
+                <S>Set-GitHubProject</S>
+                <S>Set-GitHubProjectCard</S>
+                <S>Set-GitHubProjectColumn</S>
+                <S>Set-GitHubReaction</S>
+                <S>Set-GitHubRelease</S>
+                <S>Set-GitHubReleaseAsset</S>
+                <S>Set-GitHubRepository</S>
+                <S>Set-GitHubRepositoryActionsPermission</S>
+                <S>Set-GitHubRepositoryTeamPermission</S>
+                <S>Set-GitHubRepositoryTopic</S>
+                <S>Set-GitHubTeam</S>
+                <S>Split-GitHubUri</S>
+                <S>Test-GitHubAssignee</S>
+                <S>Test-GitHubAuthenticationConfigured</S>
+                <S>Test-GitHubGistStar</S>
+                <S>Test-GitHubOrganizationMember</S>
+                <S>Test-GitHubRepositoryVulnerabilityAlert</S>
+                <S>Unlock-GitHubIssue</S>
+              </LST>
+            </Obj>
+          </En>
+          <En>
+            <S N="Key">Command</S>
+            <Obj N="Value" RefId="6">
+              <TNRef RefId="1" />
+              <LST>
+                <S>Add-GitHubAssignee</S>
+                <S>Add-GitHubIssueLabel</S>
+                <S>Add-GitHubGistStar</S>
+                <S>Backup-GitHubConfiguration</S>
+                <S>Clear-GitHubAuthentication</S>
+                <S>ConvertFrom-GitHubMarkdown</S>
+                <S>Copy-GitHubGist</S>
+                <S>Disable-GitHubRepositorySecurityFix</S>
+                <S>Disable-GitHubRepositoryVulnerabilityAlert</S>
+                <S>Enable-GitHubRepositorySecurityFix</S>
+                <S>Enable-GitHubRepositoryVulnerabilityAlert</S>
+                <S>Get-GitHubAssignee</S>
+                <S>Get-GitHubCloneTraffic</S>
+                <S>Get-GitHubCodeOfConduct</S>
+                <S>Get-GitHubConfiguration</S>
+                <S>Get-GitHubContent</S>
+                <S>Get-GitHubEmoji</S>
+                <S>Get-GitHubEvent</S>
+                <S>Get-GitHubGist</S>
+                <S>Get-GitHubGistComment</S>
+                <S>Get-GitHubGitIgnore</S>
+                <S>Get-GitHubIssue</S>
+                <S>Get-GitHubIssueComment</S>
+                <S>Get-GitHubIssueTimeline</S>
+                <S>Get-GitHubLabel</S>
+                <S>Get-GitHubLicense</S>
+                <S>Get-GitHubMilestone</S>
+                <S>Get-GitHubOrganizationMember</S>
+                <S>Get-GitHubPathTraffic</S>
+                <S>Get-GitHubProject</S>
+                <S>Get-GitHubProjectCard</S>
+                <S>Get-GitHubProjectColumn</S>
+                <S>Get-GitHubPullRequest</S>
+                <S>Get-GitHubRateLimit</S>
+                <S>Get-GitHubReaction</S>
+                <S>Get-GitHubReferrerTraffic</S>
+                <S>Get-GitHubRelease</S>
+                <S>Get-GitHubReleaseAsset</S>
+                <S>Get-GitHubRepository</S>
+                <S>Get-GitHubRepositoryActionsPermission</S>
+                <S>Get-GitHubRepositoryBranch</S>
+                <S>Get-GitHubRepositoryBranchProtectionRule</S>
+                <S>Get-GitHubRepositoryCollaborator</S>
+                <S>Get-GitHubRepositoryContributor</S>
+                <S>Get-GitHubRepositoryFork</S>
+                <S>Get-GitHubRepositoryLanguage</S>
+                <S>Get-GitHubRepositoryTag</S>
+                <S>Get-GitHubRepositoryTeamPermission</S>
+                <S>Get-GitHubRepositoryTopic</S>
+                <S>Get-GitHubRepositoryUniqueContributor</S>
+                <S>Get-GitHubTeam</S>
+                <S>Get-GitHubTeamMember</S>
+                <S>Get-GitHubUser</S>
+                <S>Get-GitHubUserContextualInformation</S>
+                <S>Get-GitHubViewTraffic</S>
+                <S>Group-GitHubIssue</S>
+                <S>Group-GitHubPullRequest</S>
+                <S>Initialize-GitHubLabel</S>
+                <S>Invoke-GHRestMethod</S>
+                <S>Invoke-GHRestMethodMultipleResult</S>
+                <S>Join-GitHubUri</S>
+                <S>Lock-GitHubIssue</S>
+                <S>Move-GitHubProjectCard</S>
+                <S>Move-GitHubProjectColumn</S>
+                <S>Move-GitHubRepositoryOwnership</S>
+                <S>New-GitHubGist</S>
+                <S>New-GitHubGistComment</S>
+                <S>New-GitHubIssue</S>
+                <S>New-GitHubIssueComment</S>
+                <S>New-GitHubLabel</S>
+                <S>New-GitHubMilestone</S>
+                <S>New-GitHubProject</S>
+                <S>New-GitHubProjectCard</S>
+                <S>New-GitHubProjectColumn</S>
+                <S>New-GitHubPullRequest</S>
+                <S>New-GitHubRelease</S>
+                <S>New-GitHubReleaseAsset</S>
+                <S>New-GitHubRepository</S>
+                <S>New-GitHubRepositoryFromTemplate</S>
+                <S>New-GitHubRepositoryBranch</S>
+                <S>New-GitHubRepositoryBranchProtectionRule</S>
+                <S>New-GitHubRepositoryFork</S>
+                <S>New-GitHubTeam</S>
+                <S>Remove-GitHubAssignee</S>
+                <S>Remove-GitHubComment</S>
+                <S>Remove-GitHubGist</S>
+                <S>Remove-GitHubGistComment</S>
+                <S>Remove-GitHubGistFile</S>
+                <S>Remove-GitHubGistStar</S>
+                <S>Remove-GitHubIssueComment</S>
+                <S>Remove-GitHubIssueLabel</S>
+                <S>Remove-GitHubLabel</S>
+                <S>Remove-GitHubMilestone</S>
+                <S>Remove-GitHubProject</S>
+                <S>Remove-GitHubProjectCard</S>
+                <S>Remove-GitHubProjectColumn</S>
+                <S>Remove-GitHubReaction</S>
+                <S>Remove-GitHubRelease</S>
+                <S>Remove-GitHubReleaseAsset</S>
+                <S>Remove-GitHubRepository</S>
+                <S>Remove-GitHubRepositoryBranch</S>
+                <S>Remove-GitHubRepositoryBranchProtectionRule</S>
+                <S>Remove-GitHubRepositoryTeamPermission</S>
+                <S>Remove-GitHubTeam</S>
+                <S>Rename-GitHubGistFile</S>
+                <S>Rename-GitHubRepository</S>
+                <S>Rename-GitHubTeam</S>
+                <S>Reset-GitHubConfiguration</S>
+                <S>Restore-GitHubConfiguration</S>
+                <S>Set-GitHubAuthentication</S>
+                <S>Set-GitHubConfiguration</S>
+                <S>Set-GitHubContent</S>
+                <S>Set-GitHubGist</S>
+                <S>Set-GitHubGistComment</S>
+                <S>Set-GitHubGistFile</S>
+                <S>Set-GitHubGistStar</S>
+                <S>Set-GitHubIssue</S>
+                <S>Set-GitHubIssueComment</S>
+                <S>Set-GitHubIssueLabel</S>
+                <S>Set-GitHubLabel</S>
+                <S>Set-GitHubMilestone</S>
+                <S>Set-GitHubProfile</S>
+                <S>Set-GitHubProject</S>
+                <S>Set-GitHubProjectCard</S>
+                <S>Set-GitHubProjectColumn</S>
+                <S>Set-GitHubReaction</S>
+                <S>Set-GitHubRelease</S>
+                <S>Set-GitHubReleaseAsset</S>
+                <S>Set-GitHubRepository</S>
+                <S>Set-GitHubRepositoryActionsPermission</S>
+                <S>Set-GitHubRepositoryTeamPermission</S>
+                <S>Set-GitHubRepositoryTopic</S>
+                <S>Set-GitHubTeam</S>
+                <S>Split-GitHubUri</S>
+                <S>Test-GitHubAssignee</S>
+                <S>Test-GitHubAuthenticationConfigured</S>
+                <S>Test-GitHubGistStar</S>
+                <S>Test-GitHubOrganizationMember</S>
+                <S>Test-GitHubRepositoryVulnerabilityAlert</S>
+                <S>Unlock-GitHubIssue</S>
+              </LST>
+            </Obj>
+          </En>
+          <En>
+            <S N="Key">Cmdlet</S>
+            <Ref N="Value" RefId="4" />
+          </En>
+        </DCT>
+      </Obj>
+      <Nil N="PowerShellGetFormatVersion" />
+      <S N="ReleaseNotes">https://github.com/microsoft/PowerShellForGitHub/blob/master/CHANGELOG.md</S>
+      <Obj N="Dependencies" RefId="7">
+        <TNRef RefId="1" />
+        <LST />
+      </Obj>
+      <S N="RepositorySourceLocation">https://www.powershellgallery.com/api/v2</S>
+      <S N="Repository">PSGallery</S>
+      <S N="PackageManagementProvider">NuGet</S>
+      <Obj N="AdditionalMetadata" RefId="8">
+        <TN RefId="3">
+          <T>System.Management.Automation.PSCustomObject</T>
+          <T>System.Object</T>
+        </TN>
+        <MS>
+          <S N="copyright">Copyright (C) Microsoft Corporation.  All rights reserved.</S>
+          <S N="description">PowerShell wrapper for GitHub API</S>
+          <S N="requireLicenseAcceptance">False</S>
+          <S N="releaseNotes">https://github.com/microsoft/PowerShellForGitHub/blob/master/CHANGELOG.md</S>
+          <S N="isLatestVersion">True</S>
+          <S N="isAbsoluteLatestVersion">True</S>
+          <S N="versionDownloadCount">241730</S>
+          <S N="downloadCount">545851</S>
+          <S N="packageSize">564039</S>
+          <S N="published">7/25/2022 6:23:36 PM -05:00</S>
+          <S N="created">7/25/2022 6:23:36 PM -05:00</S>
+          <S N="lastUpdated">4/29/2023 4:19:19 PM -05:00</S>
+          <S N="tags">GitHub API PowerShell PSModule PSFunction_Add-GitHubAssignee PSCommand_Add-GitHubAssignee PSFunction_Add-GitHubIssueLabel PSCommand_Add-GitHubIssueLabel PSFunction_Add-GitHubGistStar PSCommand_Add-GitHubGistStar PSFunction_Backup-GitHubConfiguration PSCommand_Backup-GitHubConfiguration PSFunction_Clear-GitHubAuthentication PSCommand_Clear-GitHubAuthentication PSFunction_ConvertFrom-GitHubMarkdown PSCommand_ConvertFrom-GitHubMarkdown PSFunction_Copy-GitHubGist PSCommand_Copy-GitHubGist PSFunction_Disable-GitHubRepositorySecurityFix PSCommand_Disable-GitHubRepositorySecurityFix PSFunction_Disable-GitHubRepositoryVulnerabilityAlert PSCommand_Disable-GitHubRepositoryVulnerabilityAlert PSFunction_Enable-GitHubRepositorySecurityFix PSCommand_Enable-GitHubRepositorySecurityFix PSFunction_Enable-GitHubRepositoryVulnerabilityAlert PSCommand_Enable-GitHubRepositoryVulnerabilityAlert PSFunction_Get-GitHubAssignee PSCommand_Get-GitHubAssignee PSFunction_Get-GitHubCloneTraffic PSCommand_Get-GitHubCloneTraffic PSFunction_Get-GitHubCodeOfConduct PSCommand_Get-GitHubCodeOfConduct PSFunction_Get-GitHubConfiguration PSCommand_Get-GitHubConfiguration PSFunction_Get-GitHubContent PSCommand_Get-GitHubContent PSFunction_Get-GitHubEmoji PSCommand_Get-GitHubEmoji PSFunction_Get-GitHubEvent PSCommand_Get-GitHubEvent PSFunction_Get-GitHubGist PSCommand_Get-GitHubGist PSFunction_Get-GitHubGistComment PSCommand_Get-GitHubGistComment PSFunction_Get-GitHubGitIgnore PSCommand_Get-GitHubGitIgnore PSFunction_Get-GitHubIssue PSCommand_Get-GitHubIssue PSFunction_Get-GitHubIssueComment PSCommand_Get-GitHubIssueComment PSFunction_Get-GitHubIssueTimeline PSCommand_Get-GitHubIssueTimeline PSFunction_Get-GitHubLabel PSCommand_Get-GitHubLabel PSFunction_Get-GitHubLicense PSCommand_Get-GitHubLicense PSFunction_Get-GitHubMilestone PSCommand_Get-GitHubMilestone PSFunction_Get-GitHubOrganizationMember PSCommand_Get-GitHubOrganizationMember PSFunction_Get-GitHubPathTraffic PSCommand_Get-GitHubPathTraffic PSFunction_Get-GitHubProject PSCommand_Get-GitHubProject PSFunction_Get-GitHubProjectCard PSCommand_Get-GitHubProjectCard PSFunction_Get-GitHubProjectColumn PSCommand_Get-GitHubProjectColumn PSFunction_Get-GitHubPullRequest PSCommand_Get-GitHubPullRequest PSFunction_Get-GitHubRateLimit PSCommand_Get-GitHubRateLimit PSFunction_Get-GitHubReaction PSCommand_Get-GitHubReaction PSFunction_Get-GitHubReferrerTraffic PSCommand_Get-GitHubReferrerTraffic PSFunction_Get-GitHubRelease PSCommand_Get-GitHubRelease PSFunction_Get-GitHubReleaseAsset PSCommand_Get-GitHubReleaseAsset PSFunction_Get-GitHubRepository PSCommand_Get-GitHubRepository PSFunction_Get-GitHubRepositoryActionsPermission PSCommand_Get-GitHubRepositoryActionsPermission PSFunction_Get-GitHubRepositoryBranch PSCommand_Get-GitHubRepositoryBranch PSFunction_Get-GitHubRepositoryBranchProtectionRule PSCommand_Get-GitHubRepositoryBranchProtectionRule PSFunction_Get-GitHubRepositoryCollaborator PSCommand_Get-GitHubRepositoryCollaborator PSFunction_Get-GitHubRepositoryContributor PSCommand_Get-GitHubRepositoryContributor PSFunction_Get-GitHubRepositoryFork PSCommand_Get-GitHubRepositoryFork PSFunction_Get-GitHubRepositoryLanguage PSCommand_Get-GitHubRepositoryLanguage PSFunction_Get-GitHubRepositoryTag PSCommand_Get-GitHubRepositoryTag PSFunction_Get-GitHubRepositoryTeamPermission PSCommand_Get-GitHubRepositoryTeamPermission PSFunction_Get-GitHubRepositoryTopic PSCommand_Get-GitHubRepositoryTopic PSFunction_Get-GitHubRepositoryUniqueContributor PSCommand_Get-GitHubRepositoryUniqueContributor PSFunction_Get-GitHubTeam PSCommand_Get-GitHubTeam PSFunction_Get-GitHubTeamMember PSCommand_Get-GitHubTeamMember PSFunction_Get-GitHubUser PSCommand_Get-GitHubUser PSFunction_Get-GitHubUserContextualInformation PSCommand_Get-GitHubUserContextualInformation PSFunction_Get-GitHubViewTraffic PSCommand_Get-GitHubViewTraffic PSFunction_Group-GitHubIssue PSCommand_Group-GitHubIssue PSFunction_Group-GitHubPullRequest PSCommand_Group-GitHubPullRequest PSFunction_Initialize-GitHubLabel PSCommand_Initialize-GitHubLabel PSFunction_Invoke-GHRestMethod PSCommand_Invoke-GHRestMethod PSFunction_Invoke-GHRestMethodMultipleResult PSCommand_Invoke-GHRestMethodMultipleResult PSFunction_Join-GitHubUri PSCommand_Join-GitHubUri PSFunction_Lock-GitHubIssue PSCommand_Lock-GitHubIssue PSFunction_Move-GitHubProjectCard PSCommand_Move-GitHubProjectCard PSFunction_Move-GitHubProjectColumn PSCommand_Move-GitHubProjectColumn PSFunction_Move-GitHubRepositoryOwnership PSCommand_Move-GitHubRepositoryOwnership PSFunction_New-GitHubGist PSCommand_New-GitHubGist PSFunction_New-GitHubGistComment PSCommand_New-GitHubGistComment PSFunction_New-GitHubIssue PSCommand_New-GitHubIssue PSFunction_New-GitHubIssueComment PSCommand_New-GitHubIssueComment PSFunction_New-GitHubLabel PSCommand_New-GitHubLabel PSFunction_New-GitHubMilestone PSCommand_New-GitHubMilestone PSFunction_New-GitHubProject PSCommand_New-GitHubProject PSFunction_New-GitHubProjectCard PSCommand_New-GitHubProjectCard PSFunction_New-GitHubProjectColumn PSCommand_New-GitHubProjectColumn PSFunction_New-GitHubPullRequest PSCommand_New-GitHubPullRequest PSFunction_New-GitHubRelease PSCommand_New-GitHubRelease PSFunction_New-GitHubReleaseAsset PSCommand_New-GitHubReleaseAsset PSFunction_New-GitHubRepository PSCommand_New-GitHubRepository PSFunction_New-GitHubRepositoryFromTemplate PSCommand_New-GitHubRepositoryFromTemplate PSFunction_New-GitHubRepositoryBranch PSCommand_New-GitHubRepositoryBranch PSFunction_New-GitHubRepositoryBranchProtectionRule PSCommand_New-GitHubRepositoryBranchProtectionRule PSFunction_New-GitHubRepositoryFork PSCommand_New-GitHubRepositoryFork PSFunction_New-GitHubTeam PSCommand_New-GitHubTeam PSFunction_Remove-GitHubAssignee PSCommand_Remove-GitHubAssignee PSFunction_Remove-GitHubComment PSCommand_Remove-GitHubComment PSFunction_Remove-GitHubGist PSCommand_Remove-GitHubGist PSFunction_Remove-GitHubGistComment PSCommand_Remove-GitHubGistComment PSFunction_Remove-GitHubGistFile PSCommand_Remove-GitHubGistFile PSFunction_Remove-GitHubGistStar PSCommand_Remove-GitHubGistStar PSFunction_Remove-GitHubIssueComment PSCommand_Remove-GitHubIssueComment PSFunction_Remove-GitHubIssueLabel PSCommand_Remove-GitHubIssueLabel PSFunction_Remove-GitHubLabel PSCommand_Remove-GitHubLabel PSFunction_Remove-GitHubMilestone PSCommand_Remove-GitHubMilestone PSFunction_Remove-GitHubProject PSCommand_Remove-GitHubProject PSFunction_Remove-GitHubProjectCard PSCommand_Remove-GitHubProjectCard PSFunction_Remove-GitHubProjectColumn PSCommand_Remove-GitHubProjectColumn PSFunction_Remove-GitHubReaction PSCommand_Remove-GitHubReaction PSFunction_Remove-GitHubRelease PSCommand_Remove-GitHubRelease PSFunction_Remove-GitHubReleaseAsset PSCommand_Remove-GitHubReleaseAsset PSFunction_Remove-GitHubRepository PSCommand_Remove-GitHubRepository PSFunction_Remove-GitHubRepositoryBranch PSCommand_Remove-GitHubRepositoryBranch PSFunction_Remove-GitHubRepositoryBranchProtectionRule PSCommand_Remove-GitHubRepositoryBranchProtectionRule PSFunction_Remove-GitHubRepositoryTeamPermission PSCommand_Remove-GitHubRepositoryTeamPermission PSFunction_Remove-GitHubTeam PSCommand_Remove-GitHubTeam PSFunction_Rename-GitHubGistFile PSCommand_Rename-GitHubGistFile PSFunction_Rename-GitHubRepository PSCommand_Rename-GitHubRepository PSFunction_Rename-GitHubTeam PSCommand_Rename-GitHubTeam PSFunction_Reset-GitHubConfiguration PSCommand_Reset-GitHubConfiguration PSFunction_Restore-GitHubConfiguration PSCommand_Restore-GitHubConfiguration PSFunction_Set-GitHubAuthentication PSCommand_Set-GitHubAuthentication PSFunction_Set-GitHubConfiguration PSCommand_Set-GitHubConfiguration PSFunction_Set-GitHubContent PSCommand_Set-GitHubContent PSFunction_Set-GitHubGist PSCommand_Set-GitHubGist PSFunction_Set-GitHubGistComment PSCommand_Set-GitHubGistComment PSFunction_Set-GitHubGistFile PSCommand_Set-GitHubGistFile PSFunction_Set-GitHubGistStar PSCommand_Set-GitHubGistStar PSFunction_Set-GitHubIssue PSCommand_Set-GitHubIssue PSFunction_Set-GitHubIssueComment PSCommand_Set-GitHubIssueComment PSFunction_Set-GitHubIssueLabel PSCommand_Set-GitHubIssueLabel PSFunction_Set-GitHubLabel PSCommand_Set-GitHubLabel PSFunction_Set-GitHubMilestone PSCommand_Set-GitHubMilestone PSFunction_Set-GitHubProfile PSCommand_Set-GitHubProfile PSFunction_Set-GitHubProject PSCommand_Set-GitHubProject PSFunction_Set-GitHubProjectCard PSCommand_Set-GitHubProjectCard PSFunction_Set-GitHubProjectColumn PSCommand_Set-GitHubProjectColumn PSFunction_Set-GitHubReaction PSCommand_Set-GitHubReaction PSFunction_Set-GitHubRelease PSCommand_Set-GitHubRelease PSFunction_Set-GitHubReleaseAsset PSCommand_Set-GitHubReleaseAsset PSFunction_Set-GitHubRepository PSCommand_Set-GitHubRepository PSFunction_Set-GitHubRepositoryActionsPermission PSCommand_Set-GitHubRepositoryActionsPermission PSFunction_Set-GitHubRepositoryTeamPermission PSCommand_Set-GitHubRepositoryTeamPermission PSFunction_Set-GitHubRepositoryTopic PSCommand_Set-GitHubRepositoryTopic PSFunction_Set-GitHubTeam PSCommand_Set-GitHubTeam PSFunction_Split-GitHubUri PSCommand_Split-GitHubUri PSFunction_Test-GitHubAssignee PSCommand_Test-GitHubAssignee PSFunction_Test-GitHubAuthenticationConfigured PSCommand_Test-GitHubAuthenticationConfigured PSFunction_Test-GitHubGistStar PSCommand_Test-GitHubGistStar PSFunction_Test-GitHubOrganizationMember PSCommand_Test-GitHubOrganizationMember PSFunction_Test-GitHubRepositoryVulnerabilityAlert PSCommand_Test-GitHubRepositoryVulnerabilityAlert PSFunction_Unlock-GitHubIssue PSCommand_Unlock-GitHubIssue PSIncludes_Function</S>
+          <S N="developmentDependency">False</S>
+          <S N="updated">2023-04-29T16:19:19Z</S>
+          <S N="NormalizedVersion">0.16.1</S>
+          <S N="Authors">Microsoft Corporation</S>
+          <S N="IsPrerelease">false</S>
+          <S N="ItemType">Module</S>
+          <S N="FileList">PowerShellForGitHub.nuspec|CHANGELOG.md|CODE_OF_CONDUCT.md|GitHubIssueComments.ps1|GitHubRepositories.ps1|README.md|Formatters\GitHubTeams.Format.ps1xml|Tests\GitHubIssues.tests.ps1|Tests\GitHubRepositories.tests.ps1|build\pipelines\azure-pipelines.release.yaml|CONTRIBUTING.md|GitHubIssues.ps1|GitHubRepositoryForks.ps1|SECURITY.md|Tests\Common.ps1|Tests\GitHubLabels.tests.ps1|Tests\GitHubRepositoryForks.tests.ps1|build\scripts\Build-Wiki.ps1|GitHubAnalytics.ps1|GitHubLabels.ps1|GitHubRepositoryTraffic.ps1|Telemetry.ps1|Tests\GitHubAnalytics.tests.ps1|Tests\GitHubMilestones.tests.ps1|Tests\GitHubRepositoryTraffic.tests.ps1|build\scripts\ConvertTo-NUnitXml.ps1|GitHubAssignees.ps1|GitHubMilestones.ps1|GitHubTeams.ps1|UpdateCheck.ps1|Tests\GitHubAssignees.tests.ps1|Tests\GitHubMiscellaneous.tests.ps1|Tests\GitHubTeams.tests.ps1|build\scripts\Wait-RunningBuild.ps1|GitHubBranches.ps1|GitHubMiscellaneous.ps1|GitHubUsers.ps1|USAGE.md|Tests\GitHubBranches.tests.ps1|Tests\GitHubOrganizations.tests.ps1|Tests\GitHubUsers.tests.ps1|build\scripts\Write-SignConfigXml.ps1|GitHubConfiguration.ps1|GitHubOrganizations.ps1|GOVERNANCE.md|.github\PULL_REQUEST_TEMPLATE.md|Tests\GitHubContents.tests.ps1|Tests\GitHubProjectCards.tests.ps1|.github\ISSUE_TEMPLATE\config.yml|Tests\Config\Settings.ps1|GitHubContents.ps1|GitHubProjectCards.ps1|Helpers.ps1|.vscode\launch.json|Tests\GitHubCore.Tests.ps1|Tests\GitHubProjectColumns.tests.ps1|.github\ISSUE_TEMPLATE\Documentation.md|build\pipelines\templates\prepare-release-internalOnly.yaml|GitHubCore.ps1|GitHubProjectColumns.ps1|LICENSE|.vscode\settings.json|Tests\GitHubEvents.tests.ps1|Tests\GitHubProjects.tests.ps1|.github\ISSUE_TEMPLATE\Feature_request.md|build\pipelines\templates\run-staticAnalysis.yaml|GitHubEvents.ps1|GitHubProjects.ps1|Formatters\GitHubGistComments.Format.ps1xml|Tests\GitHubGistComments.tests.ps1|Tests\GitHubPullRequests.tests.ps1|.github\ISSUE_TEMPLATE\Problem.md|build\pipelines\templates\run-unitTests.yaml|GitHubGistComments.ps1|GitHubPullRequests.ps1|PowerShellForGitHub.psd1|Formatters\GitHubGists.Format.ps1xml|Tests\GitHubGists.tests.ps1|Tests\GitHubReactions.Tests.ps1|.github\ISSUE_TEMPLATE\Support.md|build\pipelines\templates\verify-testConfigSettingsHash.yaml|GitHubGists.ps1|GitHubReactions.ps1|PowerShellForGitHub.psm1|Formatters\GitHubReleases.Format.ps1xml|Tests\GitHubIssueComments.tests.ps1|Tests\GitHubReleases.tests.ps1|build\pipelines\azure-pipelines.ci.yaml|build\pipelines\templates\wait-runningBuild.yaml|GitHubReleases.ps1|PSScriptAnalyzerSettings.psd1|Formatters\GitHubRepositories.Format.ps1xml</S>
+          <S N="GUID">9e8dfd44-f782-445a-883c-70614f71519c</S>
+          <S N="PowerShellVersion">4.0</S>
+          <S N="CompanyName">Microsoft Corporation</S>
+        </MS>
+      </Obj>
+      <S N="InstalledLocation">C:\Users\dougrios\GitHub\ADAuditTasks\output\RequiredModules\PowerShellForGitHub\0.16.1</S>
+    </MS>
+  </Obj>
+</Objs>

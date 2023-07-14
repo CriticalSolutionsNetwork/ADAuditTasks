@@ -1,4 +1,3 @@
-Function Get-AdExtendedRight([Microsoft.ActiveDirectory.Management.ADObject] $ADObject) {
     <#
     .SYNOPSIS
     Gets the extended rights granted to a specified Active Directory object.
@@ -38,6 +37,7 @@ Function Get-AdExtendedRight([Microsoft.ActiveDirectory.Management.ADObject] $AD
     .LINK
     https://docs.microsoft.com/en-us/windows/win32/ad/active-directory-extended-rights
     #>
+Function Get-AdExtendedRight([Microsoft.ActiveDirectory.Management.ADObject] $ADObject) {
     # Initialize an empty array to store extended rights
     $ExportER = @()
     # Loop through each access control entry in the object's security descriptor

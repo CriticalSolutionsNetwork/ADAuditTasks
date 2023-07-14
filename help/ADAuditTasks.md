@@ -2,7 +2,7 @@
 Module Name: ADAuditTasks
 Module Guid: 6b72cdb3-2101-4a7e-b0d0-968a70018809
 Download Help Link: https://audittaskshelpfiles.blob.core.windows.net/helpfiles/
-Help Version: 1.0.0.4
+Help Version: 1.0.0.5
 Locale: en-US
 ---
 
@@ -43,7 +43,7 @@ that responded to the ping and an array of IP addresses that failed to respond.
 ### [Get-WebCertAudit](Get-WebCertAudit)
 Retrieves the certificate information for a web server.
 
-### [Join-CSVFiles](Join-CSVFiles)
+### [Join-CSVFile](Join-CSVFile)
 Joins multiple CSV files with the same headers into a single CSV file.
 
 ### [Merge-ADAuditZip](Merge-ADAuditZip)
@@ -52,17 +52,8 @@ Combines multiple audit report files into a single compressed ZIP file.
 ### [Merge-NmapToADHostAudit](Merge-NmapToADHostAudit)
 Merges Nmap network audit data with Active Directory host audit data.
 
-### [New-GraphEmailApp](New-GraphEmailApp)
-Creates a new Microsoft Graph Email app and associated certificate for app-only authentication.
-
-### [New-PatchTuesdayReport](New-PatchTuesdayReport)
-Generates a Patch Tuesday report HTML file based on a CSV input file.
-
 ### [Send-AuditEmail](Send-AuditEmail)
 This is a wrapper function for Send-MailKitMessage and takes string arrays as input.
-
-### [Send-GraphAppEmail](Send-GraphAppEmail)
-Sends an email using the Microsoft Graph API.
 
 ### [Submit-FTPUpload](Submit-FTPUpload)
 Uploads a file to an FTP server using the WinSCP module.

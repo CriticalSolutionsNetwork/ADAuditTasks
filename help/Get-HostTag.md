@@ -1,4 +1,4 @@
----
+﻿---
 external help file: ADAuditTasks-help.xml
 Module Name: ADAuditTasks
 online version: https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-HostTag
@@ -36,6 +36,43 @@ This creates the name of the host under 15 characters and numbers them.
 Prefix can be 2-3 characters.
 
 ## PARAMETERS
+
+### -DeviceFunction
+Use tab to cycle through the following options:
+    "Application Server", "Backup Server", "Directory Server",
+    "Email Server", "Firewall", "FTP Server",
+    "Hypervisor", "File Server", "NAS File Server",
+    "Power Distribution Unit", "Redundant Power Supply", "SAN Appliance",
+    "SQL Server", "Uninteruptable Power Supply", "Web Server",
+    "Management", "Blade Enclosure", "Blade Enclosure Switch",
+    "SAN specific switch", "General server/Network switch", "Generic Function Device"
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 4
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -HostCount
+Enter a number from 1 to 999 for how many hostnames you'd like to create.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 5
+Default value: 1
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
 
 ### -PhysicalOrVirtual
 Tab through selections to add 'P' or 'V' for physical or virtual to host tag.
@@ -91,43 +128,6 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -DeviceFunction
-Use tab to cycle through the following options:
-    "Application Server", "Backup Server", "Directory Server",
-    "Email Server", "Firewall", "FTP Server",
-    "Hypervisor", "File Server", "NAS File Server",
-    "Power Distribution Unit", "Redundant Power Supply", "SAN Appliance",
-    "SQL Server", "Uninteruptable Power Supply", "Web Server",
-    "Management", "Blade Enclosure", "Blade Enclosure Switch",
-    "SAN specific switch", "General server/Network switch", "Generic Function Device"
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 4
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -HostCount
-Enter a number from 1 to 999 for how many hostnames you'd like to create.
-
-```yaml
-Type: Int32
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 5
-Default value: 1
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
 ### CommonParameters
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
@@ -135,6 +135,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
+### System.Object[]
 ### System.String[]
 ## NOTES
 Additional information about the function, usage tips, etc.

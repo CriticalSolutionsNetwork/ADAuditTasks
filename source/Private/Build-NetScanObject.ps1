@@ -1,10 +1,51 @@
+<#
+.SYNOPSIS
+    Builds a network scan object that includes information about each computer on the network.
+.DESCRIPTION
+    This function builds a network scan object that includes information about each computer
+    on the network. The function takes a network scan object as input and returns a custom
+    object with the following properties: ComputerName, IP/DNS, Ping, MacID, ManufacturerName,
+    and PortsEnabled.
+.PARAMETER NetScanObject
+    The network scan object to use as input. The object should have the following properties:
+    ComputerName, IP/DNS, and Ping.
+.PARAMETER IncludeNoPing
+    A switch parameter that specifies whether to include computers that did not respond to
+    ping in the output.
+.OUTPUTS
+    System.Collections.Generic.List[System.Management.Automation.PSCustomObject]
+    A list of custom objects that contain information about each computer on the network.
+.EXAMPLE
+    $NetScanObject = @(
+        @{
+            ComputerName = "computer1"
+            "IP/DNS"     = "192.168.1.1"
+            Ping         = $true
+        },
+        @{
+            ComputerName = "computer2"
+            "IP/DNS"     = "192.168.1.2"
+            Ping         = $false
+        }
+    )
+    $scan = Build-NetScanObject -NetScanObject $NetScanObject
+    $scan
+.NOTES
+    Author: DrIOSx
+#>
 function Build-NetScanObject {
     param(
         $NetScanObject,
         [switch]$IncludeNoPing
     )
+    if (!($script:LogString)) {
+        Write-AuditLog -Start
+    }
+    else {
+        Write-AuditLog -BeginFunction
+    }
     $ouiobject = Build-MacIdOUIList
-    $Script:LogString += Write-AuditLog -Message "Begin NetScan object creation."
+    Write-AuditLog "Begin NetScan object creation."
     switch ($IncludeNoPing) {
         $true {
             $scan = $NetSCanObject
@@ -42,7 +83,8 @@ function Build-NetScanObject {
         $Export += $PSObject
     } # End foreach scan
     if ($Export) {
-        $Script:LogString += Write-AuditLog -Message "NetScan object created!"
+        Write-AuditLog "NetScan object created!"
+        Write-AuditLog -EndFunction
         return $Export
     }
     else {

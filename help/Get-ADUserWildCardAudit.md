@@ -1,4 +1,4 @@
----
+﻿---
 external help file: ADAuditTasks-help.xml
 Module Name: ADAuditTasks
 online version: https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-ADUserWildCardAudit
@@ -34,18 +34,19 @@ Searches for all user accounts that are named like the search string "svc".
 
 ## PARAMETERS
 
-### -Enabled
-If "$false", will also search disabled users.
+### -AttachmentFolderPath
+Default path is C:\temp\ADUserWildCardAudit.
+This is the folder where attachments are going to be saved.
 
 ```yaml
-Type: Boolean
+Type: String
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 1
-Default value: True
-Accept pipeline input: True (ByPropertyName)
+Position: 4
+Default value: C:\temp\ADUserWildCardAudit
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
@@ -65,37 +66,18 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -WildCardIdentifier
-The search string to look for in the name of the account.
-Case does not matter.
-Do not add a
-wildcard (*) as it will do this automatically.
+### -Enabled
+If "$false", will also search disabled users.
 
 ```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -AttachmentFolderPath
-Default path is C:\temp\ADUserWildCardAudit.
-This is the folder where attachments are going to be saved.
-
-```yaml
-Type: String
+Type: Boolean
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 4
-Default value: C:\temp\ADUserWildCardAudit
-Accept pipeline input: True (ByValue)
+Position: 1
+Default value: True
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -110,6 +92,24 @@ Aliases:
 Required: False
 Position: 5
 Default value: False
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -WildCardIdentifier
+The search string to look for in the name of the account.
+Case does not matter.
+Do not add a
+wildcard (*) as it will do this automatically.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```

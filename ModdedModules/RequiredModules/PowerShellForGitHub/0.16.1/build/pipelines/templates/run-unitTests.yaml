@@ -1,0 +1,72 @@
+#
+# This template contains the necessary jobs to run Pester on the repo and
+# publish the test and code coverage results.
+#
+
+#--------------------------------------------------------------------------------------------------
+# This template is dependent on the following pipeline variables being configured within the pipeline.
+#
+#  1. GitHubAccessToken      - The access token with sufficient permissions to modify the accounts
+#                              specified by GitHubOwnerName and GitHubOrganizatioName.
+#                              It should be configured as a "secret".
+#  2. GitHubOwnerName        - The default "owner" that will be used for tests.
+#  3. GitHubOrganizationName - The default "organization" that will be used for tests.
+#--------------------------------------------------------------------------------------------------
+
+parameters:
+- name: 'gitHubAccessToken'
+  type: string
+- name: 'gitHubOwnerName'
+  type: string
+- name: 'gitHubOrganizationName'
+  type: string
+- name: 'platformName'
+  default: 'Windows'
+  type: string
+- name: 'usePowerShellCore'
+  default: false
+  type: boolean
+
+steps:
+  - task: PowerShell@2
+    displayName: 'Install Pester'
+    inputs:
+      pwsh: eq('${{ parameters.usePowerShellCore }}', true)
+      errorActionPreference: 'stop'
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+      targetType: 'inline'
+      script: |
+        Install-Module -Name Pester -Repository PSGallery -Scope CurrentUser -AllowClobber -SkipPublisherCheck -RequiredVersion 4.10.1 -Force -Verbose
+
+  - task: PowerShell@2
+    displayName: 'Run Unit Tests via Pester'
+    inputs:
+      pwsh: eq('${{ parameters.usePowerShellCore }}', true)
+      errorActionPreference: 'stop'
+      workingDirectory: '$(System.DefaultWorkingDirectory)'
+      targetType: 'inline'
+      script: |
+        $null = New-Item -Path ..\ -Name Pester -ItemType Directory -Force
+        Invoke-Pester -CodeCoverage .\*.ps*1 -CodeCoverageOutputFile ../Pester/coverage.xml -CodeCoverageOutputFileFormat JaCoCo -EnableExit -Strict -OutputFile ../Pester/test-results.xml -OutputFormat NUnitXml
+    env:
+      ciAccessToken: ${{ parameters.gitHubAccessToken }}
+      ciOwnerName: ${{ parameters.gitHubOwnerName }}
+      ciOrganizationName: ${{ parameters.gitHubOrganizationName }}
+
+  - task: PublishTestResults@2
+    displayName: 'Publish Test Results'
+    inputs:
+      testRunTitle: '${{ parameters.platformName }} Test Results for Pester'
+      buildPlatform: 'Windows'
+      testRunner: NUnit
+      testResultsFiles: '../Pester/test-results.xml'
+      failTaskOnFailedTests: true # required to fail build when tests fail
+    condition: succeededOrFailed()
+
+  - task: PublishCodeCoverageResults@1
+    displayName: 'Publish code coverage'
+    inputs:
+      codeCoverageTool: 'JaCoCo'
+      summaryFileLocation: '../Pester/coverage.xml'
+      failIfCoverageEmpty: true
+    condition: succeededOrFailed()

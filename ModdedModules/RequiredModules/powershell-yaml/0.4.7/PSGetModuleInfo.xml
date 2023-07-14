@@ -1,0 +1,127 @@
+<Objs Version="1.1.0.1" xmlns="http://schemas.microsoft.com/powershell/2004/04">
+  <Obj RefId="0">
+    <TN RefId="0">
+      <T>Microsoft.PowerShell.Commands.PSRepositoryItemInfo</T>
+      <T>System.Management.Automation.PSCustomObject</T>
+      <T>System.Object</T>
+    </TN>
+    <MS>
+      <S N="Name">powershell-yaml</S>
+      <S N="Version">0.4.7</S>
+      <S N="Type">Module</S>
+      <S N="Description">Powershell module for serializing and deserializing YAML</S>
+      <Obj N="Author" RefId="1">
+        <TN RefId="1">
+          <T>System.Object[]</T>
+          <T>System.Array</T>
+          <T>System.Object</T>
+        </TN>
+        <LST>
+          <S>Gabriel Adrian Samfira</S>
+          <S>Alessandro Pilotti</S>
+        </LST>
+      </Obj>
+      <S N="CompanyName">cloudbase</S>
+      <S N="Copyright">(c) 2016 Cloudbase Solutions SRL. All rights reserved.</S>
+      <DT N="PublishedDate">2023-03-02T13:18:18-06:00</DT>
+      <Nil N="InstalledDate" />
+      <Nil N="UpdatedDate" />
+      <Nil N="LicenseUri" />
+      <Nil N="ProjectUri" />
+      <Nil N="IconUri" />
+      <Obj N="Tags" RefId="2">
+        <TNRef RefId="1" />
+        <LST>
+          <S>PSModule</S>
+        </LST>
+      </Obj>
+      <Obj N="Includes" RefId="3">
+        <TN RefId="2">
+          <T>System.Collections.Hashtable</T>
+          <T>System.Object</T>
+        </TN>
+        <DCT>
+          <En>
+            <S N="Key">Workflow</S>
+            <Obj N="Value" RefId="4">
+              <TNRef RefId="1" />
+              <LST />
+            </Obj>
+          </En>
+          <En>
+            <S N="Key">RoleCapability</S>
+            <Ref N="Value" RefId="4" />
+          </En>
+          <En>
+            <S N="Key">DscResource</S>
+            <Ref N="Value" RefId="4" />
+          </En>
+          <En>
+            <S N="Key">Function</S>
+            <Obj N="Value" RefId="5">
+              <TNRef RefId="1" />
+              <LST>
+                <S>ConvertTo-Yaml</S>
+                <S>ConvertFrom-Yaml</S>
+              </LST>
+            </Obj>
+          </En>
+          <En>
+            <S N="Key">Command</S>
+            <Obj N="Value" RefId="6">
+              <TNRef RefId="1" />
+              <LST>
+                <S>ConvertTo-Yaml</S>
+                <S>ConvertFrom-Yaml</S>
+              </LST>
+            </Obj>
+          </En>
+          <En>
+            <S N="Key">Cmdlet</S>
+            <Ref N="Value" RefId="4" />
+          </En>
+        </DCT>
+      </Obj>
+      <Nil N="PowerShellGetFormatVersion" />
+      <Nil N="ReleaseNotes" />
+      <Obj N="Dependencies" RefId="7">
+        <TNRef RefId="1" />
+        <LST />
+      </Obj>
+      <S N="RepositorySourceLocation">https://www.powershellgallery.com/api/v2</S>
+      <S N="Repository">PSGallery</S>
+      <S N="PackageManagementProvider">NuGet</S>
+      <Obj N="AdditionalMetadata" RefId="8">
+        <TN RefId="3">
+          <T>System.Management.Automation.PSCustomObject</T>
+          <T>System.Object</T>
+        </TN>
+        <MS>
+          <S N="copyright">(c) 2016 Cloudbase Solutions SRL. All rights reserved.</S>
+          <S N="description">Powershell module for serializing and deserializing YAML</S>
+          <S N="requireLicenseAcceptance">False</S>
+          <S N="isLatestVersion">True</S>
+          <S N="isAbsoluteLatestVersion">True</S>
+          <S N="versionDownloadCount">3573109</S>
+          <S N="downloadCount">37345153</S>
+          <S N="packageSize">421209</S>
+          <S N="published">3/2/2023 1:18:18 PM -06:00</S>
+          <S N="created">3/2/2023 1:18:18 PM -06:00</S>
+          <S N="lastUpdated">4/29/2023 4:19:19 PM -05:00</S>
+          <S N="tags">PSModule PSFunction_ConvertTo-Yaml PSCommand_ConvertTo-Yaml PSFunction_ConvertFrom-Yaml PSCommand_ConvertFrom-Yaml PSIncludes_Function</S>
+          <S N="developmentDependency">False</S>
+          <S N="updated">2023-04-29T16:19:19Z</S>
+          <S N="NormalizedVersion">0.4.7</S>
+          <S N="Authors">Gabriel Adrian Samfira,Alessandro Pilotti</S>
+          <S N="IsPrerelease">false</S>
+          <S N="ItemType">Module</S>
+          <S N="FileList">powershell-yaml.nuspec|Load-Assemblies.ps1|README.md|powershell-yaml.psm1|lib\net45\System.ComponentModel.Primitives.dll|lib\net45\LICENSE.txt|lib\net45\LICENSE-libyaml|lib\net45\YamlDotNet.xml|lib\netstandard2.1\LICENSE.txt|lib\netstandard2.1\YamlDotNet.deps.json|lib\netstandard2.1\YamlDotNet.dll|lib\netstandard2.1\LICENSE-libyaml|lib\netstandard2.1\YamlDotNet.xml|lib\net35\LICENSE.txt|lib\net35\YamlDotNet.dll|lib\net35\LICENSE-libyaml|lib\net35\YamlDotNet.xml|powershell-yaml.psd1|LICENSE|lib\net45\System.ComponentModel.TypeConverter.dll|lib\net45\YamlDotNet.dll</S>
+          <S N="GUID">6a75a662-7f53-425a-9777-ee61284407da</S>
+          <S N="PowerShellVersion">3.0</S>
+          <S N="CompanyName">Cloudbase Solutions SRL</S>
+        </MS>
+      </Obj>
+      <S N="InstalledLocation">C:\Users\dougrios\GitHub\ADAuditTasks\output\RequiredModules\powershell-yaml\0.4.7</S>
+    </MS>
+  </Obj>
+</Objs>

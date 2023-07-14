@@ -1,9 +1,9 @@
 BeforeAll {
-    $script:moduleName = '<% $PLASTER_PARAM_ModuleName %>'
-
+    $script:moduleName = 'ADAUditTasks'
+    Write-Output "Modulename is: $script:moduleName"
+    Write-Output "Buildfile is: $PSScriptRoot/../../build.ps1"
     # If the module is not found, run the build task 'noop'.
-    if (-not (Get-Module -Name $script:moduleName -ListAvailable))
-    {
+    if (-not (Get-Module -Name $script:moduleName -ListAvailable)) {
         # Redirect all streams to $null, except the error stream (stream 2)
         & "$PSScriptRoot/../../build.ps1" -Tasks 'noop' 2>&1 4>&1 5>&1 6>&1 > $null
     }
@@ -20,52 +20,30 @@ AfterAll {
     $PSDefaultParameterValues.Remove('Mock:ModuleName')
     $PSDefaultParameterValues.Remove('InModuleScope:ModuleName')
     $PSDefaultParameterValues.Remove('Should:ModuleName')
-
+    Write-Host "Removing module: $script:moduleName"
     Remove-Module -Name $script:moduleName
 }
 
-Describe Get-Something {
 
-    Context 'Return values' {
-        BeforeEach {
-            $return = Get-Something -Data 'value'
+    Describe 'Get-ADUserPrivilegeAudit' {
+        It 'returns 3 PSCustomObject objects when -Report switch is not used' {
+            $a, $b, $c = Get-ADUserPrivilegeAudit
+            $a | Should -BeOfType [pscustomobject]
+            $b | Should -BeOfType [pscustomobject]
+            $c | Should -BeOfType [pscustomobject]
         }
 
-        It 'Returns a single object' {
-            ($return | Measure-Object).Count | Should -Be 1
+        It 'returns a string when -Report switch is used' {
+            $zipPath = Get-ADUserPrivilegeAudit -Report
+            $zipPath | Should -BeOfType [string]
         }
-
-    }
-
-    Context 'Pipeline' {
-        It 'Accepts values from the pipeline by value' {
-            $return = 'value1', 'value2' | Get-Something
-
-            $return[0] | Should -Be 'value1'
-            $return[1] | Should -Be 'value2'
-        }
-
-        It 'Accepts value from the pipeline by property name' {
-            $return = 'value1', 'value2' | ForEach-Object {
-                [PSCustomObject]@{
-                    Data = $_
-                    OtherProperty = 'other'
-                }
-            } | Get-Something
-
-
-            $return[0] | Should -Be 'value1'
-            $return[1] | Should -Be 'value2'
+        Context 'when run without arguments' {
+            It 'should return three objects' {
+                $a, $b, $c = Get-ADUserPrivilegeAudit -Verbose
+                $a.Count | Should -BeGreaterThan 0
+                $b.Count | Should -BeGreaterThan 0
+                $c.Count | Should -BeGreaterThan 0
+            }
         }
     }
-
-    Context 'ShouldProcess' {
-        It 'Supports WhatIf' {
-            (Get-Command Get-Something).Parameters.ContainsKey('WhatIf') | Should -Be $true
-            { Get-Something -Data 'value' -WhatIf } | Should -Not -Throw
-        }
-
-
-    }
-}
 

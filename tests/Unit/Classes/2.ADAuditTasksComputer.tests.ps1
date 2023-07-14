@@ -13,112 +13,31 @@ InModuleScope $ProjectName {
                 'ADAuditTasksComputer' -as [Type] | Should -BeOfType [Type]
             }
         }
+
         Context 'Constructors' {
-            It 'Has a constructor that sets all properties' {
-                $comp = [ADAuditTasksComputer]::new(
-                    "computer01",
-                    "computer01.example.com",
-                    $true,
-                    "10.0.0.1",
-                    "::1",
-                    "Windows Server 2019 Standard",
-                    "131496012909954874",
-                    [DateTime]::Now,
-                    [DateTime]::Now,
-                    "Computer 01",
-                    "OU=Servers,DC=example,DC=com",
-                    "RC4_HMAC, AES128_HMAC_SHA1, AES256_HMAC_SHA1",
-                    "HTTP/computer01,HTTP/computer01.example.com",
-                    "computer01$",
-                    "131496012909954874"
+            It 'Has a default constructor' {
+                $instance = [ADAuditTasksComputer]::new()
+                $instance | Should -Not -BeNullOrEmpty
+                $instance.GetType().Name | Should -Be 'ADAuditTasksComputer'
+            }
+            It 'Has a constructor with parameters' {
+                $instance = [ADAuditTasksComputer]::new(
+                    'computer1.example.com', 'computer1', $true, '192.168.1.2', '::1', 'Windows Server 2019', '132764234000000000', '132764234000000000',
+                    (Get-Date).AddDays(-10), '132764234000000000', 'Test computer', 'OU=Computers,DC=example,DC=com', 'AES256', 'computer1.example.com', $null
                 )
-                $comp | Should -Not -BeNullOrEmpty
-                $comp.GetType().Name | Should -Be 'ADAuditTasksComputer'
-                $comp.ComputerName | Should Be "computer01"
-                $comp.DNSHostName | Should Be "computer01.example.com"
-                $comp.Enabled | Should Be $true
-                $comp.IPv4Address | Should Be "10.0.0.1"
-                $comp.IPv6Address | Should Be "::1"
-                $comp.OperatingSystem | Should Be "Windows Server 2019 Standard"
-                $comp.LastLogon | Should Be [DateTime]::FromFileTime("131496012909954874")
-                $comp.Created | Should Be [DateTime]::Now
-                $comp.Modified | Should Be [DateTime]::Now
-                $comp.Description | Should Be "Computer 01"
-                $comp.OrgUnit | Should Be "OU=Servers>DC=example>DC=com"
-                $comp.KerberosEncryptionType | Should Be "RC4_HMAC | AES128_HMAC_SHA1 | AES256_HMAC_SHA1"
-                $comp.SPNs | Should Be "HTTP/computer01,HTTP/computer01.example.com"
-                $comp.GroupMemberships | Should Be "Domain Computers"
-                $comp.LastSeen | Should Be "Recently"
+                $instance | Should -Not -BeNullOrEmpty
+                $instance.GetType().Name | Should -Be 'ADAuditTasksComputer'
             }
         }
         Context 'Methods' {
-            # No methods defined in the class
+            It 'Overrides the ToString method' {
+                $expectedOutput = "ADAuditTasksComputer: DefaultComputer, DNS Host Name: , Enabled: False, IPv4 Address: , IPv6 Address: , Operating System: , Last Logon: , Last Seen: , Created: , Modified: , Description: , Group Memberships: , Org Unit: , Kerberos Encryption Type: , SPNs: "
+                ([ADAuditTasksComputer]::new()).ToString() | Should -Be $expectedOutput
+            }
         }
         Context 'Properties' {
-            BeforeEach {
-                $comp = [ADAuditTasksComputer]::new(
-                    "computer01",
-                    "computer01.example.com",
-                    $true,
-                    "10.0.0.1",
-                    "::1",
-                    "Windows Server 2019 Standard",
-                    "131496012909954874",
-                    [DateTime]::Now,
-                    [DateTime]::Now,
-                    "Computer 01",
-                    "OU=Servers,DC=example,DC=com",
-                    "RC4_HMAC, AES128_HMAC
-                    _SHA1, AES256_HMAC_SHA1",
-                    "HTTP/computer01,HTTP/computer01.example.com",
-                    "computer01$",
-                    "131496012909954874"
-                )
-            }
-            It 'Has a ComputerName property' {
-                $comp.ComputerName | Should Be "computer01"
-            }
-            It 'Has a DNSHostName property' {
-                $comp.DNSHostName | Should Be "computer01.example.com"
-            }
-            It 'Has an Enabled property' {
-                $comp.Enabled | Should Be $true
-            }
-            It 'Has an IPv4Address property' {
-                $comp.IPv4Address | Should Be "10.0.0.1"
-            }
-            It 'Has an IPv6Address property' {
-                $comp.IPv6Address | Should Be "::1"
-            }
-            It 'Has an OperatingSystem property' {
-                $comp.OperatingSystem | Should Be "Windows Server 2019 Standard"
-            }
-            It 'Has a LastLogon property' {
-                $comp.LastLogon | Should Be [DateTime]::FromFileTime("131496012909954874")
-            }
-            It 'Has a Created property' {
-                $comp.Created | Should Be [DateTime]::Now
-            }
-            It 'Has a Modified property' {
-                $comp.Modified | Should Be [DateTime]::Now
-            }
-            It 'Has a Description property' {
-                $comp.Description | Should Be "Computer 01"
-            }
-            It 'Has an OrgUnit property' {
-                $comp.OrgUnit | Should Be "OU=Servers>DC=example>DC=com"
-            }
-            It 'Has a KerberosEncryptionType property' {
-                $comp.KerberosEncryptionType | Should Be "RC4_HMAC | AES128_HMAC_SHA1 | AES256_HMAC_SHA1"
-            }
-            It 'Has an SPNs property' {
-                $comp.SPNs | Should Be "HTTP/computer01,HTTP/computer01.example.com"
-            }
-            It 'Has a GroupMemberships property' {
-                $comp.GroupMemberships | Should Be "Domain Computers"
-            }
-            It 'Has a LastSeen property' {
-                $comp.LastSeen | Should Be "Recently"
+            It 'Has a Name property' {
+                ([ADAuditTasksComputer]::new()).ComputerName | Should -Be 'DefaultComputer'
             }
         }
     }

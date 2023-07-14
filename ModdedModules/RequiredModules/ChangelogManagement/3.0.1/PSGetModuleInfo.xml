@@ -1,0 +1,132 @@
+<Objs Version="1.1.0.1" xmlns="http://schemas.microsoft.com/powershell/2004/04">
+  <Obj RefId="0">
+    <TN RefId="0">
+      <T>Microsoft.PowerShell.Commands.PSRepositoryItemInfo</T>
+      <T>System.Management.Automation.PSCustomObject</T>
+      <T>System.Object</T>
+    </TN>
+    <MS>
+      <S N="Name">ChangelogManagement</S>
+      <S N="Version">3.0.1</S>
+      <S N="Type">Module</S>
+      <S N="Description">ChangelogManagement is a PowerShell module for reading and manipulating changelog files in [Keep a Changelog 1.0.0](https://keepachangelog.com/en/1.0.0/) format._x000A__x000A_The primary feature is automatic updating of changelogs at release time in a CI/CD workflow via Update-Changelog._x000A__x000A_Other features include:_x000A__x000A_- Creating new changelog files via New-Changelog_x000A_- Adding data to changelog files via Add-ChangelogData_x000A_- Getting changelog contents (parsed into a PowerShell object) via Get-ChangelogData_x000A_- Converting changelogs into other formats via ConvertFrom-Changelog</S>
+      <S N="Author">Nate Scherer</S>
+      <S N="CompanyName">natescherer</S>
+      <S N="Copyright">(c) 2022 Nate Scherer. All rights reserved.</S>
+      <DT N="PublishedDate">2022-12-12T23:57:26-06:00</DT>
+      <Nil N="InstalledDate" />
+      <Nil N="UpdatedDate" />
+      <URI N="LicenseUri">https://github.com/natescherer/ChangelogManagement/blob/main/LICENSE</URI>
+      <URI N="ProjectUri">https://github.com/natescherer/ChangelogManagement</URI>
+      <Nil N="IconUri" />
+      <Obj N="Tags" RefId="1">
+        <TN RefId="1">
+          <T>System.Object[]</T>
+          <T>System.Array</T>
+          <T>System.Object</T>
+        </TN>
+        <LST>
+          <S>Changelog</S>
+          <S>Tools</S>
+          <S>Build</S>
+          <S>Release</S>
+          <S>PSModule</S>
+        </LST>
+      </Obj>
+      <Obj N="Includes" RefId="2">
+        <TN RefId="2">
+          <T>System.Collections.Hashtable</T>
+          <T>System.Object</T>
+        </TN>
+        <DCT>
+          <En>
+            <S N="Key">Workflow</S>
+            <Obj N="Value" RefId="3">
+              <TNRef RefId="1" />
+              <LST />
+            </Obj>
+          </En>
+          <En>
+            <S N="Key">RoleCapability</S>
+            <Ref N="Value" RefId="3" />
+          </En>
+          <En>
+            <S N="Key">DscResource</S>
+            <Ref N="Value" RefId="3" />
+          </En>
+          <En>
+            <S N="Key">Function</S>
+            <Obj N="Value" RefId="4">
+              <TNRef RefId="1" />
+              <LST>
+                <S>Add-ChangelogData</S>
+                <S>ConvertFrom-Changelog</S>
+                <S>Get-ChangelogData</S>
+                <S>New-Changelog</S>
+                <S>Update-Changelog</S>
+              </LST>
+            </Obj>
+          </En>
+          <En>
+            <S N="Key">Command</S>
+            <Obj N="Value" RefId="5">
+              <TNRef RefId="1" />
+              <LST>
+                <S>Add-ChangelogData</S>
+                <S>ConvertFrom-Changelog</S>
+                <S>Get-ChangelogData</S>
+                <S>New-Changelog</S>
+                <S>Update-Changelog</S>
+              </LST>
+            </Obj>
+          </En>
+          <En>
+            <S N="Key">Cmdlet</S>
+            <Ref N="Value" RefId="3" />
+          </En>
+        </DCT>
+      </Obj>
+      <Nil N="PowerShellGetFormatVersion" />
+      <S N="ReleaseNotes">### Changed_x000A__x000A_- Get-ChangelogData now always outputs a PSCustomObject for the Unreleased property when there is an Unreleased section header in the changelog. The PSCustomObject property RawData will contain the Unreleased header and any change type headers that exist. The properties Added, Changed, Deprecated, Removed, Fixed, and Security will be null if there are no corresponding change type under the Unreleased section header._x000A__x000A_### Fixed_x000A__x000A_- Get-ChangelogData will now return null for the property Unreleased if there are no Unreleased section header in the changelog.</S>
+      <Obj N="Dependencies" RefId="6">
+        <TNRef RefId="1" />
+        <LST />
+      </Obj>
+      <S N="RepositorySourceLocation">https://www.powershellgallery.com/api/v2</S>
+      <S N="Repository">PSGallery</S>
+      <S N="PackageManagementProvider">NuGet</S>
+      <Obj N="AdditionalMetadata" RefId="7">
+        <TN RefId="3">
+          <T>System.Management.Automation.PSCustomObject</T>
+          <T>System.Object</T>
+        </TN>
+        <MS>
+          <S N="copyright">(c) 2022 Nate Scherer. All rights reserved.</S>
+          <S N="description">ChangelogManagement is a PowerShell module for reading and manipulating changelog files in [Keep a Changelog 1.0.0](https://keepachangelog.com/en/1.0.0/) format._x000A__x000A_The primary feature is automatic updating of changelogs at release time in a CI/CD workflow via Update-Changelog._x000A__x000A_Other features include:_x000A__x000A_- Creating new changelog files via New-Changelog_x000A_- Adding data to changelog files via Add-ChangelogData_x000A_- Getting changelog contents (parsed into a PowerShell object) via Get-ChangelogData_x000A_- Converting changelogs into other formats via ConvertFrom-Changelog</S>
+          <S N="requireLicenseAcceptance">False</S>
+          <S N="releaseNotes">### Changed_x000A__x000A_- Get-ChangelogData now always outputs a PSCustomObject for the Unreleased property when there is an Unreleased section header in the changelog. The PSCustomObject property RawData will contain the Unreleased header and any change type headers that exist. The properties Added, Changed, Deprecated, Removed, Fixed, and Security will be null if there are no corresponding change type under the Unreleased section header._x000A__x000A_### Fixed_x000A__x000A_- Get-ChangelogData will now return null for the property Unreleased if there are no Unreleased section header in the changelog.</S>
+          <S N="isLatestVersion">True</S>
+          <S N="isAbsoluteLatestVersion">True</S>
+          <S N="versionDownloadCount">10084</S>
+          <S N="downloadCount">47505</S>
+          <S N="packageSize">94048</S>
+          <S N="published">12/12/2022 11:57:26 PM -06:00</S>
+          <S N="created">12/12/2022 11:57:26 PM -06:00</S>
+          <S N="lastUpdated">4/29/2023 10:04:09 AM -05:00</S>
+          <S N="tags">Changelog Tools Build Release PSModule PSFunction_Add-ChangelogData PSCommand_Add-ChangelogData PSFunction_ConvertFrom-Changelog PSCommand_ConvertFrom-Changelog PSFunction_Get-ChangelogData PSCommand_Get-ChangelogData PSFunction_New-Changelog PSCommand_New-Changelog PSFunction_Update-Changelog PSCommand_Update-Changelog PSIncludes_Function</S>
+          <S N="developmentDependency">False</S>
+          <S N="updated">2023-04-29T10:04:09Z</S>
+          <S N="NormalizedVersion">3.0.1</S>
+          <S N="Authors">Nate Scherer</S>
+          <S N="IsPrerelease">false</S>
+          <S N="ItemType">Module</S>
+          <S N="FileList">ChangelogManagement.nuspec|public\New-Changelog.ps1|README.html|public\Get-ChangelogData.ps1|CHANGELOG.html|docs\Update-Changelog.html|docs\Add-ChangelogData.html|ChangelogManagement-v3.0.1.zip|docs\ConvertFrom-Changelog.html|ChangelogManagement.psm1|docs\Get-ChangelogData.html|ChangelogManagement.psd1|docs\New-Changelog.html|public\ConvertFrom-Changelog.ps1|public\Add-ChangelogData.ps1|public\Update-Changelog.ps1</S>
+          <S N="GUID">77cc0827-cc78-460c-afc1-ca74d5421177</S>
+          <S N="PowerShellVersion">5.1</S>
+          <S N="CompanyName">Nate Scherer</S>
+        </MS>
+      </Obj>
+      <S N="InstalledLocation">C:\Users\dougrios\GitHub\ADAuditTasks\output\RequiredModules\ChangelogManagement\3.0.1</S>
+    </MS>
+  </Obj>
+</Objs>

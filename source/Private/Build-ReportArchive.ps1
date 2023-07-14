@@ -1,5 +1,3 @@
-function Build-ReportArchive {
-    [CmdletBinding()]
     <#
     .SYNOPSIS
     Exports data to a CSV file, archives the CSV file and a log file in a zip file, and returns the path to the zip file.
@@ -39,7 +37,9 @@ function Build-ReportArchive {
     .LINK
     https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.archive/compress-archive
     #>
-
+function Build-ReportArchive {
+    [OutputType([string[]])]
+    [CmdletBinding()]
     # Define function parameters with help messages
     param (
         [Parameter(
@@ -70,6 +70,12 @@ function Build-ReportArchive {
     )
     # Initialize variables
     begin {
+        if (!($script:LogString)) {
+            Write-AuditLog -Start
+        }
+        else {
+            Write-AuditLog -BeginFunction
+        }
         $ExportFile = $Export
     }
     # Process each object in the pipeline
@@ -80,18 +86,20 @@ function Build-ReportArchive {
         }
         catch {
             # Write error to log and re-throw error
-            $Script:LogString += Write-AuditLog -Message "Failed to export CSV: $csv" -Severity Error
+            Write-AuditLog "Failed to export CSV: $csv" -Severity Error
             throw $ExportErr
         }
         # Get SHA-256 hash of the CSV file and write to log
         $Sha256Hash = (Get-FileHash $csv).Hash
-        $Script:LogString += Write-AuditLog -Message "Exported CSV SHA256 hash: "
-        $Script:LogString += Write-AuditLog -Message "$($Sha256Hash)"
+        Write-AuditLog "Exported CSV SHA256 hash: "
+        Write-AuditLog "$($Sha256Hash)"
         # Write information about the export directory and file path to log
-        $Script:LogString += Write-AuditLog -Message "Directory: $AttachmentFolderPath"
-        $Script:LogString += Write-AuditLog -Message "FilePath: $zip"
-        $Script:LogString += Write-AuditLog -Message "End Log"
-        $Script:LogString | Export-Csv $log -NoTypeInformation -Encoding utf8
+        Write-AuditLog "Directory: $AttachmentFolderPath"
+        Write-AuditLog "FilePath: $zip"
+        Write-AuditLog "Archived CSV and log files to zip file: $zip"
+        Write-AuditLog -EndFunction
+        write-auditlog -End -OutputPath $log
+        #$Script:LogString | Export-Csv $log -NoTypeInformation -Encoding utf8
     }
     # Clean up and archive files
     end {

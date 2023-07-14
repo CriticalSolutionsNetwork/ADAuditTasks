@@ -25,13 +25,10 @@ The following Public Functions are available to the user executing the tasks:
 - `Get-WebCertAudit`
 - `Get-HostTag`
 - `Get-QuickPing`
-- `Join-CSVFiles`
+- `Join-CSVFile`
 - `Merge-ADAuditZip`
 - `Merge-NmapToADHostAudit`
-- `New-GraphEmailApp`
-- `New-PatchTuesdayReport`
 - `Send-AuditEmail`
-- `Send-GraphAppEmail`
 - `Submit-FTPUpload`
 
 ## Private Functions
@@ -40,17 +37,15 @@ The following Private Functions support the functions in this module:
 
 - `Build-ADAuditTasksComputer`
 - `Build-ADAuditTasksUser`
-- `Build-DirectoryPath`
+- `Initialize-DirectoryPath`
 - `Build-MacIdOUIList`
 - `Build-NetScanObject`
 - `Build-ReportArchive`
 - `Get-AdExtendedRight`
 - `Get-ADGroupMemberof`
-- `Group-UpdateByProduct`
 - `Initialize-ModuleEnv`
 - `Install-ADModule`
 - `Read-FileContent`
-- `Show-OSUpdateSection`
 - `Test-IsAdmin`
 - `Write-AuditLog`
 

@@ -1,4 +1,4 @@
----
+﻿---
 external help file: ADAuditTasks-help.xml
 Module Name: ADAuditTasks
 online version: https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Send-AuditEmail
@@ -22,8 +22,8 @@ Send-AuditEmail -AttachmentFiles <String[]> [-SMTPServer <String>] [-Port <Int32
 ### Func
 ```
 Send-AuditEmail -AttachmentFiles <String[]> [-SMTPServer <String>] [-Port <Int32>] [-UserName <String>] [-SSL]
- [-From <String>] [-To <String>] [-Subject <String>] [-Body <String>] [-Function <String>]
- [-FunctionApp <String>] [-Token <String>] [<CommonParameters>]
+ [-From <String>] [-To <String>] [-Subject <String>] [-Body <String>] -Function <String> -FunctionApp <String>
+ -Token <String> -CertificateThumbprint <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -73,13 +73,97 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -SMTPServer
-The SMTP Server address.
-For example: "smtp.office365.com"
+### -Body
+The body of the message, pre-populates with the same data as the subject line.
+Specify body text
+in the function parameters to override.
 
 ```yaml
 Type: String
 Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: "$($script:MyInvocation.MyCommand.Name -replace '\..*') report ran for $($env:USERDNSDOMAIN) on host $($env:COMPUTERNAME)."
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -CertificateThumbprint
+API key for the Azure Function App
+
+```yaml
+Type: String
+Parameter Sets: Func
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -From
+This is who the email will appear to originate from.
+This is either the same as the UserName,
+or, if delegated, access to an email account the Username account has delegated permissions to send for.
+Link:
+    https://learn.microsoft.com/en-us/microsoft-365/admin/add-users/give-mailbox-permissions-to-another-user?view=o365-worldwide
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Function
+If you are using the optional function feature and created a password retrieval function,
+this is the name of the function in Azure AD that accesses the vault.
+
+```yaml
+Type: String
+Parameter Sets: Func
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -FunctionApp
+If you are using the optional function feature, this is the name of the function app in Azure AD.
+
+```yaml
+Type: String
+Parameter Sets: Func
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Pass
+Takes a SecureString as input.
+The password must be added to the command by using:
+    -Pass (Read-Host -AsSecureString)
+    You will be promted to enter the password for the UserName parameter.
+
+```yaml
+Type: SecureString
+Parameter Sets: Pass
 Aliases:
 
 Required: False
@@ -105,9 +189,9 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -UserName
-The Account authorized to send email via SMTP.
-From parameter is usually the same.
+### -SMTPServer
+The SMTP Server address.
+For example: "smtp.office365.com"
 
 ```yaml
 Type: String
@@ -136,12 +220,11 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -From
-This is who the email will appear to originate from.
-This is either the same as the UserName,
-or, if delegated, access to an email account the Username account has delegated permissions to send for.
-Link:
-    https://learn.microsoft.com/en-us/microsoft-365/admin/add-users/give-mailbox-permissions-to-another-user?view=o365-worldwide
+### -Subject
+The subject is automatically populated with the name of the function that ran the script,
+as well as the domain and hostname.
+
+If you specify subject in the parameters, it will override the default with your subject.
 
 ```yaml
 Type: String
@@ -150,7 +233,7 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: None
+Default value: "$($script:MyInvocation.MyCommand.Name -replace '\..*') report ran for $($env:USERDNSDOMAIN) on host $($env:COMPUTERNAME)."
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -170,90 +253,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Subject
-The subject is automatically populated with the name of the function that ran the script,
-as well as the domain and hostname.
-
-If you specify subject in the parameters, it will override the default with your subject.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: "$($script:MyInvocation.MyCommand.Name -replace '\..*') report ran for $($env:USERDNSDOMAIN) on host $($env:COMPUTERNAME)."
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Body
-The body of the message, pre-populates with the same data as the subject line.
-Specify body text
-in the function parameters to override.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: "$($script:MyInvocation.MyCommand.Name -replace '\..*') report ran for $($env:USERDNSDOMAIN) on host $($env:COMPUTERNAME)."
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Pass
-Takes a SecureString as input.
-The password must be added to the command by using:
-    -Pass (Read-Host -AsSecureString)
-    You will be promted to enter the password for the UserName parameter.
-
-```yaml
-Type: SecureString
-Parameter Sets: Pass
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Function
-If you are using the optional function feature and created a password retrieval function,
-this is the name of the function in Azure AD that accesses the vault.
-
-```yaml
-Type: String
-Parameter Sets: Func
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -FunctionApp
-If you are using the optional function feature, this is the name of the function app in Azure AD.
-
-```yaml
-Type: String
-Parameter Sets: Func
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Token
 If you are using the optional function feature, this is the api token for the specific function.
 Ensure you are using the "Function Key" and NOT the "Host Key" to ensure access is only to the specific funtion.
@@ -261,6 +260,22 @@ Ensure you are using the "Function Key" and NOT the "Host Key" to ensure access 
 ```yaml
 Type: String
 Parameter Sets: Func
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -UserName
+The Account authorized to send email via SMTP.
+From parameter is usually the same.
+
+```yaml
+Type: String
+Parameter Sets: (All)
 Aliases:
 
 Required: False

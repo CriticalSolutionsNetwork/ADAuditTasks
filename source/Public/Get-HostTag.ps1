@@ -45,9 +45,8 @@ function Get-HostTag {
     .LINK
     https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-HostTag
     #>
-    [OutputType([string[]])]
-    # Define the binding for the cmdlet
     [CmdletBinding()]
+    [OutputType([System.Object[]],[string[]])]
     # Define the parameters for the function
     param (
         # Define the first parameter, which is mandatory
@@ -112,6 +111,7 @@ function Get-HostTag {
         [int]$HostCount = 1
     )
     begin {
+        Write-AuditLog -Start
         switch ($DeviceFunction) {
             "Application Server" { $DFunction = "APP" }
             "Backup Server" { $DFunction = "BAK" }
@@ -160,7 +160,7 @@ function Get-HostTag {
             "Windows Server" { $OSTxt = "WSV" }
             "Windows Server Core" { $OSTxt = "WSC" }
             "Generic OS" { $OSTxt = "GOS" }
-            Default { $DFunction = "GHV" }
+            Default { $OSTxt = "GHV" }
         }
         switch ($PhysicalOrVirtual) {
             "Physical" { $DevType = "P" }
@@ -168,14 +168,15 @@ function Get-HostTag {
         }
     }
     process {
-        $OutPut = @()
+        Write-AuditLog "The prefix is $Prefix"
         1..$HostCount | ForEach-Object {
-            $CustomName = $Prefix + "-" + $DevType + $OSTxt + $DFunction + $('{0:d3}' -f [int]$_)
-            $Output += $CustomName
+            $CustomName1 = "-" + $DevType + $OSTxt + $DFunction + $('{0:d3}' -f [int]$_)
+            $CustomName = $Prefix + $CustomName1
+            $CustomName
         }
         # Create Device Name
     }
     end {
-        return $Output
+        Write-AuditLog -EndFunction
     }
 }

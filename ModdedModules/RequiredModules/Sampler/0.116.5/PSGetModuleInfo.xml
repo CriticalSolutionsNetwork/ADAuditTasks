@@ -1,0 +1,201 @@
+<Objs Version="1.1.0.1" xmlns="http://schemas.microsoft.com/powershell/2004/04">
+  <Obj RefId="0">
+    <TN RefId="0">
+      <T>Microsoft.PowerShell.Commands.PSRepositoryItemInfo</T>
+      <T>System.Management.Automation.PSCustomObject</T>
+      <T>System.Object</T>
+    </TN>
+    <MS>
+      <S N="Name">Sampler</S>
+      <S N="Version">0.116.5</S>
+      <S N="Type">Module</S>
+      <S N="Description">Sample Module with Pipeline scripts and its Plaster template to create a module following some of the community accepted practices.</S>
+      <S N="Author">Gael Colas</S>
+      <S N="CompanyName">gaelcolas</S>
+      <S N="Copyright">(c) Gael Colas. All rights reserved.</S>
+      <DT N="PublishedDate">2023-04-19T10:16:13-05:00</DT>
+      <Nil N="InstalledDate" />
+      <Nil N="UpdatedDate" />
+      <URI N="LicenseUri">https://github.com/gaelcolas/Sampler/blob/main/LICENSE</URI>
+      <URI N="ProjectUri">https://github.com/gaelcolas/Sampler</URI>
+      <URI N="IconUri">https://raw.githubusercontent.com/gaelcolas/Sampler/main/Sampler/assets/sampler.png</URI>
+      <Obj N="Tags" RefId="1">
+        <TN RefId="1">
+          <T>System.Object[]</T>
+          <T>System.Array</T>
+          <T>System.Object</T>
+        </TN>
+        <LST>
+          <S>Template</S>
+          <S>pipeline</S>
+          <S>plaster</S>
+          <S>DesiredStateConfiguration</S>
+          <S>DSC</S>
+          <S>DSCResourceKit</S>
+          <S>DSCResource</S>
+          <S>Windows</S>
+          <S>MacOS</S>
+          <S>Linux</S>
+          <S>PSModule</S>
+        </LST>
+      </Obj>
+      <Obj N="Includes" RefId="2">
+        <TN RefId="2">
+          <T>System.Collections.Hashtable</T>
+          <T>System.Object</T>
+        </TN>
+        <DCT>
+          <En>
+            <S N="Key">Workflow</S>
+            <Obj N="Value" RefId="3">
+              <TNRef RefId="1" />
+              <LST />
+            </Obj>
+          </En>
+          <En>
+            <S N="Key">RoleCapability</S>
+            <Ref N="Value" RefId="3" />
+          </En>
+          <En>
+            <S N="Key">DscResource</S>
+            <Ref N="Value" RefId="3" />
+          </En>
+          <En>
+            <S N="Key">Function</S>
+            <Obj N="Value" RefId="4">
+              <TNRef RefId="1" />
+              <LST>
+                <S>Add-Sample</S>
+                <S>Convert-SamplerHashtableToString</S>
+                <S>Get-BuildVersion</S>
+                <S>Get-BuiltModuleVersion</S>
+                <S>Get-ClassBasedResourceName</S>
+                <S>Get-CodeCoverageThreshold</S>
+                <S>Get-MofSchemaName</S>
+                <S>Get-OperatingSystemShortName</S>
+                <S>Get-PesterOutputFileFileName</S>
+                <S>Get-Psm1SchemaName</S>
+                <S>Get-SamplerAbsolutePath</S>
+                <S>Get-SamplerBuiltModuleBase</S>
+                <S>Get-SamplerBuiltModuleManifest</S>
+                <S>Get-SamplerCodeCoverageOutputFile</S>
+                <S>Get-SamplerCodeCoverageOutputFileEncoding</S>
+                <S>Get-SamplerModuleInfo</S>
+                <S>Get-SamplerModuleRootPath</S>
+                <S>Get-SamplerProjectName</S>
+                <S>Get-SamplerSourcePath</S>
+                <S>Invoke-SamplerGit</S>
+                <S>Merge-JaCoCoReport</S>
+                <S>New-SampleModule</S>
+                <S>New-SamplerJaCoCoDocument</S>
+                <S>New-SamplerPipeline</S>
+                <S>Out-SamplerXml</S>
+                <S>Set-SamplerPSModulePath</S>
+                <S>Split-ModuleVersion</S>
+                <S>Update-JaCoCoStatistic</S>
+              </LST>
+            </Obj>
+          </En>
+          <En>
+            <S N="Key">Command</S>
+            <Obj N="Value" RefId="5">
+              <TNRef RefId="1" />
+              <LST>
+                <S>Add-Sample</S>
+                <S>Convert-SamplerHashtableToString</S>
+                <S>Get-BuildVersion</S>
+                <S>Get-BuiltModuleVersion</S>
+                <S>Get-ClassBasedResourceName</S>
+                <S>Get-CodeCoverageThreshold</S>
+                <S>Get-MofSchemaName</S>
+                <S>Get-OperatingSystemShortName</S>
+                <S>Get-PesterOutputFileFileName</S>
+                <S>Get-Psm1SchemaName</S>
+                <S>Get-SamplerAbsolutePath</S>
+                <S>Get-SamplerBuiltModuleBase</S>
+                <S>Get-SamplerBuiltModuleManifest</S>
+                <S>Get-SamplerCodeCoverageOutputFile</S>
+                <S>Get-SamplerCodeCoverageOutputFileEncoding</S>
+                <S>Get-SamplerModuleInfo</S>
+                <S>Get-SamplerModuleRootPath</S>
+                <S>Get-SamplerProjectName</S>
+                <S>Get-SamplerSourcePath</S>
+                <S>Invoke-SamplerGit</S>
+                <S>Merge-JaCoCoReport</S>
+                <S>New-SampleModule</S>
+                <S>New-SamplerJaCoCoDocument</S>
+                <S>New-SamplerPipeline</S>
+                <S>Out-SamplerXml</S>
+                <S>Set-SamplerPSModulePath</S>
+                <S>Split-ModuleVersion</S>
+                <S>Update-JaCoCoStatistic</S>
+              </LST>
+            </Obj>
+          </En>
+          <En>
+            <S N="Key">Cmdlet</S>
+            <Ref N="Value" RefId="3" />
+          </En>
+        </DCT>
+      </Obj>
+      <Nil N="PowerShellGetFormatVersion" />
+      <S N="ReleaseNotes">## [0.116.5] - 2023-04-19_x000D__x000A__x000D__x000A_- Fix Azure Pipeline bug to resolve errors and delays during the build process. Shallow fetch has been disabled to ensure complete repository cloning. Fixes [#424](https://github.com/gaelcolas/Sampler/issues/424)</S>
+      <Obj N="Dependencies" RefId="6">
+        <TNRef RefId="1" />
+        <LST>
+          <Obj RefId="7">
+            <TN RefId="3">
+              <T>System.Collections.Specialized.OrderedDictionary</T>
+              <T>System.Object</T>
+            </TN>
+            <DCT>
+              <En>
+                <S N="Key">Name</S>
+                <S N="Value">Plaster</S>
+              </En>
+              <En>
+                <S N="Key">CanonicalId</S>
+                <S N="Value">nuget:Plaster</S>
+              </En>
+            </DCT>
+          </Obj>
+        </LST>
+      </Obj>
+      <S N="RepositorySourceLocation">https://www.powershellgallery.com/api/v2</S>
+      <S N="Repository">PSGallery</S>
+      <S N="PackageManagementProvider">NuGet</S>
+      <Obj N="AdditionalMetadata" RefId="8">
+        <TN RefId="4">
+          <T>System.Management.Automation.PSCustomObject</T>
+          <T>System.Object</T>
+        </TN>
+        <MS>
+          <S N="copyright">(c) Gael Colas. All rights reserved.</S>
+          <S N="description">Sample Module with Pipeline scripts and its Plaster template to create a module following some of the community accepted practices.</S>
+          <S N="requireLicenseAcceptance">False</S>
+          <S N="releaseNotes">## [0.116.5] - 2023-04-19_x000D__x000A__x000D__x000A_- Fix Azure Pipeline bug to resolve errors and delays during the build process. Shallow fetch has been disabled to ensure complete repository cloning. Fixes [#424](https://github.com/gaelcolas/Sampler/issues/424)</S>
+          <S N="isLatestVersion">True</S>
+          <S N="isAbsoluteLatestVersion">True</S>
+          <S N="versionDownloadCount">3732</S>
+          <S N="downloadCount">105764</S>
+          <S N="packageSize">194930</S>
+          <S N="published">4/19/2023 10:16:13 AM -05:00</S>
+          <S N="created">4/19/2023 10:16:13 AM -05:00</S>
+          <S N="lastUpdated">4/29/2023 10:04:09 AM -05:00</S>
+          <S N="tags">Template pipeline plaster DesiredStateConfiguration DSC DSCResourceKit DSCResource Windows MacOS Linux PSModule PSFunction_Add-Sample PSCommand_Add-Sample PSFunction_Convert-SamplerHashtableToString PSCommand_Convert-SamplerHashtableToString PSFunction_Get-BuildVersion PSCommand_Get-BuildVersion PSFunction_Get-BuiltModuleVersion PSCommand_Get-BuiltModuleVersion PSFunction_Get-ClassBasedResourceName PSCommand_Get-ClassBasedResourceName PSFunction_Get-CodeCoverageThreshold PSCommand_Get-CodeCoverageThreshold PSFunction_Get-MofSchemaName PSCommand_Get-MofSchemaName PSFunction_Get-OperatingSystemShortName PSCommand_Get-OperatingSystemShortName PSFunction_Get-PesterOutputFileFileName PSCommand_Get-PesterOutputFileFileName PSFunction_Get-Psm1SchemaName PSCommand_Get-Psm1SchemaName PSFunction_Get-SamplerAbsolutePath PSCommand_Get-SamplerAbsolutePath PSFunction_Get-SamplerBuiltModuleBase PSCommand_Get-SamplerBuiltModuleBase PSFunction_Get-SamplerBuiltModuleManifest PSCommand_Get-SamplerBuiltModuleManifest PSFunction_Get-SamplerCodeCoverageOutputFile PSCommand_Get-SamplerCodeCoverageOutputFile PSFunction_Get-SamplerCodeCoverageOutputFileEncoding PSCommand_Get-SamplerCodeCoverageOutputFileEncoding PSFunction_Get-SamplerModuleInfo PSCommand_Get-SamplerModuleInfo PSFunction_Get-SamplerModuleRootPath PSCommand_Get-SamplerModuleRootPath PSFunction_Get-SamplerProjectName PSCommand_Get-SamplerProjectName PSFunction_Get-SamplerSourcePath PSCommand_Get-SamplerSourcePath PSFunction_Invoke-SamplerGit PSCommand_Invoke-SamplerGit PSFunction_Merge-JaCoCoReport PSCommand_Merge-JaCoCoReport PSFunction_New-SampleModule PSCommand_New-SampleModule PSFunction_New-SamplerJaCoCoDocument PSCommand_New-SamplerJaCoCoDocument PSFunction_New-SamplerPipeline PSCommand_New-SamplerPipeline PSFunction_Out-SamplerXml PSCommand_Out-SamplerXml PSFunction_Set-SamplerPSModulePath PSCommand_Set-SamplerPSModulePath PSFunction_Split-ModuleVersion PSCommand_Split-ModuleVersion PSFunction_Update-JaCoCoStatistic PSCommand_Update-JaCoCoStatistic PSIncludes_Function</S>
+          <S N="developmentDependency">False</S>
+          <S N="updated">2023-04-29T10:04:09Z</S>
+          <S N="NormalizedVersion">0.116.5</S>
+          <S N="Authors">Gael Colas</S>
+          <S N="IsPrerelease">false</S>
+          <S N="ItemType">Module</S>
+          <S N="FileList">Sampler.nuspec|Sampler.psm1|Templates\Sampler\CONTRIBUTING.md|Sampler.psd1|Templates\Sampler\Get-Something.tests.ps1|Templates\Sampler\README.md|scripts\Set-SamplerTaskVariable.ps1|Templates\Sampler\codecov.yml.template|en-US\about_Sampler.help.txt|Templates\Sampler\SECURITY.generic.md|tasks\Clean.ModuleBuilder.build.ps1|Templates\Sampler\README.md.template|tasks\ChocolateyPackage.build.ps1|Templates\Sampler\Get-PrivateFunction.ps1|tasks\Create_Changelog_Branch.build.ps1|Templates\Sampler\module.tests.ps1.template|tasks\Invoke-Pester.pester.build.ps1|Templates\Sampler\Get-PrivateFunction.tests.ps1|tasks\JaCoCo.coverage.build.ps1|Templates\Sampler\azure-pipelines_dsccommunity.yml.template|tasks\Create_Release_Git_Tag.build.ps1|Templates\Sampler\appveyor.yml|tasks\SetPsModulePath.build.ps1|Templates\Sampler\markdownlint.json|tasks\Build-Module.ModuleBuilder.build.ps1|Templates\Sampler\about_ModuleName.help.template|tasks\generateHelp.PlatyPS.build.ps1|Templates\VscodeConfig\plasterManifest.xml|tasks\release.module.build.ps1|Templates\VscodeConfig\settings.json|tasks\DeployAll.PSDeploy.build.ps1|Templates\VscodeConfig\tasks.json|tasks\GuestConfig.build.ps1|Templates\VscodeConfig\analyzersettings.psd1|tasks\DscResource.Test.build.ps1|Templates\GCPackage\plasterManifest.xml|Templates\ClassFolderResource\DSC_ClassFolder.ps1|Templates\PublicCallPrivateFunctions\plasterManifest.xml|Templates\ClassFolderResource\plasterManifest.xml|Templates\ClassFolderResource\Private\Test-FileAttribute.ps1|Templates\ClassFolderResource\Reason.ps1.template|Templates\ClassFolderResource\Private\Set-FileAttribute.ps1|Templates\ClassFolderResource\1.Ensure.ps1.template|Templates\ClassFolderResource\Private\ConvertTo-HashtableFromObject.ps1|Templates\Git\gitignore|Templates\ClassFolderResource\en-US\DSC_ClassFolder.strings.psd1|Templates\Git\GitVersion.yml.template|Templates\MofResource\DSC_Folder\DSC_Folder.schema.mof|Templates\Git\gitattributes|Templates\MofResource\DSC_Folder\DSC_Folder.psm1|Templates\PrivateFunction\Get-PrivateFunction.ps1.template|Templates\ChocolateyPackage\myPackage\mypackage.nuspec.template|Templates\PrivateFunction\plasterManifest.xml|Templates\ChocolateyPackage\myPackage\_TODO.txt|Templates\PrivateFunction\Get-PrivateFunction.tests.ps1.template|Templates\ChocolateyPackage\myPackage\README.md|Templates\Enum\plasterManifest.xml|Templates\GithubConfig\ISSUE_TEMPLATE\config.yml.template|Templates\Enum\Enum.ps1.template|Templates\GithubConfig\ISSUE_TEMPLATE\General.md|Templates\PublicFunction\plasterManifest.xml|Templates\GithubConfig\ISSUE_TEMPLATE\Problem_with_module.yml.template|Templates\PublicFunction\Get-Something.tests.ps1.template|Templates\GithubConfig\ISSUE_TEMPLATE\Problem_with_resource.yml.template|Templates\PublicFunction\Get-Something.ps1.template|Templates\GithubConfig\ISSUE_TEMPLATE\Resource_proposal.yml|Templates\Build\build.yaml.template|Templates\Classes\Classes\3.class11.ps1|Templates\Build\Resolve-Dependency.ps1|Templates\Classes\Classes\2.class2.ps1|Templates\Build\CODE_OF_CONDUCT.md|Templates\Classes\Classes\4.class12.ps1|Templates\Build\plasterManifest.xml|Templates\Classes\Classes\1.class1.ps1|Templates\Build\CHANGELOG.md.template|Templates\ClassResource\Private\Set-HelpFunctionProperty.ps1|Templates\Build\Resolve-Dependency.psd1.template|Templates\ClassResource\Private\ConvertTo-HashtableFromObject.ps1|Templates\Build\CONTRIBUTING.md|Templates\ClassResource\Private\Get-DummyObject.ps1|Templates\Build\build.ps1|Templates\ClassResource\en-US\DSC_ClassResource.strings.psd1.template|Templates\Build\SECURITY.generic.md|Templates\Sampler\LICENSES\LICENSE.Apache.template|Templates\Build\README.md.template|Templates\Sampler\LICENSES\LICENSE.MIT.template|Templates\Build\RequiredModules.psd1.template|Templates\Examples\Resources\Folder\1-DscResourceTemplate_CreateFolderAsSystemConfig.ps1|Templates\Examples\README.md|Templates\Examples\Resources\Folder\2-DscResourceTemplate_CreateFolderAsUserConfig.ps1|Templates\HelperSubModules\plasterManifest.xml|Templates\Examples\Resources\Folder\3-DscResourceTemplate_RemoveFolderConfig.ps1|Templates\ChocolateyPipeline\plasterManifest.xml|Templates\HelperSubModules\Modules\HelperSubmodule\HelperSubmodule.psm1|Templates\ChocolateyPipeline\chocobuild.yml.template|Templates\MofResource\Modules\Folder.Common\Folder.Common.psm1|Templates\Composite\plasterManifest.xml|Templates\MofResource\DSC_Folder\en-US\DSC_Folder.strings.psd1|Templates\Composite\Composite.schema.psm1.template|Templates\ChocolateyPackage\myPackage\tools\VERIFICATION.txt|Templates\MofResource\plasterManifest.xml|Templates\ChocolateyPackage\myPackage\tools\chocolateyinstall.ps1|Templates\ChocolateyPackage\plasterManifest.xml|Templates\ChocolateyPackage\myPackage\tools\chocolateyuninstall.ps1|Templates\GithubConfig\plasterManifest.xml|Templates\ChocolateyPackage\myPackage\tools\chocolateybeforemodify.ps1|Templates\GithubConfig\PULL_REQUEST_TEMPLATE_dsccommunity.md|Templates\ChocolateyPackage\myPackage\tools\LICENSE.txt|Templates\GithubConfig\PULL_REQUEST_TEMPLATE.md|Templates\GCPackage\GCPackages\MyGuestConfigPackage\MyGuestConfigPackage.config.ps1.template|Templates\Classes\plasterManifest.xml|Templates\ClassFolderResource\tests\Unit\Private\Set-FileAttribute.tests.ps1|Templates\ClassResource\plasterManifest.xml|Templates\ClassFolderResource\tests\Unit\Private\Test-FileAttribute.tests.ps1|Templates\ClassResource\DSC_ClassResource.ps1.template|Templates\ClassFolderResource\tests\Unit\Private\ConvertTo-HashtableFromObject.tests.ps1|Templates\ClassResource\Reason.ps1.template|Templates\ClassFolderResource\tests\Unit\ClassResource\DSC_ClassFolder.tests.ps1|Templates\ClassResource\1.Ensure.ps1.template|Templates\MofResource\tests\Unit\Modules\Folder.Common.tests.ps1|Templates\Sampler\azure-pipelines.yml.template|Templates\MofResource\tests\Unit\DSCResources\DSC_Folder.tests.ps1.template|Templates\Sampler\kitchen.yml.template|Templates\ChocolateyPackage\tests\ChocolateyPackage\myPackage\myPackage.PesterV5.tests.ps1|Templates\Sampler\module.template|Templates\ChocolateyPackage\tests\ChocolateyPackage\myPackage\myPackage.PesterV4.tests.ps1|Templates\Sampler\README_dsccommunity.md.template|Templates\Classes\tests\Unit\Classes\class12.tests.ps1|Templates\Sampler\Get-Something.ps1|Templates\Classes\tests\Unit\Classes\class2.tests.ps1|Templates\Sampler\CODE_OF_CONDUCT.md|Templates\Classes\tests\Unit\Classes\class1.tests.ps1|Templates\Sampler\SECURITY.dsccommunity.md|Templates\Classes\tests\Unit\Classes\class11.tests.ps1|Templates\Sampler\plasterManifest.xml|Templates\ClassResource\tests\Unit\Private\ConvertTo-HashtableFromObject.tests.ps1.template|Templates\Sampler\CHANGELOG.md.template|Templates\ClassResource\tests\Unit\ClassResource\DSC_ClassResource.tests.ps1.template</S>
+          <S N="GUID">b59b8442-9cf9-4c4b-bc40-035336ace573</S>
+          <S N="PowerShellVersion">5.0</S>
+          <S N="CompanyName">SynEdgy Limited</S>
+        </MS>
+      </Obj>
+      <S N="InstalledLocation">C:\Users\dougrios\GitHub\ADAuditTasks\output\RequiredModules\Sampler\0.116.5</S>
+    </MS>
+  </Obj>
+</Objs>

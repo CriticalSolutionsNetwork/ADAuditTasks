@@ -1,5 +1,5 @@
 function Send-AuditEmail {
-    <#
+<#
     .SYNOPSIS
     This is a wrapper function for Send-MailKitMessage and takes string arrays as input.
     .DESCRIPTION
@@ -63,11 +63,11 @@ function Send-AuditEmail {
     https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Send-AuditEmail
     .LINK
     https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Send-AuditEmail
-    #>
+#>
     [CmdletBinding(DefaultParameterSetName = 'Pass')]
     param (
         [Parameter(
-            MandaTory = $true,
+            Mandatory = $true,
             HelpMessage = 'Enter the Zip file paths as comma separated array with quotes for each filepath',
             ValueFromPipelineByPropertyName = $true
         )][string[]]$AttachmentFiles, # Array of paths to zip files that will be attached to the email
@@ -82,8 +82,8 @@ function Send-AuditEmail {
         [switch]$SSL, # Whether to use SSL for the SMTP connection
         [string]$From, # Email address for the sender
         [string]$To, # Email address for the recipient
-        [string]$Subject = "$($script:MyInvocation.MyCommand.Name -replace '\..*') report ran for $($env:USERDNSDOMAIN) on host $($env:COMPUTERNAME).", # Email subject line
-        [string]$Body = "$($script:MyInvocation.MyCommand.Name -replace '\..*') report ran for $($env:USERDNSDOMAIN) on host $($env:COMPUTERNAME).", # Email body text
+        [string]$Subject = "$($script:MyInvocation.MyCommand.Name -replace '\..*') report ran for $($env:USERDOMAIN) on host $($env:COMPUTERNAME).", # Email subject line
+        [string]$Body = "$($script:MyInvocation.MyCommand.Name -replace '\..*') report ran for $($env:USERDOMAIN) on host $($env:COMPUTERNAME).", # Email body text
         [Parameter(
             ParameterSetName = 'Pass',
             HelpMessage = 'Enter this as the parameter: (Read-Host -AsSecureString)'
@@ -91,19 +91,28 @@ function Send-AuditEmail {
         [securestring]$Pass, # SecureString containing the password for SMTP authentication
         [Parameter(
             ParameterSetName = 'Func',
+            Mandatory = $true,
             HelpMessage = 'Enter the name of the Function as showing in the function app'
         )]
         [string]$Function, # Name of the function in the Azure Function App
         [Parameter(
             ParameterSetName = 'Func',
+            Mandatory = $true,
             HelpMessage = 'Enter the name of the function app'
         )]
         [string]$FunctionApp, # Name of the Azure Function App
         [Parameter(
             ParameterSetName = 'Func',
+            Mandatory = $true,
             HelpMessage = 'Enter the API key associated with the function. Not the Host Key.'
         )]
-        [string]$Token                  # API key for the Azure Function App
+        [string]$Token, # API key for the Azure Function App
+        [Parameter(
+            ParameterSetName = 'Func',
+            Mandatory = $true,
+            HelpMessage = 'Enter the local Client Certificate thumbprint associated and previously uploaded to the function.'
+        )]
+        [string]$CertificateThumbprint
     )
     begin {
         # Install/Import Required Module
@@ -135,7 +144,8 @@ function Send-AuditEmail {
         elseif ($FunctionApp) {
             # If a function app name and API key are provided, retrieve credentials from the function app URL.
             $url = "https://$($FunctionApp).azurewebsites.net/api/$($Function)"
-            $a, $b = (Invoke-RestMethod $url -Headers @{ 'x-functions-key' = "$Token" }).split(',')
+            $cert = Get-ChildItem -Path Cert:\LocalMachine\My\ | Where-Object { $_.Thumbprint -eq $CertificateThumbprint }
+            $a, $b = (Invoke-RestMethod -Uri $url -Method Get -Headers @{ 'x-functions-key' = "$Token" } -Certificate $cert ).split(',')
             $Credential = `
                 [System.Management.AuTomation.PSCredential]::new($User, (ConvertTo-SecureString -String $a -Key $b.split(' ')) )
         }

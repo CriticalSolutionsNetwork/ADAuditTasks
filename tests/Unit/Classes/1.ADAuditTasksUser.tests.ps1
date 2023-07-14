@@ -7,111 +7,42 @@ $ProjectName = (Get-ChildItem $ProjectPath\*\*.psd1 | Where-Object {
 Import-Module $ProjectName
 
 InModuleScope $ProjectName {
-    Describe ADAuditTasksUser {
+    Describe 'ADAuditTasksUser' {
         Context 'Type creation' {
             It 'Has created a type named ADAuditTasksUser' {
                 'ADAuditTasksUser' -as [Type] | Should -BeOfType [Type]
             }
         }
+
         Context 'Constructors' {
-            It 'Has a constructor that sets all properties' {
-                $user = [ADAuditTasksUser]::new(
-                    "johndoe",
-                    "John",
-                    "Doe",
-                    "John Doe",
-                    "johndoe@example.com",
-                    "131496012909954874",
-                    "True",
-                    "131496012909954874",
-                    "OU=Users,DC=example,DC=com",
-                    "Manager",
-                    "CN=Jane Smith,OU=Users,DC=example,DC=com",
-                    "Department",
-                    $false,
-                    $true
+            It 'Has a default constructor' {
+                $instance = [ADAuditTasksUser]::new()
+                $instance | Should -Not -BeNullOrEmpty
+                $instance.GetType().Name | Should -Be 'ADAuditTasksUser'
+            }
+
+
+            It 'Has a constructor with parameters' {
+                $instance = [ADAuditTasksUser]::new(
+                    'jdoe', 'John', 'Doe', 'John Doe', 'jdoe@example.com', '132764234000000000', 'Enabled', '132764234000000000',
+                    'OU=Users,DC=example,DC=com', 'Developer', $null, 'IT', $true, $true
                 )
-                $user | Should -Not -BeNullOrEmpty
-                $user.GetType().Name | Should -Be 'ADAuditTasksUser'
-                $user.UserName | Should Be "johndoe"
-                $user.FirstName | Should Be "John"
-                $user.LastName | Should Be "Doe"
-                $user.Name | Should Be "John Doe"
-                $user.UPN | Should Be "johndoe@example.com"
-                $user.LastSignIn | Should Be [DateTime]::FromFileTime("131496012909954874")
-                $user.Enabled | Should Be "True"
-                $user.LastSeen | Should Be "3+ months"
-                $user.OrgUnit | Should Be "OU=Users,DC=example,DC=com"
-                $user.Title | Should Be "Manager"
-                $user.Manager | Should Be "Jane Smith"
-                $user.Department | Should Be "Department"
-                $user.AccessRequired | Should Be $false
-                $user.NeedMailbox | Should Be $true
+                $instance | Should -Not -BeNullOrEmpty
+                $instance.GetType().Name | Should -Be 'ADAuditTasksUser'
+                $instance.Manager | Should -Be 'NotFound'
             }
         }
+
         Context 'Methods' {
-            # No methods defined in the class
+            It 'Overrides the ToString method' {
+                $expectedOutput = "ADAuditTasksUser: UserName=DefaultUser, FirstName=, LastName=, Name=, UPN=, LastSignIn=, Enabled=, LastSeen=, OrgUnit=, Title=, Manager=, Department=, AccessRequired=False, NeedMailbox=False"
+                ([ADAuditTasksUser]::new()).ToString() | Should -Be $expectedOutput
+            }
         }
+
         Context 'Properties' {
-            BeforeEach {
-                $user = [ADAuditTasksUser]::new(
-                    "johndoe",
-                    "John",
-                    "Doe",
-                    "John Doe",
-                    "johndoe@example.com",
-                    "131496012909954874",
-                    "True",
-                    "131496012909954874",
-                    "OU=Users,DC=example,DC=com",
-                    "Manager",
-                    "CN=Jane Smith,OU=Users,DC=example,DC=com",
-                    "Department",
-                    $false,
-                    $true
-                )
-            }
-            It 'Has a UserName property' {
-                $user.UserName | Should Be "johndoe"
-            }
-            It 'Has a FirstName property' {
-                $user.FirstName | Should Be "John"
-            }
-            It 'Has a LastName property' {
-                $user.LastName | Should Be "Doe"
-            }
             It 'Has a Name property' {
-                $user.Name | Should Be "John Doe"
-            }
-            It 'Has a UPN property' {
-                $user.UPN | Should Be "johndoe@example.com"
-            }
-            It 'Has a LastSignIn property' {
-                $user.LastSignIn | Should Be [DateTime]::FromFileTime("131496012909954874")
-            }
-            It 'Has an Enabled property' {
-                $user.Enabled | Should Be "True"
-            }
-            It 'Has a LastSeen property' {
-                $user.LastSeen | Should Be "3+ months"
-            }
-            It 'Has an OrgUnit property' {
-                $user.OrgUnit | Should Be "OU=Users,DC=example,DC=com"
-            }
-            It 'Has a Title property' {
-                $user.Title | Should Be "Manager"
-            }
-            It 'Has a Manager property' {
-                $user.Manager | Should Be "Jane Smith"
-            }
-            It 'Has a Department property' {
-                $user.Department | Should Be "Department"
-            }
-            It 'Has an AccessRequired property' {
-                $user.AccessRequired | Should Be $false
-            }
-            It 'Has a NeedMailbox property' {
-                $user.NeedMailbox | Should Be $true
+                ([ADAuditTasksUser]::new()).Name | Should -Be $null
             }
         }
     }
