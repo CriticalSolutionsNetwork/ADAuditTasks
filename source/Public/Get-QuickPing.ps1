@@ -1,44 +1,37 @@
 function Get-QuickPing {
 <#
-.SYNOPSIS
-Performs a quick ping on a range of IP addresses and returns an array of IP addresses
-that responded to the ping and an array of IP addresses that failed to respond.
-.DESCRIPTION
-This function performs a quick ping on a range of IP addresses specified by the IPRange parameter.
-The ping is done with a Time-to-Live (TTL) value of 128 (by default), meaning only the local network
-will be pinged. The function returns an array of IP addresses that responded to the ping and an array
-of IP addresses that failed to respond.
-.PARAMETER IPRange
-Specifies a range of IP addresses to ping. Can be a string with a single IP address,
-a range of IP addresses in CIDR notation, or an array of IP addresses.
-.PARAMETER TTL
-Specifies the Time-to-Live (TTL) value to use for the ping. The default value is 128.
-.PARAMETER BufferSize
-Specifies the size of the buffer to use for the ping. The default value is 16.
-.PARAMETER Count
-Specifies the number of times to send the ping request. The default value is 1.
-.EXAMPLE
-Get-QuickPing -IPRange 192.168.1.1
-Performs a quick ping on the IP address 192.168.1.1 with a TTL of 128 and returns an
-array of IP addresses that responded to the ping and an array of IP addresses that
-failed to respond.
-.EXAMPLE
-Get-QuickPing -IPRange 192.168.1.0/24
-Performs a quick ping on all IP addresses in the 192.168.1.0/24 network with a TTL of
-128 and returns an array of IP addresses that responded to the ping and an array of IP
-addresses that failed to respond.
-.EXAMPLE
-Get-QuickPing -IPRange @(192.168.1.1, 192.168.1.2, 192.168.1.3)
-Performs a quick ping on the IP addresses 192.168.1.1, 192.168.1.2, and 192.168.1.3 with
-a TTL of 128 and returns an array of IP addresses that responded to the ping and an array
-of IP addresses that failed to respond.
-.LINK
-https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-QuickPing
-.LINK
-https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-QuickPing
+    .SYNOPSIS
+    Performs a quick ping on a range of IP addresses and returns an array of IP addresses
+    that responded to the ping and an array of IP addresses that failed to respond.
+    .DESCRIPTION
+    This function performs a quick ping on a range of IP addresses specified by the IPRange parameter.
+    The ping is done with a Time-to-Live (TTL) value of 128 (by default). The function returns an array
+    of IP addresses that responded to the ping and an array of IP addresses that failed to respond.
+    This function has specific behaviors depending on the PowerShell version. For PowerShell 7 and
+    above, it uses the 'Test-Connection' cmdlet's '-OutVariable' parameter.
+    .PARAMETER IPRange
+    Specifies a range of IP addresses to ping. Can be a string with a single IP address.
+    .PARAMETER TTL
+    Specifies the Time-to-Live (TTL) value to use for the ping. The default value is 128.
+    .PARAMETER BufferSize
+    Specifies the size of the buffer to use for the ping. The default value is 16.
+    .PARAMETER Count
+    Specifies the number of times to send the ping request. The default value is 1.
+    .EXAMPLE
+    Get-QuickPing -IPRange 192.168.1.1
+    Performs a quick ping on the IP address 192.168.1.1 with a TTL of 128 and returns an
+    array of IP addresses that responded to the ping and an array of IP addresses that
+    failed to respond.
+    .EXAMPLE
+    Get-QuickPing -IPRange "192.168.1.1", "192.168.1.2", "192.168.1.3"
+    Performs a quick ping on the IP addresses 192.168.1.1, 192.168.1.2, and 192.168.1.3 with
+    a TTL of 128 and returns an array of IP addresses that responded to the ping and an array
+    of IP addresses that failed to respond.
+    .LINK
+    https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-QuickPing
+    .LINK
+    https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-QuickPing
 #>
-
-
     param (
         $IPRange,
         [int]$TTL = 128,
@@ -46,12 +39,13 @@ https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-QuickPing
         [int32]$Count = 1
     )
     begin {
-        $SoloRun = $false
         if (!$Script:LogString) {
-            $Script:LogString = @()
-            #Begin Logging
-            $Script:LogString += Write-AuditLog -Message "Begin Log"
-            $SoloRun = $true
+            if (!($script:LogString)) {
+                Write-AuditLog -Start
+            }
+            else {
+                Write-AuditLog -BeginFunction
+            }
         }
         $FailedToPing = @()
         $Success = @()
@@ -67,7 +61,7 @@ https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-QuickPing
                 if ($PSVersionTable.PSVersion.Major -ge 7) {
                     [void](Test-Connection $IP -BufferSize $BufferSize -TimeToLive $TTL -Count $Count -ErrorAction Stop -OutVariable test)
                     if ($test.Status -eq 'Success') {
-                        $Script:LogString += Write-AuditLog -Message "$IP Found!" -Severity Information
+                        Write-AuditLog "$IP Found!" -Severity Information
                         $Success += $IP
                     }
                     else {
@@ -77,7 +71,7 @@ https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-QuickPing
                 else {
                     try {
                         [void](Test-Connection $IP -BufferSize $BufferSize -TimeToLive $TTL -Count $Count -ErrorAction Stop)
-                        $Script:LogString += Write-AuditLog -Message "$IP Found!"
+                        Write-AuditLog "$IP Found!"
                         $Success += $IP
                     }
                     catch {
@@ -85,7 +79,7 @@ https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-QuickPing
                     }
                 }
             }
-            catch {}
+            catch { throw $_.Exception}
         }
         if ($null -eq $FailedToPing) {
             $FailedtoPing = "NoIPs"
@@ -95,9 +89,7 @@ https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-QuickPing
         }
     }
     end {
-        if ($SoloRun) {
-            $Script:LogString += Write-AuditLog -Message "End Log!"
-        }
+        Write-AuditLog -EndFunction
         return $Success, $FailedToPing
     }
 }

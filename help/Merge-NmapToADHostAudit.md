@@ -1,4 +1,4 @@
----
+﻿---
 external help file: ADAuditTasks-help.xml
 Module Name: ADAuditTasks
 online version: https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Merge-NmapToADHostAudit
@@ -54,21 +54,6 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -NmapCsv
-The path to the Nmap network audit CSV file.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
 ### -AttachmentFolderPath
 The output folder path where the merged CSV file and unmatched Nmap data CSV file will
 be saved.
@@ -82,6 +67,21 @@ Aliases:
 Required: False
 Position: 2
 Default value: C:\temp\NmapToADHostAudit
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -NmapCsv
+The path to the Nmap network audit CSV file.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```

@@ -16,6 +16,7 @@ variables:
   buildArtifactName: output
   testResultFolderName: testResults
   defaultBranch: main
+  Agent.Source.Git.ShallowFetchDepth: 0 # override ShallowFetchDepth
 
 stages:
   - stage: Build
@@ -283,7 +284,7 @@ stages:
           eq(variables['Build.SourceBranch'], 'refs/heads/main'),
           startsWith(variables['Build.SourceBranch'], 'refs/tags/')
         ),
-        contains(variables['System.TeamFoundationCollectionUri'], 'DrIOSx')
+        contains(variables['System.TeamFoundationCollectionUri'], '"CriticalSolutions.net LLC"')
       )
     jobs:
       - job: Deploy_Module

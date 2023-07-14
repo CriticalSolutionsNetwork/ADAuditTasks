@@ -1,5 +1,5 @@
 function Get-ADActiveUserAudit {
-    <#
+<#
     .SYNOPSIS
     Gets active but stale AD User accounts that haven't logged in within the last 90 days by default.
     .DESCRIPTION
@@ -30,7 +30,7 @@ function Get-ADActiveUserAudit {
     https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-ADActiveUserAudit
     .LINK
     https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-ADActiveUserAudit
-    #>
+#>
     [OutputType([ADAuditTasksUser])]
     [CmdletBinding()]
     param (
@@ -60,13 +60,17 @@ function Get-ADActiveUserAudit {
         [switch]$Report
     )
     begin {
-        #Create logging object
-        $Script:LogString = @()
-        #Begin Logging
-        $Script:LogString += Write-AuditLog -Message "Begin Log"
-        $Script:LogString += Write-AuditLog -Message "###############################################"
+        Write-AuditLog -Start
+
+        Write-AuditLog "###############################################"
         $ScriptFunctionName = $MyInvocation.MyCommand.Name -replace '\..*'
         ### ActiveDirectory Module Install
+        if ($env:USERNAME -eq 'SYSTEM') {
+            $DomainSuffix = $env:USERDOMAIN
+        } else {
+            $DomainSuffix = $env:USERDNSDOMAIN
+        }
+
         try {
             Install-ADModule -ErrorAction Stop -Verbose
         }
@@ -74,7 +78,7 @@ function Get-ADActiveUserAudit {
             throw $_.Exception
         } ### End ADModule Install
         # Create Directory Path if it does not exist.
-        Build-DirectoryPath -DirectoryPath $AttachmentFolderPath
+        Initialize-DirectoryPath -DirectoryPath $AttachmentFolderPath
         # Gather ADUser Properties to search for.
         $propsArray =
         "SamAccountName",
@@ -90,14 +94,14 @@ function Get-ADActiveUserAudit {
         "Manager",
         "Department"
         # Log the properties being retrieved.
-        $Script:LogString += Write-AuditLog -Message "###############################################"
-        $Script:LogString += Write-AuditLog -Message "Retrieving the following ADUser properties: "
-        $Script:LogString += Write-AuditLog -Message "$($propsArray -join " | ")"
+        Write-AuditLog "###############################################"
+        Write-AuditLog "Retrieving the following ADUser properties: "
+        Write-AuditLog "$($propsArray -join " | ")"
         # Establish timeframe to review.
         $time = (Get-Date).Adddays( - ($DaysInactive))
         # Log the search criteria.
-        $Script:LogString += Write-AuditLog -Message "Searching for users who have not signed in within the last $DaysInactive days."
-        $Script:LogString += Write-AuditLog -Message "Where property Enabled = $Enabled"
+        Write-AuditLog "Searching for users who have not signed in within the last $DaysInactive days."
+        Write-AuditLog "Where property Enabled = $Enabled"
         # Pause for 2 seconds to avoid potential race conditions.
         Start-Sleep 2
     }
@@ -110,26 +114,28 @@ function Get-ADActiveUserAudit {
     } # End Process
     end {
         # Log success message.
-        $Script:LogString += Write-AuditLog -Message "The $ScriptFunctionName Export was successful."
+        Write-AuditLog "The $ScriptFunctionName Export was successful."
 
         # Log output object properties.
-        $Script:LogString += Write-AuditLog -Message "There are $($Export.Count) objects listed with the following properties: "
-        $Script:LogString += Write-AuditLog -Message "$(($Export | Get-Member -MemberType property ).Name -join " | ")"
+        Write-AuditLog "There are $($Export.Count) objects listed with the following properties: "
+        Write-AuditLog "$(($Export | Get-Member -MemberType property ).Name -join " | ")"
         # Export to csv and zip, if requested.
         if ($Report) {
             # Add Datetime to filename.
-            $ExportFileName = "$AttachmentFolderPath\$((Get-Date).ToString('yyyy-MM-dd_hh.mm.ss'))_$($ScriptFunctionName)_$($env:USERDNSDOMAIN)"
+            $ExportFileName = "$AttachmentFolderPath\$((Get-Date).ToString('yyyy-MM-dd_hh.mm.ss'))_$($ScriptFunctionName)_$($DomainSuffix)"
             # Create FileNames.
             $csv = "$ExportFileName.csv"
             $zip = "$ExportFileName.zip"
             $log = "$ExportFileName.AuditLog.csv"
             # Call the Build-ReportArchive function to create the archive.
+            Write-AuditLog -Endfunction
             Build-ReportArchive -Export $Export -csv $csv -zip $zip -log $log -AttachmentFolderPath $AttachmentFolderPath -ErrorAction SilentlyContinue -ErrorVariable BuildErr
         }
         else {
             # Log message indicating that the function is returning the output object.
-            $Script:LogString += Write-AuditLog -Message "Returning output object."
-            Start-Sleep 2
+            Write-AuditLog "Returning output object."
+            Start-Sleep 1
+            Write-AuditLog -Endfunction
             return $Export
         }
     }

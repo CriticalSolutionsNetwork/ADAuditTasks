@@ -1,0 +1,10 @@
+{
+    "editor.rulers": [
+        100
+    ],
+    "[powershell]": {
+        "files.trimTrailingWhitespace": true
+    },
+    "powershell.codeFormatting.openBraceOnSameLine": false,
+    "powershell.codeFormatting.alignPropertyValuePairs": false
+}

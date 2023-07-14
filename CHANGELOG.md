@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Signing support for enhanced security and integrity checks.
+- Updated the initialize-module function for improved module loading and setup.
+
+### Removed
+
+- Several unneeded functions were removed to streamline the module and improve maintenance.
+
+### Fixed
+
+- `Write-AuditLog` function warning.
+- Directory path function.
+
+## [0.5.2] - 2023-04-11
+
+### Added
+
 - Custom URI for help using storage blob instead of SWA.
 
 ## [0.5.1] - 2023-04-10
@@ -39,7 +55,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Public function `Join-CSVFiles` to join csv files.
+- Public function `Join-CSVFile` to join csv files.
 - Public function `Convert-NmapXMLToCSV` to convert nmap xml data to csv. 
 - Public function `Merge-NmapToADHostAudit` to merge nmap csv output to ADHostAudit data.
 - Added scan on ping fail to `Get-NetworkAudit`
@@ -47,7 +63,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Private function `Build-DirectoryPath` verbose output.
+- Private function `Initialize-DirectoryPath` verbose output.
 
 ## [0.3.8] - 2023-03-27
 
@@ -93,7 +109,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Added public function Get-WebCert. #40
-- Added public function New-GraphEmailApp. #38
+- Added public function Register-GraphEmailApp. #38
 - Added public function Send-GraphAppEmail. #39
 - Added public function New-PatchTuesdayReport. #42
 - Added private function Group-UpdateByProduct. #42
@@ -110,7 +126,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Added private function `Build-DirectoryPath`.
+- Added private function `Initialize-DirectoryPath`.
 
 ## [0.3.2] - 2023-03-15
 

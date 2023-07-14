@@ -1,4 +1,4 @@
----
+﻿---
 external help file: ADAuditTasks-help.xml
 Module Name: ADAuditTasks
 online version: https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-QuickPing
@@ -53,6 +53,38 @@ of IP addresses that failed to respond.
 
 ## PARAMETERS
 
+### -BufferSize
+Specifies the size of the buffer to use for the ping.
+The default value is 16.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 3
+Default value: 16
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Count
+Specifies the number of times to send the ping request.
+The default value is 1.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 4
+Default value: 1
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -IPRange
 Specifies a range of IP addresses to ping.
 Can be a string with a single IP address,
@@ -82,38 +114,6 @@ Aliases:
 Required: False
 Position: 2
 Default value: 128
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -BufferSize
-Specifies the size of the buffer to use for the ping.
-The default value is 16.
-
-```yaml
-Type: Int32
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 3
-Default value: 16
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Count
-Specifies the number of times to send the ping request.
-The default value is 1.
-
-```yaml
-Type: Int32
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 4
-Default value: 1
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

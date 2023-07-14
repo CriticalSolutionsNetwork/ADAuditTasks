@@ -1,5 +1,5 @@
 function Merge-NmapToADHostAudit {
-    <#
+<#
     .SYNOPSIS
     Merges Nmap network audit data with Active Directory host audit data.
     .DESCRIPTION
@@ -27,7 +27,7 @@ function Merge-NmapToADHostAudit {
     https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Merge-NmapToADHostAudit
     .LINK
     https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Merge-NmapToADHostAudit
-    #>
+#>
     [CmdletBinding()]
     param (
         [Parameter(
@@ -48,10 +48,9 @@ function Merge-NmapToADHostAudit {
         [string]$AttachmentFolderPath = "C:\temp\NmapToADHostAudit"
     )
     begin {
-        $Script:LogString = @()
-        #Begin Logging
-        $Script:LogString += Write-AuditLog -Message "Begin Log"
-        Build-DirectoryPath -DirectoryPath $AttachmentFolderPath
+        Write-AuditLog -Start
+
+        Initialize-DirectoryPath -DirectoryPath $AttachmentFolderPath
         # Variables
         $adAuditData = Import-Csv -Path $ADAuditCsv
         $nmapData = Import-Csv -Path $NmapCsv
@@ -59,7 +58,7 @@ function Merge-NmapToADHostAudit {
         [string]$UnmatchedNmapOutputCsv = "$AttachmentFolderPath\$((Get-Date).ToString('yyyy-MM-dd_hh.mm.ss')).$($env:USERDOMAIN).NmapUnjoinedToADAudit.csv"
     }
     process {
-        $Script:LogString += Write-AuditLog -Message "Processing Nmap data and grouping by hostname and IP address"
+        Write-AuditLog "Processing Nmap data and grouping by hostname and IP address"
         # Group Nmap data by hostname and IP address
         $nmapDataGrouped = $nmapData | Group-Object -Property @{Expression = { $_.Hostname + $_.IPAddress } }
         # Combine the port, service, and version information
@@ -84,7 +83,7 @@ function Merge-NmapToADHostAudit {
         }
         $mergedData = @()
         $unmatchedNmapData = @()
-        $Script:LogString += Write-AuditLog -Message "Processing ADAudit data and merging with Nmap data"
+        Write-AuditLog "Processing ADAudit data and merging with Nmap data"
         # Process ADAudit data
         foreach ($adRow in $adAuditData) {
             $ip = $adRow.IPv4Address
@@ -146,7 +145,7 @@ function Merge-NmapToADHostAudit {
             $mergedData += $mergedRow
             $nmapDataGrouped = $nmapDataGrouped | Where-Object { $_.IPAddress -ne $nmapRow.IPAddress -and $_.Hostname -ne $nmapRow.Hostname } # Remove matched Nmap row
         }
-        $Script:LogString += Write-AuditLog -Message "Processing unmatched Nmap data"
+        Write-AuditLog "Processing unmatched Nmap data"
         # Process unmatched Nmap data
         foreach ($nmapRow in $nmapDataGrouped) {
             $mergedRow = [PSCustomObject]@{
@@ -177,10 +176,10 @@ function Merge-NmapToADHostAudit {
         }
     }
     end {
-        $Script:LogString += Write-AuditLog -Message "Exporting merged data to CSV file: $OutputCsv"
+        Write-AuditLog "Exporting merged data to CSV file: $OutputCsv"
         $mergedData | Export-Csv -Path $OutputCsv -NoTypeInformation
-        $Script:LogString += Write-AuditLog -Message "Exporting unmatched Nmap data to CSV file: $UnmatchedNmapOutputCsv"
+        Write-AuditLog "Exporting unmatched Nmap data to CSV file: $UnmatchedNmapOutputCsv"
         $unmatchedNmapData | Export-Csv -Path $UnmatchedNmapOutputCsv -NoTypeInformation
-        $Script:LogString += Write-AuditLog -Message "End Log"
+        Write-AuditLog -EndFunction
     }
 }

@@ -27,8 +27,8 @@ function Get-ADUserPrivilegeAudit {
     .LINK
     https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-ADUserPrivilegeAudit
     #>
-
     [CmdletBinding()]
+    [OutputType([pscustomobject[]], [string], [System.Object[]])]
     param (
         # Input parameter: output folder path for generated reports
         [Parameter(
@@ -46,14 +46,15 @@ function Get-ADUserPrivilegeAudit {
         [switch]$Report
     )
     begin {
-        # Create logging object
-        $Script:LogString = @()
-        # Begin Logging
-        $Script:LogString += Write-AuditLog -Message "Begin Log"
-        $Script:LogString += Write-AuditLog -Message "###############################################"
+        Write-AuditLog -Start
+        Write-AuditLog "###############################################"
         # Get name of the function
         $ScriptFunctionName = $MyInvocation.MyCommand.Name -replace '\..*'
-
+        if ($env:USERNAME -eq 'SYSTEM') {
+            $DomainSuffix = $env:USERDOMAIN
+        } else {
+            $DomainSuffix = $env:USERDNSDOMAIN
+        }
         # Check if ActiveDirectory module is installed
         ### ActiveDirectory Module Install
         try {
@@ -63,7 +64,7 @@ function Get-ADUserPrivilegeAudit {
             throw $_.Exception
         } ### End ADModule Install
         # Create output directory if it does not already exist
-        Build-DirectoryPath -DirectoryPath $AttachmentFolderPath
+        Initialize-DirectoryPath -DirectoryPath $AttachmentFolderPath
         # Create Privilege Groups Array.
         $AD_PrivilegedGroups = @(
             'Enterprise Admins',
@@ -87,9 +88,9 @@ function Get-ADUserPrivilegeAudit {
         $members = @()
         $ADUsers = @()
         # AD Groups to search for.
-        $Script:LogString += Write-AuditLog -Message "###############################################"
-        $Script:LogString += Write-AuditLog -Message "Retriving info from the following priveledged groups: "
-        $Script:LogString += Write-AuditLog -Message "$($AD_PrivilegedGroups -join " | ")"
+        Write-AuditLog "###############################################"
+        Write-AuditLog "Retriving info from the following priveledged groups: "
+        Write-AuditLog "$($AD_PrivilegedGroups -join " | ")"
         Start-Sleep 2
     }
     process {
@@ -122,7 +123,7 @@ function Get-ADUserPrivilegeAudit {
             @{N = 'Manager'; E = { (Get-ADUser -Identity $_.manager).Name } }, `
             @{N = 'SuspectedSvcAccount'; E = {
                     # Check if the account is a suspected service account based on PasswordNeverExpires or servicePrincipalName
-                    if (((Get-ADUser -Identity $_.samaccountname -Properties PasswordNeverExpires).PasswordNeverExpires) -or (((Get-ADUser -Identity $_.samaccountname -Properties servicePrincipalName).servicePrincipalName) -ne $null) ) {
+                    if (((Get-ADUser -Identity $_.samaccountname -Properties PasswordNeverExpires).PasswordNeverExpires) -or ( $null -ne  ((Get-ADUser -Identity $_.samaccountname -Properties servicePrincipalName).servicePrincipalName) ) ) {
                         return $true
                     }
                     else {
@@ -160,13 +161,13 @@ function Get-ADUserPrivilegeAudit {
             $Export += $PSObject
         }
         # Log success message for $ScriptFunctionName export
-        $Script:LogString += Write-AuditLog -Message "The $ScriptFunctionName Export was successful."
+        Write-AuditLog "The $ScriptFunctionName Export was successful."
         # Log count and properties of objects in $Export
-        $Script:LogString += Write-AuditLog -Message "There are $($Export.Count) objects listed with the following properties: "
-        $Script:LogString += Write-AuditLog -Message "$(($Export | Get-Member -MemberType noteproperty ).Name -join " | ")"
+        Write-AuditLog "There are $($Export.Count) objects listed with the following properties: "
+        Write-AuditLog "$(($Export | Get-Member -MemberType noteproperty ).Name -join " | ")"
 
         # Get PDC
-        $dc = (Get-ADDomainController -Discover -DomainName $env:USERDNSDOMAIN -Service PrimaryDC).Name
+        $dc = (Get-ADDomainController -Discover -DomainName $DomainSuffix -Service PrimaryDC).Name
         # Get DN of AD Root.
         $rootou = (Get-ADRootDSE).defaultNamingContext
         # Get AD objects from the PDC for the root ou. #TODO Check
@@ -178,10 +179,10 @@ function Get-ADUserPrivilegeAudit {
             Get-AdExtendedRight $ADObject
         }
         # Log success message for extended permissions export
-        $Script:LogString += Write-AuditLog -Message "The Extended Permissions Export was successful."
+        Write-AuditLog "The Extended Permissions Export was successful."
         # Log count and properties of objects in $Export2
-        $Script:LogString += Write-AuditLog -Message "There are $($Export2.Count) objects listed with the following properties: "
-        $Script:LogString += Write-AuditLog -Message "$(($Export2 | Get-Member -MemberType noteproperty ).Name -join " | ")"
+        Write-AuditLog "There are $($Export2.Count) objects listed with the following properties: "
+        Write-AuditLog "$(($Export2 | Get-Member -MemberType noteproperty ).Name -join " | ")"
 
         # Export Delegated access, allowed protocols, and Destination Services by filtering for relevant properties
         $Export3 = Get-ADObject -Filter { (msDS-AllowedToDelegateTo -like '*') -or (UserAccountControl -band 0x0080000) -or (UserAccountControl -band 0x1000000) } `
@@ -193,15 +194,15 @@ function Get-ADUserPrivilegeAudit {
         @{N = 'DestinationServices'; E = { $_.'msDS-AllowedToDelegateTo' } }
 
         # Log success message for delegated permissions export
-        $Script:LogString += Write-AuditLog -Message "The delegated permissions Export was successful."
+        Write-AuditLog "The delegated permissions Export was successful."
         # Log count and properties of objects in $Export3
-        $Script:LogString += Write-AuditLog -Message "There are $($Export3.Count) objects listed with the following properties: "
-        $Script:LogString += Write-AuditLog -Message "$(($Export3 | Get-Member -MemberType noteproperty ).Name -join " | ")"
+        Write-AuditLog "There are $($Export3.Count) objects listed with the following properties: "
+        Write-AuditLog "$(($Export3 | Get-Member -MemberType noteproperty ).Name -join " | ")"
     }
     end {
         if ($Report) {
             # Add Datetime to filename
-            $ExportFileName = "$AttachmentFolderPath\$((Get-Date).ToString('yyyy-MM-dd_hh.mm.ss'))_$($ScriptFunctionName)_$($env:USERDNSDOMAIN)"
+            $ExportFileName = "$AttachmentFolderPath\$((Get-Date).ToString('yyyy-MM-dd_hh.mm.ss'))_$($ScriptFunctionName)_$($DomainSuffix)"
             # Create FileNames
             $csv1 = "$ExportFileName.csv"
             $csv2 = "$ExportFileName.ExtendedPermissions.csv"
@@ -209,27 +210,28 @@ function Get-ADUserPrivilegeAudit {
             $zip1 = "$ExportFileName.zip"
             $log = "$ExportFileName.AuditLog.csv"
             # Export results to CSV files
-            $Export | Export-Csv $csv1
-            $Export2 | Export-Csv $csv2
-            $Export3 | Export-Csv $csv3
+            $Export | Export-Csv $csv1 -NoTypeInformation
+            $Export2 | Export-Csv $csv2 -NoTypeInformation
+            $Export3 | Export-Csv $csv3 -NoTypeInformation
             # Compute SHA256 hash for each CSV file
             $csv1Sha256Hash = (Get-FileHash $csv1).Hash
             $csv2Sha256Hash = (Get-FileHash $csv2).Hash
             $csv3Sha256Hash = (Get-FileHash $csv3).Hash
             # Log SHA256 hash for each CSV file
-            $Script:LogString += Write-AuditLog -Message "Exported CSV $csv1 SHA256 hash: "
-            $Script:LogString += Write-AuditLog -Message "$($csv1Sha256Hash)"
-            $Script:LogString += Write-AuditLog -Message "Exported CSV $csv2 SHA256 hash: "
-            $Script:LogString += Write-AuditLog -Message "$($csv2Sha256Hash)"
-            $Script:LogString += Write-AuditLog -Message "Exported CSV $csv3 SHA256 hash: "
-            $Script:LogString += Write-AuditLog -Message "$($csv3Sha256Hash)"
+            Write-AuditLog "Exported CSV $csv1 SHA256 hash: "
+            Write-AuditLog "$($csv1Sha256Hash)"
+            Write-AuditLog "Exported CSV $csv2 SHA256 hash: "
+            Write-AuditLog "$($csv2Sha256Hash)"
+            Write-AuditLog "Exported CSV $csv3 SHA256 hash: "
+            Write-AuditLog "$($csv3Sha256Hash)"
             # Log directory path and ZIP file path
-            $Script:LogString += Write-AuditLog -Message "Directory: $AttachmentFolderPath"
-            $Script:LogString += Write-AuditLog -Message "Returning string filepath of: "
-            $Script:LogString += Write-AuditLog -Message "FilePath: $zip1"
+            Write-AuditLog "Directory: $AttachmentFolderPath"
+            Write-AuditLog "Returning string filepath of: "
+            Write-AuditLog "FilePath: $zip1"
             # Export audit log to CSV file
-            $Script:LogString | Export-Csv $log -NoTypeInformation -Encoding utf8
+            # $Script:LogString | Export-Csv $log -NoTypeInformation -Encoding utf8
             # Compress CSV files and audit log into a ZIP file
+            Write-AuditLog -End -OutputPath $log
             Compress-Archive $csv1, $csv2, $csv3, $log -DestinationPath $zip1 -CompressionLevel Optimal
             # Remove CSV and audit log files
             Remove-Item $csv1, $csv2, $csv3, $log -Force
@@ -238,10 +240,10 @@ function Get-ADUserPrivilegeAudit {
         }
         else {
             # Return output objects
-            $Script:LogString += Write-AuditLog -Message "Returning 3 output objects. Create object like this:  `$a, `$b, `$c, = Get-ADUserPrivilegedAudit"
-            Start-Sleep 2
+            Write-AuditLog "Returning 3 output objects. Instantiate object Example:  `$a, `$b, `$c, = Get-ADUserPrivilegedAudit"
+            Write-AuditLog -EndFunction
+            Start-Sleep 1
             return $Export, $Export2, $Export3
         }
     }
-
 }

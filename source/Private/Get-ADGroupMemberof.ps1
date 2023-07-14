@@ -1,4 +1,3 @@
-function Get-ADGroupMemberof {
     <#
     .SYNOPSIS
     Gets the names of the groups that a user or computer is a member of.
@@ -23,6 +22,7 @@ function Get-ADGroupMemberof {
     .LINK
     https://docs.microsoft.com/en-us/powershell/module/activedirectory/
     #>
+function Get-ADGroupMemberof {
     [CmdletBinding()]
     # Define function parameters
     param (

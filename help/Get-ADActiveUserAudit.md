@@ -1,4 +1,4 @@
----
+﻿---
 external help file: ADAuditTasks-help.xml
 Module Name: ADAuditTasks
 online version: https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-ADActiveUserAudit
@@ -43,18 +43,19 @@ Get-ADActiveUserAudit -Enabled $false -DaysInactive 30 -AttachmentFolderPath "C:
 
 ## PARAMETERS
 
-### -Enabled
-If "$false", will also search disabled users.
+### -AttachmentFolderPath
+Default path is C:\temp\ADActiveUserAudit.
+This is the folder where attachments are going to be saved.
 
 ```yaml
-Type: Boolean
+Type: String
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 1
-Default value: True
-Accept pipeline input: True (ByPropertyName)
+Position: 3
+Default value: C:\temp\ADActiveUserAudit
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
@@ -74,19 +75,18 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -AttachmentFolderPath
-Default path is C:\temp\ADActiveUserAudit.
-This is the folder where attachments are going to be saved.
+### -Enabled
+If "$false", will also search disabled users.
 
 ```yaml
-Type: String
+Type: Boolean
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 3
-Default value: C:\temp\ADActiveUserAudit
-Accept pipeline input: True (ByValue)
+Position: 1
+Default value: True
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 

@@ -1,5 +1,5 @@
 function Submit-FTPUpload {
-    <#
+<#
     .SYNOPSIS
     Uploads a file to an FTP server using the WinSCP module.
     .DESCRIPTION
@@ -38,7 +38,7 @@ function Submit-FTPUpload {
     https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Submit-FTPUpload
     .LINK
     https://winscp.net/eng/docs/library_powershell
-    #>
+#>
     [CmdletBinding()]
     param (
         [string]$FTPUserName, # FTP username
@@ -58,6 +58,12 @@ function Submit-FTPUpload {
         [string]$RemoteFTPPath # Remote FTP path
     )
     process {
+        if (!($script:LogString)) {
+            Write-AuditLog -Start
+        }
+        else {
+            Write-AuditLog -BeginFunction
+        }
         # This script will run in the context of the user. Please be sure it's a local admin with cached credentials.
         # Required Modules
         Import-Module WinSCP
@@ -77,7 +83,7 @@ function Submit-FTPUpload {
         foreach ($File in $LocalFilePath) {
             $sendvar = Send-WinSCPItem -Path $File -Destination $RemoteFTPPath -WinSCPSession $WinSCPSession -ErrorAction Stop -ErrorVariable SendWinSCPErr
             if ($sendvar.IsSuccess -eq $false) {
-                $Script:LogString += Write-AuditLog -Message $SendWinSCPErr -Severity Error
+                Write-AuditLog $SendWinSCPErr -Severity Error
                 $errorindex += 1
             }
         }
@@ -88,5 +94,6 @@ function Submit-FTPUpload {
         }
         # Close and remove the session object.
         Remove-WinSCPSession -WinSCPSession $WinSCPSession
+        Write-AuditLog -EndFunction
     }
 }

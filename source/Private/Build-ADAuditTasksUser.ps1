@@ -1,30 +1,54 @@
+<#
+.SYNOPSIS
+    Builds a list of custom objects containing Active Directory user data.
+.DESCRIPTION
+    This function builds a list of custom objects containing Active Directory
+    user data, such as the user's name, last logon timestamp, and manager.
+.PARAMETER ADExport
+    An array of Microsoft.ActiveDirectory.Management.ADUser objects.
+.OUTPUTS
+    System.Collections.Generic.List[ADAuditTasksUser]
+    A list of custom objects that contains Active Directory user data.
+.EXAMPLE
+    $adUsers = Get-ADUser -Filter * -Properties *
+    $adAuditTasksUsers = Build-ADAuditTasksUser -ADExport $adUsers
+    $adAuditTasksUsers
+.NOTES
+    Author: DrIOSx
+#>
+
 function Build-ADAuditTasksUser {
-    #Not Finished
     param (
         [Microsoft.ActiveDirectory.Management.ADUser[]]$ADExport
     )
-    $Script:LogString += Write-AuditLog -Message "Begin ADAUditTasksUser object creation."
-    $Export = @()
-    foreach ($item in $ADExport) {
-        $Export += [ADAuditTasksUser]::new(
-            $($item.SamAccountName),
-            $($item.GivenName),
-            $($item.Surname),
-            $($item.Name),
-            $($item.UserPrincipalName),
-            $($item.LastLogonTimeStamp),
-            $($item.Enabled),
-            $($item.LastLogonTimeStamp),
-            $($item.DistinguishedName),
-            $($item.Title),
-            $($item.Manager),
-            $($item.Department),
+    if (!($script:LogString)) {
+        Write-AuditLog -Start
+    }
+    else {
+        Write-AuditLog -BeginFunction
+    }
+    Write-AuditLog "Begin ADAUditTasksUser object creation."
+
+    $Export = $ADExport | ForEach-Object {
+        [ADAuditTasksUser]::new(
+            $_.SamAccountName,
+            $_.GivenName,
+            $_.Surname,
+            $_.Name,
+            $_.UserPrincipalName,
+            $_.LastLogonTimeStamp,
+            $_.Enabled,
+            $_.LastLogonTimeStamp,
+            $_.DistinguishedName,
+            $_.Title,
+            $_.Manager,
+            $_.Department,
             $false,
             $false
         )
     }
-    if ($null -ne $Export) {
-        $Script:LogString += Write-AuditLog -Message "The ADAUditTasksUser object was built successfully."
-        return $Export
-    }
+
+    Write-AuditLog "The ADAUditTasksUser object was built successfully."
+    Write-auditlog -EndFunction
+    return $Export
 }

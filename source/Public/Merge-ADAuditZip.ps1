@@ -48,10 +48,16 @@ function Merge-ADAuditZip {
         [string]$OutputFolder = "C:\temp",
         [switch]$OpenDirectory
     )
+    Write-AuditLog -Start
     # Remove any blank file paths from the array
+    if ($env:USERNAME -eq 'SYSTEM') {
+        $DomainSuffix = $env:USERDOMAIN
+    } else {
+        $DomainSuffix = $env:USERDNSDOMAIN
+    }
     $FilePaths = $FilePaths | Where-Object { $_ }
     # Create the output directory if it doesn't exist
-    Build-DirectoryPath -DirectoryPath $OutputFolder
+    Initialize-DirectoryPath -DirectoryPath $OutputFolder
     # Create a hashtable to store the file sizes
     $fileSizes = @{}
     foreach ($filePath in $FilePaths) {
@@ -61,7 +67,7 @@ function Merge-ADAuditZip {
     $sortedFiles = $fileSizes.GetEnumerator() | Sort-Object -Property Value -Descending | Select-Object -ExpandProperty Name
     # Build the output path
     $dateTimeString = (Get-Date).ToString('yyyy-MM-dd_hh.mm.ss')
-    $domainName = $env:USERDNSDOMAIN
+    $domainName = $DomainSuffix
     $partCounter = 0
     $outputFileName = "$($dateTimeString)_$($domainName)_CombinedAudit.zip"
     $outputPath = Join-Path $OutputFolder $outputFileName
@@ -89,7 +95,7 @@ function Merge-ADAuditZip {
     }
     # Create a zip file with the remaining files
     if ($filesToAdd) {
-        $Script:LogString += Write-AuditLog -Message "Compressing Archive with files $filesToAdd."
+        Write-AuditLog "Compressing Archive with files $filesToAdd."
         Compress-Archive -Path $filesToAdd -DestinationPath $outputPath
     }
 
@@ -101,12 +107,14 @@ function Merge-ADAuditZip {
     # Remove the original files
     if ($OpenDirectory) {
         # If the OpenDirectory switch is used
-        $Script:LogString += Write-AuditLog -Message "Build Complete. Opening output directory."
+        Write-AuditLog "Build Complete. Opening output directory."
+        Write-AuditLog -EndFunction
         Invoke-Item (Split-Path $outputPath) # Open the directory of the merged zip file
         return $outputPath
     }
     else {
-        $Script:LogString += Write-AuditLog -Message "Build Complete. Returning output file path."
+        Write-AuditLog "Build Complete. Returning output file path."
+        Write-AuditLog -EndFunction
         return $outputPath # Otherwise, only return the path of the merged zip file
     }
 }

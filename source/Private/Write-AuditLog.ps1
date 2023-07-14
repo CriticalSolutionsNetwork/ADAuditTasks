@@ -1,78 +1,203 @@
-function Write-AuditLog {
+﻿function Write-AuditLog {
     <#
     .SYNOPSIS
-    Writes an audit log entry with a specified message and severity level.
+        Writes log messages to the console and updates the script-wide log variable.
     .DESCRIPTION
-    The Write-AuditLog function writes an audit log entry to the console,
-    providing information about the time, the version of the module and the
-    function, the PowerShell version, whether the user is an administrator,
-    the user's domain and username, the computer name, the severity level,
-    and the specified message.
-    .PARAMETER Message
-    Specifies the message to include in the audit log entry. This parameter is mandatory.
-    .PARAMETER Severity
-    Specifies the severity level of the audit log entry. Valid values are 'Information',
-    'Warning', and 'Error'. The default value is 'Information'.
+        The Write-AuditLog function writes log messages to the console based on the severity (Verbose, Warning, or Error) and updates
+        the script-wide log variable ($script:LogString) with the log entry. You can use the Start, End, and EndFunction switches to
+        manage the lifecycle of the logging.
+    .INPUTS
+        System.String
+        You can pipe a string to the Write-AuditLog function as the Message parameter.
+        You can also pipe an object with a Severity property as the Severity parameter.
     .OUTPUTS
-    Returns a pscustomobject representing the audit log entry with the following properties:
-    - Time: The date and time when the log entry was created.
-    - PSVersion: The version of PowerShell.
-    - IsAdmin: Whether the user is an administrator.
-    - User: The domain and username of the user who invoked the function.
-    - HostName: The name of the computer where the function was invoked.
-    - InvokedBy: The name and version of the module and the function.
-    - Severity: The severity level of the audit log entry.
-    - Message: The message included in the audit log entry.
+        None
+        The Write-AuditLog function doesn't output any objects to the pipeline. It writes messages to the console and updates the
+        script-wide log variable ($script:LogString).
+    .PARAMETER BeginFunction
+        Sets the message to "Begin [FunctionName] function log.", where FunctionName is the name of the calling function, and adds it to the log variable.
+    .PARAMETER Message
+        The message string to log.
+    .PARAMETER Severity
+        The severity of the log message. Accepted values are 'Information', 'Warning', and 'Error'. Defaults to 'Information'.
+    .PARAMETER Start
+        Initializes the script-wide log variable and sets the message to "Begin [FunctionName] Log.", where FunctionName is the name of the calling function.
+    .PARAMETER End
+        Sets the message to "End Log" and exports the log to a CSV file if the OutputPath parameter is provided.
+    .PARAMETER EndFunction
+        Sets the message to "End [FunctionName] log.", where FunctionName is the name of the calling function, and adds it to the log variable.
+    .PARAMETER OutputPath
+        The file path for exporting the log to a CSV file when using the End switch.
     .EXAMPLE
-    Write-AuditLog -Message "Successful login." -Severity Information
+        Write-AuditLog -Message "This is a test message."
 
-    This example writes an audit log entry with the message "Successful login" and the severity level 'Information'.
+        Writes a test message with the default severity (Information) to the console and adds it to the log variable.
+    .EXAMPLE
+        Write-AuditLog -Message "This is a warning message." -Severity "Warning"
+
+        Writes a warning message to the console and adds it to the log variable.
+    .EXAMPLE
+        Write-AuditLog -Start
+
+        Initializes the log variable and sets the message to "Begin [FunctionName] Log.", where FunctionName is the name of the calling function.
+    .EXAMPLE
+        Write-AuditLog -BeginFunction
+
+        Sets the message to "Begin [FunctionName] function log.", where FunctionName is the name of the calling function, and adds it to the log variable.
+    .EXAMPLE
+        Write-AuditLog -EndFunction
+
+        Sets the message to "End [FunctionName] log.", where FunctionName is the name of the calling function, and adds it to the log variable.
+    .EXAMPLE
+        Write-AuditLog -End -OutputPath "C:\Logs\auditlog.csv"
+
+        Sets the message to "End Log", adds it to the log variable, and exports the log to a CSV file.
     .NOTES
-    This function is intended to be used for auditing purposes to keep track of events happening in a PowerShell script or module.
-    #>
-    [OutputType([pscustomobject])]
-    [CmdletBinding()]
-    # Define the parameters of the function.
+    Author: DrIOSx
+#>
+    [CmdletBinding(DefaultParameterSetName = 'Default')]
     param(
+        ###
         [Parameter(
-            Mandatory = $true,
+            Mandatory = $false,
             HelpMessage = 'Input a Message string.',
-            Position = 0
+            Position = 0,
+            ParameterSetName = 'Default',
+            ValueFromPipeline = $true
         )]
         [ValidateNotNullOrEmpty()]
         [string]$Message,
+        ###
         [Parameter(
+            Mandatory = $false,
             HelpMessage = 'Information, Warning or Error.',
-            Position = 1
+            Position = 1,
+            ParameterSetName = 'Default',
+            ValueFromPipelineByPropertyName = $true
         )]
         [ValidateNotNullOrEmpty()]
         [ValidateSet('Information', 'Warning', 'Error')]
-        [string]$Severity = 'Information'
+        [string]$Severity = 'Information',
+        ###
+        [Parameter(
+            Mandatory = $false,
+            ParameterSetName = 'End'
+        )]
+        [switch]$End,
+        ###
+        [Parameter(
+            Mandatory = $false,
+            ParameterSetName = 'BeginFunction'
+        )]
+        [switch]$BeginFunction,
+        [Parameter(
+            Mandatory = $false,
+            ParameterSetName = 'EndFunction'
+        )]
+        [switch]$EndFunction,
+        ###
+        [Parameter(
+            Mandatory = $false,
+            ParameterSetName = 'Start'
+        )]
+        [switch]$Start,
+        ###
+        [Parameter(
+            Mandatory = $false,
+            ParameterSetName = 'End'
+        )]
+        [string]$OutputPath
     )
-    # Switch statement to determine what action to take based on the severity parameter.
-    switch ($Severity) {
-        'Warning' { Write-Warning $Message -WarningAction Inquire }
-        'Error' { Write-Error $Message }
-        Default { Write-Verbose $Message }
+    begin {
+        $ErrorActionPreference = "SilentlyContinue"
+        # Define variables to hold information about the command that was invoked.
+        $ModuleName = $Script:MyInvocation.MyCommand.Name -replace '\..*'
+        $FuncName = (Get-PSCallStack)[1].Command
+        $ModuleVer = $MyInvocation.MyCommand.Version.ToString()
+        # Set the error action preference to continue.
+        $ErrorActionPreference = "Continue"
     }
-    # Set the error action preference to silently continue.
-    $ErrorActionPreference = "SilentlyContinue"
-    # Define variables to hold information about the command that was invoked.
-    $ModuleName = $Script:MyInvocation.MyCommand.Name -replace '\..*'
-    $FuncName = (Get-PSCallStack)[1].Command
-    $ModuleVer = $MyInvocation.MyCommand.Version.ToString()
-    # Set the error action preference to continue.
-    $ErrorActionPreference = "Continue"
-    # Return a custom object containing the specified properties with their values.
-    return [pscustomobject]@{
-        Time      = ((Get-Date).ToString('yyyy-MM-dd hh:mmTss'))
-        PSVersion = ($PSVersionTable.PSVersion).ToString()
-        PSEdition = ($PSVersionTable.PSEdition).ToString()
-        IsAdmin   = $(Test-IsAdmin)
-        User      = "$Env:USERDOMAIN\$Env:USERNAME"
-        HostName  = $Env:COMPUTERNAME
-        InvokedBy = $( $ModuleName + "/" + $FuncName + '.v' + $ModuleVer )
-        Severity  = $Severity
-        Message   = $Message
+    process {
+        try {
+            $Function = $($FuncName + '.v' + $ModuleVer)
+            if ($Start) {
+                $script:LogString = @()
+                $Message = '+++ Begin Log | ' + $Function + ' |'
+            }
+            elseif ($BeginFunction) {
+                $Message = '>>> Begin Function Log | ' + $Function + ' |'
+            }
+            $logEntry = [pscustomobject]@{
+                Time      = ((Get-Date).ToString('yyyy-MM-dd hh:mmTss'))
+                Module    = $ModuleName
+                PSVersion = ($PSVersionTable.PSVersion).ToString()
+                PSEdition = ($PSVersionTable.PSEdition).ToString()
+                IsAdmin   = $(Test-IsAdmin)
+                User      = "$Env:USERDOMAIN\$Env:USERNAME"
+                HostName  = $Env:COMPUTERNAME
+                InvokedBy = $Function
+                Severity  = $Severity
+                Message   = $Message
+                RunID     = -1
+            }
+            if ($BeginFunction) {
+                $maxRunID = ($script:LogString | Where-Object { $_.InvokedBy -eq $Function } | Measure-Object -Property RunID -Maximum).Maximum
+                if ($null -eq $maxRunID) { $maxRunID = -1 }
+                $logEntry.RunID = $maxRunID + 1
+            }
+            else {
+                $lastRunID = ($script:LogString | Where-Object { $_.InvokedBy -eq $Function } | Select-Object -Last 1).RunID
+                if ($null -eq $lastRunID) { $lastRunID = 0 }
+                $logEntry.RunID = $lastRunID
+            }
+            if ($EndFunction) {
+                $FunctionStart = "$((($script:LogString | Where-Object {$_.InvokedBy -eq $Function -and $_.RunId -eq $lastRunID } | Sort-Object Time)[0]).Time)"
+                $startTime = ([DateTime]::ParseExact("$FunctionStart", 'yyyy-MM-dd hh:mmTss', $null))
+                $endTime = Get-Date
+                $timeTaken = $endTime - $startTime
+                $Message = '<<< End Function Log   | ' + $Function + ' | Runtime: ' + "$($timeTaken.Minutes) min $($timeTaken.Seconds) sec"
+                $logEntry.Message = $Message
+            }
+            elseif ($End) {
+                $startTime = ([DateTime]::ParseExact($($script:LogString[0].Time), 'yyyy-MM-dd hh:mmTss', $null))
+                $endTime = Get-Date
+                $timeTaken = $endTime - $startTime
+                $Message = '--- End Log   | ' + $Function + ' | Runtime: ' + "$($timeTaken.Minutes) min $($timeTaken.Seconds) sec"
+                $logEntry.Message = $Message
+            }
+            $script:LogString += $logEntry
+            switch ($Severity) {
+                'Warning' {
+                    Write-Warning ('[WARNING] ⚠  ' + $Message)
+                    $UserInput = Read-Host "Warning encountered! Do you want to continue? (Y/N)"
+                    if ($UserInput -eq 'N') {
+                        Write-Output "Script execution stopped by user!"
+                        exit
+                    }
+                }
+                'Error' { Write-Error ('[ERROR] ✖  ' + $Message) -ErrorAction Continue }
+                Default { Write-Verbose ('[INFO] ✔  ' + $Message) }
+            }
+        }
+        catch {
+            throw "Write-AuditLog encountered an error (process block): $($_.Exception.Message)"
+        }
+
+    }
+    end {
+        try {
+            if ($End) {
+                if (-not [string]::IsNullOrEmpty($OutputPath)) {
+                    $script:LogString | Export-Csv -Path $OutputPath -NoTypeInformation -Encoding utf8
+                    Write-Verbose "LogPath: $(Split-Path -Path $OutputPath -Parent)"
+                }
+                else {
+                    throw "OutputPath is not specified for End action."
+                }
+            }
+        }
+        catch {
+            throw "Error in Write-AuditLog (end block): $($_.Exception.Message)"
+        }
     }
 }

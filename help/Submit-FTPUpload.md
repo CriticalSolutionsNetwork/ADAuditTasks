@@ -1,4 +1,4 @@
----
+﻿---
 external help file: ADAuditTasks-help.xml
 Module Name: ADAuditTasks
 online version: https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Submit-FTPUpload
@@ -36,6 +36,37 @@ The SSH host key fingerprint is also provided.
 
 ## PARAMETERS
 
+### -FTPHostName
+Specifies the name of the FTP server to connect to.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 3
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -FTPSecure
+Specifies the level of security to use when connecting to the FTP server.
+The default value is None.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 5
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -FTPUserName
 Specifies the username to use when connecting to the FTP server.
 
@@ -51,6 +82,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -LocalFilePath
+Specifies the local path to the file to upload to the FTP server.
+
+```yaml
+Type: String[]
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 7
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Password
 Specifies the password to use when connecting to the FTP server.
 
@@ -61,21 +107,6 @@ Aliases:
 
 Required: False
 Position: 2
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -FTPHostName
-Specifies the name of the FTP server to connect to.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 3
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -97,9 +128,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -FTPSecure
-Specifies the level of security to use when connecting to the FTP server.
-The default value is None.
+### -RemoteFTPPath
+Specifies the remote path to upload the file to on the FTP server.
 
 ```yaml
 Type: String
@@ -107,7 +137,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 5
+Position: 8
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -124,36 +154,6 @@ Aliases:
 
 Required: False
 Position: 6
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -LocalFilePath
-Specifies the local path to the file to upload to the FTP server.
-
-```yaml
-Type: String[]
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 7
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -RemoteFTPPath
-Specifies the remote path to upload the file to on the FTP server.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 8
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

@@ -20,20 +20,17 @@ The following Public Functions are available to the user executing the tasks:
 - `Get-WebCertAudit`
 - `Get-HostTag`
 - `Get-QuickPing`
-- `Join-CSVFiles`
+- `Join-CSVFile`
 - `Merge-ADAuditZip`
 - `Merge-NmapToADHostAUdit`
-- `New-GraphEmailApp`
-- `New-PatchTuesdayReport`
 - `Send-AuditEmail`
-- `Send-GraphAppEmail`
 - `Submit-FTPUpload`
 
 The following Private Functions support the functions in this module:
 
 - `Build-ADAuditTasksComputer`
 - `Build-ADAuditTasksUser`
-- `Build-DirectoryPath`
+- `Initialize-DirectoryPath`
 - `Build-MacIdOUIList`
 - `Build-NetScanObject`
 - `Build-ReportArchive`
@@ -43,7 +40,6 @@ The following Private Functions support the functions in this module:
 - `Initialize-ModuleEnv`
 - `Install-ADModule`
 - `Read-FileContent`
-- `Show-OSUpdateSection`
 - `Test-IsAdmin`
 - `Write-AuditLog`
 
@@ -56,9 +52,9 @@ None
 The following example demonstrates how to create a zip file of different host types:
 
 ```powershell
-$workstations = Get-ADHostAudit -HostType WindowsWorkstations
-$servers = Get-ADHostAudit -HostType WindowsServers
-$nonWindows = Get-ADHostAudit -HostType "Non-Windows"
+$workstations   = Get-ADHostAudit -HostType WindowsWorkstations
+$servers        = Get-ADHostAudit -HostType WindowsServers
+$nonWindows     = Get-ADHostAudit -HostType "Non-Windows"
 
 Merge-ADAuditZip -FilePaths $workstations, $servers, $nonWindows
 ```
