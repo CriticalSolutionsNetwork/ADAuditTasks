@@ -18,13 +18,13 @@ Build-Docs
 
 #>
 
-$workstations = Get-ADHostAudit -HostType WindowsWorkstations -Report -Verbose
-$servers = Get-ADHostAudit -HostType WindowsServers -Report -Verbose
-$nonWindows = Get-ADHostAudit -HostType "Non-Windows" -Report -Verbose
-$activeUsers = Get-ADActiveUserAudit -Report -Verbose
-$privilegedUsers = Get-ADUserPrivilegeAudit -Report -Verbose
-$wildcardUsers = Get-ADUserWildCardAudit -WildCardIdentifier "svc" -Report -Verbose
-$netaudit = Get-NetworkAudit -LocalSubnets -AddService -Report -Verbose
+$workstations       = Get-ADHostAudit -HostType WindowsWorkstations -Report -Verbose
+$servers            = Get-ADHostAudit -HostType WindowsServers -Report -Verbose
+$nonWindows         = Get-ADHostAudit -HostType "Non-Windows" -Report -Verbose
+$activeUsers        = Get-ADActiveUserAudit -Report -Verbose
+$privilegedUsers    = Get-ADUserPrivilegeAudit -Report -Verbose
+$wildcardUsers      = Get-ADUserWildCardAudit -WildCardIdentifier "svc" -Report -Verbose
+$netaudit           = Get-NetworkAudit -LocalSubnets -AddService -Report -Verbose
 Merge-ADAuditZip -FilePaths  $workstations, $servers, $nonWindows, $activeUsers, $privilegedUsers, $wildcardUsers, $netaudit -OpenDirectory -Verbose
 
 $netaudit = Get-NetworkAudit -LocalSubnets -Report -Verbose
@@ -62,10 +62,10 @@ Get-NetworkAudit -Ports 443 -Computers $test1 -Report -NoHops -AddService
 #>
 
 <#
-    $ver = "v0.7.0"
+    $ver = "v0.7.1"
     git checkout main
     git pull origin main
-    git tag -a $ver -m "Release version $ver unsigned"
+    git tag -a $ver -m "Release version $ver help fix"
     git push origin $ver
     "Fix: PR #37"
     git push origin $ver

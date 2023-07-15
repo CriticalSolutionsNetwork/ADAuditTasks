@@ -41,9 +41,13 @@ function Get-ADUserLogonAudit {
         $SamAccountName
     )
     process {
+    if (!($script:LogString)) {
         Write-AuditLog -Start
-
-        Write-AuditLog "###############################################"
+    }
+    else {
+        Write-AuditLog -BeginFunction
+    }
+    Write-AuditLog "###############################################"
         # Check if the Active Directory module is installed and install it if necessary
         try {
             Install-ADModule -ErrorAction Stop -Verbose

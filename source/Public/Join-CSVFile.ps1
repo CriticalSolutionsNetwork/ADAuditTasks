@@ -39,7 +39,12 @@ function Join-CSVFile {
     )
 
     begin {
-        Write-AuditLog -Start
+        if (!($script:LogString)) {
+            Write-AuditLog -Start
+        }
+        else {
+            Write-AuditLog -BeginFunction
+        }
         Initialize-DirectoryPath -DirectoryPath $AttachmentFolderPath
         [string]$OutputCsv = "$AttachmentFolderPath\$((Get-Date).ToString('yyyy-MM-dd_hh.mm.ss')).$($env:USERDOMAIN).JoinedCSVs.csv"
         $baseHeaders = $null

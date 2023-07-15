@@ -48,7 +48,12 @@ function Merge-ADAuditZip {
         [string]$OutputFolder = "C:\temp",
         [switch]$OpenDirectory
     )
-    Write-AuditLog -Start
+    if (!($script:LogString)) {
+        Write-AuditLog -Start
+    }
+    else {
+        Write-AuditLog -BeginFunction
+    }
     # Remove any blank file paths from the array
     if ($env:USERNAME -eq 'SYSTEM') {
         $DomainSuffix = $env:USERDOMAIN

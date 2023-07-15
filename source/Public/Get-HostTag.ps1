@@ -111,7 +111,12 @@ function Get-HostTag {
         [int]$HostCount = 1
     )
     begin {
-        Write-AuditLog -Start
+        if (!($script:LogString)) {
+            Write-AuditLog -Start
+        }
+        else {
+            Write-AuditLog -BeginFunction
+        }
         switch ($DeviceFunction) {
             "Application Server" { $DFunction = "APP" }
             "Backup Server" { $DFunction = "BAK" }

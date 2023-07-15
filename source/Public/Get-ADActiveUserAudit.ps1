@@ -60,9 +60,12 @@ function Get-ADActiveUserAudit {
         [switch]$Report
     )
     begin {
-        Write-AuditLog -Start
-
-        Write-AuditLog "###############################################"
+        if (!($script:LogString)) {
+            Write-AuditLog -Start
+        }
+        else {
+            Write-AuditLog -BeginFunction
+        }
         $ScriptFunctionName = $MyInvocation.MyCommand.Name -replace '\..*'
         ### ActiveDirectory Module Install
         if ($env:USERNAME -eq 'SYSTEM') {
