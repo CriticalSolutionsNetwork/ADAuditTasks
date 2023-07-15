@@ -1,4 +1,4 @@
----
+﻿---
 external help file: ADAuditTasks-help.xml
 Module Name: ADAuditTasks
 online version: https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-NetworkAudit
@@ -46,40 +46,16 @@ Generates a report of the network audit results in the C:\temp folder.
 
 ## PARAMETERS
 
-### -Ports
-Specifies the ports to scan.
-If not provided, the function uses default ports:
-"21", "22", "23", "25", "53", "67", "68", "80", "443",
-"88", "464", "123", "135", "137", "138", "139",
-"445", "389", "636", "514", "587", "1701",
-"3268", "3269", "3389", "5985", "5986"
-
-To specify ports, provide an integer or an array of integers.
-Example: "22", "80", "443"
+### -AddService
+Includes the service name associated with each port in the output.
 
 ```yaml
-Type: Int32[]
+Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 1
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -LocalSubnets
-Scans subnets connected to the local device.
-It will not scan outside of the hosting device's subnet.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: Default
-Aliases:
-
-Required: True
-Position: 2
+Position: Named
 Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -101,18 +77,18 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -ThrottleLimit
-Specifies the number of concurrent threads.
-Default: 32.
+### -LocalSubnets
+Scans subnets connected to the local device.
+It will not scan outside of the hosting device's subnet.
 
 ```yaml
-Type: Int32
-Parameter Sets: (All)
+Type: SwitchParameter
+Parameter Sets: Default
 Aliases:
 
-Required: False
-Position: 3
-Default value: 32
+Required: True
+Position: 2
+Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
@@ -132,17 +108,25 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -AddService
-Includes the service name associated with each port in the output.
+### -Ports
+Specifies the ports to scan.
+If not provided, the function uses default ports:
+"21", "22", "23", "25", "53", "67", "68", "80", "443",
+"88", "464", "123", "135", "137", "138", "139",
+"445", "389", "636", "514", "587", "1701",
+"3268", "3269", "3389", "5985", "5986"
+
+To specify ports, provide an integer or an array of integers.
+Example: "22", "80", "443"
 
 ```yaml
-Type: SwitchParameter
+Type: Int32[]
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
-Default value: False
+Position: 1
+Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
@@ -177,19 +161,19 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -WhatIf
-Shows what would happen if the cmdlet runs.
-The cmdlet is not run.
+### -ThrottleLimit
+Specifies the number of concurrent threads.
+Default: 32.
 
 ```yaml
-Type: SwitchParameter
+Type: Int32
 Parameter Sets: (All)
-Aliases: wi
+Aliases:
 
 Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
+Position: 3
+Default value: 32
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -200,6 +184,22 @@ Prompts you for confirmation before running the cmdlet.
 Type: SwitchParameter
 Parameter Sets: (All)
 Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -WhatIf
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: wi
 
 Required: False
 Position: Named

@@ -1,14 +1,14 @@
 ﻿---
 Module Name: ADAuditTasks
 Module Guid: 7ddb359a-e07f-4be0-b63a-a81f44c61fff
-Download Help Link: https://audittaskshelpfiles.blob.core.windows.net/helpfiles
+Download Help Link: https://audittaskshelpfiles.blob.core.windows.net/helpfiles/
 Help Version: 1.0.0.5
 Locale: en-US
 ---
 
 # ADAuditTasks Module
 ## Description
-{{ Fill in the Description }}
+The ADAuditTasks module is a PowerShell module that provides a set of cmdlets for auditing Active Directory environments. The cmdlets in this module can be used to perform various audit tasks, including user and host auditing, logon auditing, privilege auditing, network auditing, and web certificate auditing. The module is designed to simplify the process of auditing Active Directory environments and provides easy-to-use cmdlets that can be run from a PowerShell console or script. With the ADAuditTasks module, you can easily gather and analyze data about your Active Directory environment to identify potential security risks and improve the overall security of your organization.
 
 ## ADAuditTasks Cmdlets
 ### [Convert-NmapXMLToCSV](Convert-NmapXMLToCSV)
