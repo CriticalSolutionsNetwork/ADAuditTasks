@@ -240,7 +240,7 @@ function Get-ADUserPrivilegeAudit {
         }
         else {
             # Return output objects
-            Write-AuditLog "Returning 3 output objects. Instantiate object Example:  `$a, `$b, `$c, = Get-ADUserPrivilegedAudit"
+            Write-AuditLog "Returning 3 output objects. Instantiate object Example: `$a, `$b, `$c, = Get-ADUserPrivilegedAudit"
             Write-AuditLog -EndFunction
             Start-Sleep 1
             return $Export, $Export2, $Export3

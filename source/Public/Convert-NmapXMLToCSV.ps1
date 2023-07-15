@@ -50,7 +50,12 @@ function Convert-NmapXMLToCSV {
     )
 
     begin {
-        Write-AuditLog -Start
+        if (!($script:LogString)) {
+            Write-AuditLog -Start
+        }
+        else {
+            Write-AuditLog -BeginFunction
+        }
 
         Initialize-DirectoryPath -DirectoryPath $AttachmentFolderPath
         [xml]$nmapXml = Get-Content -Path $InputXml

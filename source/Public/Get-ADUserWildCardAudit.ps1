@@ -64,8 +64,12 @@ function Get-ADUserWildCardAudit {
         [switch]$Report
     )
     begin {
+    if (!($script:LogString)) {
         Write-AuditLog -Start
-        Write-AuditLog "###############################################"
+    }
+    else {
+        Write-AuditLog -BeginFunction
+    }
         $ScriptFunctionName = $MyInvocation.MyCommand.Name -replace '\..*'
         if ($env:USERNAME -eq 'SYSTEM') {
             $DomainSuffix = $env:USERDOMAIN

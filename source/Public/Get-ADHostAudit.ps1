@@ -81,8 +81,12 @@ https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-ADHostAudit
     )
     begin {
         # Create logging object
-        Write-AuditLog -Start
-        Write-AuditLog "###############################################"
+        if (!($script:LogString)) {
+            Write-AuditLog -Start
+        }
+        else {
+            Write-AuditLog -BeginFunction
+        }
         # Get the name of the script function
         $ScriptFunctionName = $MyInvocation.MyCommand.Name -replace '\..*'
         # Check if the Active Directory module is installed and install it if necessary

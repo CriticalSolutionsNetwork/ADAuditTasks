@@ -168,15 +168,16 @@
             $script:LogString += $logEntry
             switch ($Severity) {
                 'Warning' {
-                    Write-Warning ('[WARNING] ⚠  ' + $Message)
+                    Write-Warning ('[WARNING] ! ' + $Message)
                     $UserInput = Read-Host "Warning encountered! Do you want to continue? (Y/N)"
                     if ($UserInput -eq 'N') {
                         Write-Output "Script execution stopped by user!"
                         exit
                     }
                 }
-                'Error' { Write-Error ('[ERROR] ✖  ' + $Message) -ErrorAction Continue }
-                Default { Write-Verbose ('[INFO] ✔  ' + $Message) }
+                'Error'       { Write-Error ('[ERROR] X ' + $Message) -ErrorAction Continue }
+                'Verbose'     { Write-Verbose ('[VERBOSE] ~ ' + $Message) }
+                Default { Write-Information ('[INFORMATION] * ' + $Message)  -InformationAction Continue}
             }
         }
         catch {
