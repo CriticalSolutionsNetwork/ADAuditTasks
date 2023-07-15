@@ -62,7 +62,7 @@ Get-NetworkAudit -Ports 443 -Computers $test1 -Report -NoHops -AddService
 #>
 
 <#
-    $ver = "v0.6.1"
+    $ver = "v0.7.0"
     git checkout main
     git pull origin main
     git tag -a $ver -m "Release version $ver signing test"
