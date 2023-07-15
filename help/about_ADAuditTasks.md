@@ -10,37 +10,37 @@ This module provides a collection of public and private functions that support v
 
 The following Public Functions are available to the user executing the tasks:
 
-- `Convert-NmapXMLToCSV`
-- `Get-ADActiveUserAudit`
-- `Get-ADHostAudit`
-- `Get-ADUserLogonAudit`
-- `Get-ADUserPrivilegeAudit`
-- `Get-ADUserWildCardAudit`
-- `Get-NetworkAudit`
-- `Get-WebCertAudit`
-- `Get-HostTag`
-- `Get-QuickPing`
-- `Join-CSVFile`
-- `Merge-ADAuditZip`
-- `Merge-NmapToADHostAUdit`
-- `Send-AuditEmail`
-- `Submit-FTPUpload`
+- Convert-NmapXMLToCSV
+- Get-ADActiveUserAudit
+- Get-ADHostAudit
+- Get-ADUserLogonAudit
+- Get-ADUserPrivilegeAudit
+- Get-ADUserWildCardAudit
+- Get-NetworkAudit
+- Get-WebCertAudit
+- Get-HostTag
+- Get-QuickPing
+- Join-CSVFile
+- Merge-ADAuditZip
+- Merge-NmapToADHostAUdit
+- Send-AuditEmail
+- Submit-FTPUpload
 
 The following Private Functions support the functions in this module:
 
-- `Build-ADAuditTasksComputer`
-- `Build-ADAuditTasksUser`
-- `Initialize-DirectoryPath`
-- `Build-MacIdOUIList`
-- `Build-NetScanObject`
-- `Build-ReportArchive`
-- `Get-AdExtendedRight`
-- `Get-ADGroupMemberof`
-- `Group-UpdateByProduct`
-- `Initialize-ModuleEnv`
-- `Install-ADModule`
-- `Test-IsAdmin`
-- `Write-AuditLog`
+- Build-ADAuditTasksComputer
+- Build-ADAuditTasksUser
+- Initialize-DirectoryPath
+- Build-MacIdOUIList
+- Build-NetScanObject
+- Build-ReportArchive
+- Get-AdExtendedRight
+- Get-ADGroupMemberof
+- Group-UpdateByProduct
+- Initialize-ModuleEnv
+- Install-ADModule
+- Test-IsAdmin
+- Write-AuditLog
 
 ## Optional Subtopics
 None

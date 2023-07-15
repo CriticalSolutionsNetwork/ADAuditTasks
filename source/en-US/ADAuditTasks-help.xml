@@ -42,18 +42,6 @@
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
-        <maml:name>AttachmentFolderPath</maml:name>
-        <maml:description>
-          <maml:para>The output folder path where the converted CSV file will be saved. Default location is "C:\temp\NmapXMLToCSV".</maml:para>
-        </maml:description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-        <dev:type>
-          <maml:name>String</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>C:\temp\NmapXMLToCSV</dev:defaultValue>
-      </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
         <maml:name>InputXml</maml:name>
         <maml:description>
@@ -65,6 +53,18 @@
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
+        <maml:name>AttachmentFolderPath</maml:name>
+        <maml:description>
+          <maml:para>The output folder path where the converted CSV file will be saved. Default location is "C:\temp\NmapXMLToCSV".</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>C:\temp\NmapXMLToCSV</dev:defaultValue>
       </command:parameter>
     </command:parameters>
     <command:inputTypes />
@@ -161,17 +161,17 @@ This example will convert the contents of "C:\path\to\nmap.xml" into a CSV file 
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="3" aliases="none">
-        <maml:name>AttachmentFolderPath</maml:name>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
+        <maml:name>Enabled</maml:name>
         <maml:description>
-          <maml:para>Default path is C:\temp\ADActiveUserAudit. This is the folder where attachments are going to be saved.</maml:para>
+          <maml:para>If "$false", will also search disabled users.</maml:para>
         </maml:description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
         <dev:type>
-          <maml:name>String</maml:name>
+          <maml:name>Boolean</maml:name>
           <maml:uri />
         </dev:type>
-        <dev:defaultValue>C:\temp\ADActiveUserAudit</dev:defaultValue>
+        <dev:defaultValue>True</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
         <maml:name>DaysInactive</maml:name>
@@ -185,17 +185,17 @@ This example will convert the contents of "C:\path\to\nmap.xml" into a CSV file 
         </dev:type>
         <dev:defaultValue>90</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
-        <maml:name>Enabled</maml:name>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="3" aliases="none">
+        <maml:name>AttachmentFolderPath</maml:name>
         <maml:description>
-          <maml:para>If "$false", will also search disabled users.</maml:para>
+          <maml:para>Default path is C:\temp\ADActiveUserAudit. This is the folder where attachments are going to be saved.</maml:para>
         </maml:description>
-        <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
-          <maml:name>Boolean</maml:name>
+          <maml:name>String</maml:name>
           <maml:uri />
         </dev:type>
-        <dev:defaultValue>True</dev:defaultValue>
+        <dev:defaultValue>C:\temp\ADActiveUserAudit</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="4" aliases="none">
         <maml:name>Report</maml:name>
@@ -400,42 +400,6 @@ This example will convert the contents of "C:\path\to\nmap.xml" into a CSV file 
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
-        <maml:name>AttachmentFolderPath</maml:name>
-        <maml:description>
-          <maml:para>Specifies the directory where attachments will be saved.</maml:para>
-        </maml:description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-        <dev:type>
-          <maml:name>String</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>C:\temp\ADHostAudit</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
-        <maml:name>DaystoConsiderAHostInactive</maml:name>
-        <maml:description>
-          <maml:para>Specifies the number of days to consider a host as inactive.</maml:para>
-        </maml:description>
-        <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
-        <dev:type>
-          <maml:name>Int32</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>90</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
-        <maml:name>Enabled</maml:name>
-        <maml:description>
-          <maml:para>If set to $false, the function will also search for disabled computers.</maml:para>
-        </maml:description>
-        <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
-        <dev:type>
-          <maml:name>Boolean</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>True</dev:defaultValue>
-      </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="none">
         <maml:name>HostType</maml:name>
         <maml:description>
@@ -460,6 +424,18 @@ This example will convert the contents of "C:\path\to\nmap.xml" into a CSV file 
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
+        <maml:name>DaystoConsiderAHostInactive</maml:name>
+        <maml:description>
+          <maml:para>Specifies the number of days to consider a host as inactive.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+        <dev:type>
+          <maml:name>Int32</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>90</dev:defaultValue>
+      </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="3" aliases="none">
         <maml:name>Report</maml:name>
         <maml:description>
@@ -471,6 +447,30 @@ This example will convert the contents of "C:\path\to\nmap.xml" into a CSV file 
           <maml:uri />
         </dev:type>
         <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
+        <maml:name>AttachmentFolderPath</maml:name>
+        <maml:description>
+          <maml:para>Specifies the directory where attachments will be saved.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>C:\temp\ADHostAudit</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
+        <maml:name>Enabled</maml:name>
+        <maml:description>
+          <maml:para>If set to $false, the function will also search for disabled computers.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
+        <dev:type>
+          <maml:name>Boolean</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>True</dev:defaultValue>
       </command:parameter>
     </command:parameters>
     <command:inputTypes />
@@ -828,17 +828,17 @@ Returns three reports to the default folder, C:\temp\ADUserPrivilegeAudit, in a 
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="4" aliases="none">
-        <maml:name>AttachmentFolderPath</maml:name>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
+        <maml:name>Enabled</maml:name>
         <maml:description>
-          <maml:para>Default path is C:\temp\ADUserWildCardAudit. This is the folder where attachments are going to be saved.</maml:para>
+          <maml:para>If "$false", will also search disabled users.</maml:para>
         </maml:description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
         <dev:type>
-          <maml:name>String</maml:name>
+          <maml:name>Boolean</maml:name>
           <maml:uri />
         </dev:type>
-        <dev:defaultValue>C:\temp\ADUserWildCardAudit</dev:defaultValue>
+        <dev:defaultValue>True</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
         <maml:name>DaysInactive</maml:name>
@@ -852,17 +852,29 @@ Returns three reports to the default folder, C:\temp\ADUserPrivilegeAudit, in a 
         </dev:type>
         <dev:defaultValue>90</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
-        <maml:name>Enabled</maml:name>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
+        <maml:name>WildCardIdentifier</maml:name>
         <maml:description>
-          <maml:para>If "$false", will also search disabled users.</maml:para>
+          <maml:para>The search string to look for in the name of the account. Case does not matter. Do not add a wildcard (*) as it will do this automatically.</maml:para>
         </maml:description>
-        <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
-          <maml:name>Boolean</maml:name>
+          <maml:name>String</maml:name>
           <maml:uri />
         </dev:type>
-        <dev:defaultValue>True</dev:defaultValue>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="4" aliases="none">
+        <maml:name>AttachmentFolderPath</maml:name>
+        <maml:description>
+          <maml:para>Default path is C:\temp\ADUserWildCardAudit. This is the folder where attachments are going to be saved.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>C:\temp\ADUserWildCardAudit</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="5" aliases="none">
         <maml:name>Report</maml:name>
@@ -875,18 +887,6 @@ Returns three reports to the default folder, C:\temp\ADUserPrivilegeAudit, in a 
           <maml:uri />
         </dev:type>
         <dev:defaultValue>False</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
-        <maml:name>WildCardIdentifier</maml:name>
-        <maml:description>
-          <maml:para>The search string to look for in the name of the account. Case does not matter. Do not add a wildcard (*) as it will do this automatically.</maml:para>
-        </maml:description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-        <dev:type>
-          <maml:name>String</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
     </command:parameters>
     <command:inputTypes />
@@ -1003,30 +1003,6 @@ Returns three reports to the default folder, C:\temp\ADUserPrivilegeAudit, in a 
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="4" aliases="none">
-        <maml:name>DeviceFunction</maml:name>
-        <maml:description>
-          <maml:para>Use tab to cycle through the following options:     "Application Server", "Backup Server", "Directory Server",     "Email Server", "Firewall", "FTP Server",     "Hypervisor", "File Server", "NAS File Server",     "Power Distribution Unit", "Redundant Power Supply", "SAN Appliance",     "SQL Server", "Uninteruptable Power Supply", "Web Server",     "Management", "Blade Enclosure", "Blade Enclosure Switch",     "SAN specific switch", "General server/Network switch", "Generic Function Device"</maml:para>
-        </maml:description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-        <dev:type>
-          <maml:name>String</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="5" aliases="none">
-        <maml:name>HostCount</maml:name>
-        <maml:description>
-          <maml:para>Enter a number from 1 to 999 for how many hostnames you'd like to create.</maml:para>
-        </maml:description>
-        <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
-        <dev:type>
-          <maml:name>Int32</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>1</dev:defaultValue>
-      </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
         <maml:name>PhysicalOrVirtual</maml:name>
         <maml:description>
@@ -1062,6 +1038,30 @@ Returns three reports to the default folder, C:\temp\ADUserPrivilegeAudit, in a 
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="4" aliases="none">
+        <maml:name>DeviceFunction</maml:name>
+        <maml:description>
+          <maml:para>Use tab to cycle through the following options:     "Application Server", "Backup Server", "Directory Server",     "Email Server", "Firewall", "FTP Server",     "Hypervisor", "File Server", "NAS File Server",     "Power Distribution Unit", "Redundant Power Supply", "SAN Appliance",     "SQL Server", "Uninteruptable Power Supply", "Web Server",     "Management", "Blade Enclosure", "Blade Enclosure Switch",     "SAN specific switch", "General server/Network switch", "Generic Function Device"</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="5" aliases="none">
+        <maml:name>HostCount</maml:name>
+        <maml:description>
+          <maml:para>Enter a number from 1 to 999 for how many hostnames you'd like to create.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+        <dev:type>
+          <maml:name>Int32</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>1</dev:defaultValue>
       </command:parameter>
     </command:parameters>
     <command:inputTypes />
@@ -1146,16 +1146,15 @@ Returns three reports to the default folder, C:\temp\ADUserPrivilegeAudit, in a 
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
-          <maml:name>Computers</maml:name>
+          <maml:name>LocalSubnets</maml:name>
           <maml:description>
-            <maml:para>Scans a single host or an array of hosts using subnet ID in CIDR notation, IP address, NETBIOS name, or FQDN in double quotes. Example: "10.11.1.0/24", "10.11.2.0/24"</maml:para>
+            <maml:para>Scans subnets connected to the local device. It will not scan outside of the hosting device's subnet.</maml:para>
           </maml:description>
-          <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
           <dev:type>
-            <maml:name>String[]</maml:name>
+            <maml:name>SwitchParameter</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
+          <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="3" aliases="none">
           <maml:name>ThrottleLimit</maml:name>
@@ -1170,9 +1169,9 @@ Returns three reports to the default folder, C:\temp\ADUserPrivilegeAudit, in a 
           <dev:defaultValue>32</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
-          <maml:name>AddService</maml:name>
+          <maml:name>NoHops</maml:name>
           <maml:description>
-            <maml:para>Includes the service name associated with each port in the output.</maml:para>
+            <maml:para>Prevents scans across a gateway.</maml:para>
           </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
@@ -1181,9 +1180,9 @@ Returns three reports to the default folder, C:\temp\ADUserPrivilegeAudit, in a 
           <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
-          <maml:name>NoHops</maml:name>
+          <maml:name>AddService</maml:name>
           <maml:description>
-            <maml:para>Prevents scans across a gateway.</maml:para>
+            <maml:para>Includes the service name associated with each port in the output.</maml:para>
           </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
@@ -1213,10 +1212,10 @@ Returns three reports to the default folder, C:\temp\ADUserPrivilegeAudit, in a 
           </dev:type>
           <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf">
-          <maml:name>Confirm</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi">
+          <maml:name>WhatIf</maml:name>
           <maml:description>
-            <maml:para>Prompts you for confirmation before running the cmdlet.</maml:para>
+            <maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.</maml:para>
           </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
@@ -1224,10 +1223,10 @@ Returns three reports to the default folder, C:\temp\ADUserPrivilegeAudit, in a 
           </dev:type>
           <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi">
-          <maml:name>WhatIf</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf">
+          <maml:name>Confirm</maml:name>
           <maml:description>
-            <maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.</maml:para>
+            <maml:para>Prompts you for confirmation before running the cmdlet.</maml:para>
           </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
@@ -1252,15 +1251,16 @@ Returns three reports to the default folder, C:\temp\ADUserPrivilegeAudit, in a 
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
-          <maml:name>LocalSubnets</maml:name>
+          <maml:name>Computers</maml:name>
           <maml:description>
-            <maml:para>Scans subnets connected to the local device. It will not scan outside of the hosting device's subnet.</maml:para>
+            <maml:para>Scans a single host or an array of hosts using subnet ID in CIDR notation, IP address, NETBIOS name, or FQDN in double quotes. Example: "10.11.1.0/24", "10.11.2.0/24"</maml:para>
           </maml:description>
+          <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
           <dev:type>
-            <maml:name>SwitchParameter</maml:name>
+            <maml:name>String[]</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>False</dev:defaultValue>
+          <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="3" aliases="none">
           <maml:name>ThrottleLimit</maml:name>
@@ -1275,9 +1275,9 @@ Returns three reports to the default folder, C:\temp\ADUserPrivilegeAudit, in a 
           <dev:defaultValue>32</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
-          <maml:name>AddService</maml:name>
+          <maml:name>NoHops</maml:name>
           <maml:description>
-            <maml:para>Includes the service name associated with each port in the output.</maml:para>
+            <maml:para>Prevents scans across a gateway.</maml:para>
           </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
@@ -1286,9 +1286,9 @@ Returns three reports to the default folder, C:\temp\ADUserPrivilegeAudit, in a 
           <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
-          <maml:name>NoHops</maml:name>
+          <maml:name>AddService</maml:name>
           <maml:description>
-            <maml:para>Prevents scans across a gateway.</maml:para>
+            <maml:para>Includes the service name associated with each port in the output.</maml:para>
           </maml:description>
           <dev:type>
             <maml:name>SwitchParameter</maml:name>
@@ -1318,17 +1318,6 @@ Returns three reports to the default folder, C:\temp\ADUserPrivilegeAudit, in a 
           </dev:type>
           <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf">
-          <maml:name>Confirm</maml:name>
-          <maml:description>
-            <maml:para>Prompts you for confirmation before running the cmdlet.</maml:para>
-          </maml:description>
-          <dev:type>
-            <maml:name>SwitchParameter</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>False</dev:defaultValue>
-        </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi">
           <maml:name>WhatIf</maml:name>
           <maml:description>
@@ -1340,13 +1329,37 @@ Returns three reports to the default folder, C:\temp\ADUserPrivilegeAudit, in a 
           </dev:type>
           <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf">
+          <maml:name>Confirm</maml:name>
+          <maml:description>
+            <maml:para>Prompts you for confirmation before running the cmdlet.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
-        <maml:name>AddService</maml:name>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
+        <maml:name>Ports</maml:name>
         <maml:description>
-          <maml:para>Includes the service name associated with each port in the output.</maml:para>
+          <maml:para>Specifies the ports to scan. If not provided, the function uses default ports: "21", "22", "23", "25", "53", "67", "68", "80", "443", "88", "464", "123", "135", "137", "138", "139", "445", "389", "636", "514", "587", "1701", "3268", "3269", "3389", "5985", "5986"</maml:para>
+          <maml:para>To specify ports, provide an integer or an array of integers. Example: "22", "80", "443"</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
+        <dev:type>
+          <maml:name>Int32[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
+        <maml:name>LocalSubnets</maml:name>
+        <maml:description>
+          <maml:para>Scans subnets connected to the local device. It will not scan outside of the hosting device's subnet.</maml:para>
         </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
@@ -1367,17 +1380,17 @@ Returns three reports to the default folder, C:\temp\ADUserPrivilegeAudit, in a 
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
-        <maml:name>LocalSubnets</maml:name>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="3" aliases="none">
+        <maml:name>ThrottleLimit</maml:name>
         <maml:description>
-          <maml:para>Scans subnets connected to the local device. It will not scan outside of the hosting device's subnet.</maml:para>
+          <maml:para>Specifies the number of concurrent threads. Default: 32.</maml:para>
         </maml:description>
-        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
         <dev:type>
-          <maml:name>SwitchParameter</maml:name>
+          <maml:name>Int32</maml:name>
           <maml:uri />
         </dev:type>
-        <dev:defaultValue>False</dev:defaultValue>
+        <dev:defaultValue>32</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
         <maml:name>NoHops</maml:name>
@@ -1391,18 +1404,17 @@ Returns three reports to the default folder, C:\temp\ADUserPrivilegeAudit, in a 
         </dev:type>
         <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
-        <maml:name>Ports</maml:name>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
+        <maml:name>AddService</maml:name>
         <maml:description>
-          <maml:para>Specifies the ports to scan. If not provided, the function uses default ports: "21", "22", "23", "25", "53", "67", "68", "80", "443", "88", "464", "123", "135", "137", "138", "139", "445", "389", "636", "514", "587", "1701", "3268", "3269", "3389", "5985", "5986"</maml:para>
-          <maml:para>To specify ports, provide an integer or an array of integers. Example: "22", "80", "443"</maml:para>
+          <maml:para>Includes the service name associated with each port in the output.</maml:para>
         </maml:description>
-        <command:parameterValue required="true" variableLength="false">Int32[]</command:parameterValue>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
-          <maml:name>Int32[]</maml:name>
+          <maml:name>SwitchParameter</maml:name>
           <maml:uri />
         </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
+        <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
         <maml:name>Report</maml:name>
@@ -1428,22 +1440,10 @@ Returns three reports to the default folder, C:\temp\ADUserPrivilegeAudit, in a 
         </dev:type>
         <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="3" aliases="none">
-        <maml:name>ThrottleLimit</maml:name>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi">
+        <maml:name>WhatIf</maml:name>
         <maml:description>
-          <maml:para>Specifies the number of concurrent threads. Default: 32.</maml:para>
-        </maml:description>
-        <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
-        <dev:type>
-          <maml:name>Int32</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>32</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf">
-        <maml:name>Confirm</maml:name>
-        <maml:description>
-          <maml:para>Prompts you for confirmation before running the cmdlet.</maml:para>
+          <maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.</maml:para>
         </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
@@ -1452,10 +1452,10 @@ Returns three reports to the default folder, C:\temp\ADUserPrivilegeAudit, in a 
         </dev:type>
         <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi">
-        <maml:name>WhatIf</maml:name>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf">
+        <maml:name>Confirm</maml:name>
         <maml:description>
-          <maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.</maml:para>
+          <maml:para>Prompts you for confirmation before running the cmdlet.</maml:para>
         </maml:description>
         <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
         <dev:type>
@@ -1568,30 +1568,6 @@ Generates a report of the network audit results in the C:\temp folder.</dev:code
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
-        <maml:name>BufferSize</maml:name>
-        <maml:description>
-          <maml:para>Specifies the size of the buffer to use for the ping. The default value is 16.</maml:para>
-        </maml:description>
-        <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
-        <dev:type>
-          <maml:name>Int32</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>16</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
-        <maml:name>Count</maml:name>
-        <maml:description>
-          <maml:para>Specifies the number of times to send the ping request. The default value is 1.</maml:para>
-        </maml:description>
-        <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
-        <dev:type>
-          <maml:name>Int32</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>1</dev:defaultValue>
-      </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>IPRange</maml:name>
         <maml:description>
@@ -1615,6 +1591,30 @@ Generates a report of the network audit results in the C:\temp folder.</dev:code
           <maml:uri />
         </dev:type>
         <dev:defaultValue>128</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+        <maml:name>BufferSize</maml:name>
+        <maml:description>
+          <maml:para>Specifies the size of the buffer to use for the ping. The default value is 16.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+        <dev:type>
+          <maml:name>Int32</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>16</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
+        <maml:name>Count</maml:name>
+        <maml:description>
+          <maml:para>Specifies the number of times to send the ping request. The default value is 1.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+        <dev:type>
+          <maml:name>Int32</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>1</dev:defaultValue>
       </command:parameter>
     </command:parameters>
     <command:inputTypes />
@@ -1811,18 +1811,6 @@ This example retrieves the certificate information for the web server at https:/
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
-        <maml:name>AttachmentFolderPath</maml:name>
-        <maml:description>
-          <maml:para>The output folder path where the merged CSV file will be saved. Default location is "C:\temp\MergedCSV".</maml:para>
-        </maml:description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-        <dev:type>
-          <maml:name>String</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>C:\temp\MergedCSV</dev:defaultValue>
-      </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="1" aliases="none">
         <maml:name>CSVFilePaths</maml:name>
         <maml:description>
@@ -1834,6 +1822,18 @@ This example retrieves the certificate information for the web server at https:/
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
+        <maml:name>AttachmentFolderPath</maml:name>
+        <maml:description>
+          <maml:para>The output folder path where the merged CSV file will be saved. Default location is "C:\temp\MergedCSV".</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>C:\temp\MergedCSV</dev:defaultValue>
       </command:parameter>
     </command:parameters>
     <command:inputTypes />
@@ -1961,18 +1961,6 @@ This example retrieves the certificate information for the web server at https:/
         </dev:type>
         <dev:defaultValue>25165824</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-        <maml:name>OpenDirectory</maml:name>
-        <maml:description>
-          <maml:para>Specifies an optional switch to open the directory of the merged compressed ZIP file after creation.</maml:para>
-        </maml:description>
-        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
-        <dev:type>
-          <maml:name>SwitchParameter</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>False</dev:defaultValue>
-      </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
         <maml:name>OutputFolder</maml:name>
         <maml:description>
@@ -1984,6 +1972,18 @@ This example retrieves the certificate information for the web server at https:/
           <maml:uri />
         </dev:type>
         <dev:defaultValue>C:\temp</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>OpenDirectory</maml:name>
+        <maml:description>
+          <maml:para>Specifies an optional switch to open the directory of the merged compressed ZIP file after creation.</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
       </command:parameter>
     </command:parameters>
     <command:inputTypes />
@@ -2090,18 +2090,6 @@ Merge-ADAuditZip -FilePaths $workstations, $servers, $nonWindows</dev:code>
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
-        <maml:name>AttachmentFolderPath</maml:name>
-        <maml:description>
-          <maml:para>The output folder path where the merged CSV file and unmatched Nmap data CSV file will be saved. Default location is "C:\temp\NmapToADHostAudit".</maml:para>
-        </maml:description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-        <dev:type>
-          <maml:name>String</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>C:\temp\NmapToADHostAudit</dev:defaultValue>
-      </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
         <maml:name>NmapCsv</maml:name>
         <maml:description>
@@ -2113,6 +2101,18 @@ Merge-ADAuditZip -FilePaths $workstations, $servers, $nonWindows</dev:code>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="2" aliases="none">
+        <maml:name>AttachmentFolderPath</maml:name>
+        <maml:description>
+          <maml:para>The output folder path where the merged CSV file and unmatched Nmap data CSV file will be saved. Default location is "C:\temp\NmapToADHostAudit".</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>C:\temp\NmapToADHostAudit</dev:defaultValue>
       </command:parameter>
     </command:parameters>
     <command:inputTypes />
@@ -2171,21 +2171,9 @@ Merge-ADAuditZip -FilePaths $workstations, $servers, $nonWindows</dev:code>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>Body</maml:name>
+          <maml:name>SMTPServer</maml:name>
           <maml:description>
-            <maml:para>The body of the message, pre-populates with the same data as the subject line. Specify body text in the function parameters to override.</maml:para>
-          </maml:description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-          <dev:type>
-            <maml:name>String</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>"$($script:MyInvocation.MyCommand.Name -replace '\..*') report ran for $($env:USERDOMAIN) on host $($env:COMPUTERNAME)."</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>CertificateThumbprint</maml:name>
-          <maml:description>
-            <maml:para>API key for the Azure Function App</maml:para>
+            <maml:para>The SMTP Server address. For example: "smtp.office365.com"</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -2193,6 +2181,41 @@ Merge-ADAuditZip -FilePaths $workstations, $servers, $nonWindows</dev:code>
             <maml:uri />
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
+          <maml:name>Port</maml:name>
+          <maml:description>
+            <maml:para>The following ports can be used to send email:     "993", "995", "587", "25"</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+          <dev:type>
+            <maml:name>Int32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>0</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>UserName</maml:name>
+          <maml:description>
+            <maml:para>The Account authorized to send email via SMTP. From parameter is usually the same.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>SSL</maml:name>
+          <maml:description>
+            <maml:para>Switch to ensure SSL is used during transport.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>From</maml:name>
@@ -2205,6 +2228,167 @@ Merge-ADAuditZip -FilePaths $workstations, $servers, $nonWindows</dev:code>
             <maml:uri />
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>To</maml:name>
+          <maml:description>
+            <maml:para>This is the mailbox who will be the recipient of the communication.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Subject</maml:name>
+          <maml:description>
+            <maml:para>The subject is automatically populated with the name of the function that ran the script, as well as the domain and hostname.</maml:para>
+            <maml:para>If you specify subject in the parameters, it will override the default with your subject.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>"$($script:MyInvocation.MyCommand.Name -replace '\..*') report ran for $($env:USERDOMAIN) on host $($env:COMPUTERNAME)."</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Body</maml:name>
+          <maml:description>
+            <maml:para>The body of the message, pre-populates with the same data as the subject line. Specify body text in the function parameters to override.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>"$($script:MyInvocation.MyCommand.Name -replace '\..*') report ran for $($env:USERDOMAIN) on host $($env:COMPUTERNAME)."</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Pass</maml:name>
+          <maml:description>
+            <maml:para>Takes a SecureString as input. The password must be added to the command by using:     -Pass (Read-Host -AsSecureString)     You will be promted to enter the password for the UserName parameter.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">SecureString</command:parameterValue>
+          <dev:type>
+            <maml:name>SecureString</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Send-AuditEmail</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
+          <maml:name>AttachmentFiles</maml:name>
+          <maml:description>
+            <maml:para>The full filepath to the zip you are sending:     -AttachmentFiles "C:\temp\ADHostAudit\2023-01-04_03.45.14_Get-ADHostAudit_AD.CONTOSO.COM.Servers.zip"</maml:para>
+            <maml:para>The Audit reports output this filename if the "-Report" switch is used allowing it to be nested in this parameter for ease of automation.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+          <dev:type>
+            <maml:name>String[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>SMTPServer</maml:name>
+          <maml:description>
+            <maml:para>The SMTP Server address. For example: "smtp.office365.com"</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
+          <maml:name>Port</maml:name>
+          <maml:description>
+            <maml:para>The following ports can be used to send email:     "993", "995", "587", "25"</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+          <dev:type>
+            <maml:name>Int32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>0</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>UserName</maml:name>
+          <maml:description>
+            <maml:para>The Account authorized to send email via SMTP. From parameter is usually the same.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>SSL</maml:name>
+          <maml:description>
+            <maml:para>Switch to ensure SSL is used during transport.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>From</maml:name>
+          <maml:description>
+            <maml:para>This is who the email will appear to originate from. This is either the same as the UserName, or, if delegated, access to an email account the Username account has delegated permissions to send for. Link:     https://learn.microsoft.com/en-us/microsoft-365/admin/add-users/give-mailbox-permissions-to-another-user?view=o365-worldwide</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>To</maml:name>
+          <maml:description>
+            <maml:para>This is the mailbox who will be the recipient of the communication.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Subject</maml:name>
+          <maml:description>
+            <maml:para>The subject is automatically populated with the name of the function that ran the script, as well as the domain and hostname.</maml:para>
+            <maml:para>If you specify subject in the parameters, it will override the default with your subject.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>"$($script:MyInvocation.MyCommand.Name -replace '\..*') report ran for $($env:USERDOMAIN) on host $($env:COMPUTERNAME)."</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Body</maml:name>
+          <maml:description>
+            <maml:para>The body of the message, pre-populates with the same data as the subject line. Specify body text in the function parameters to override.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+          <dev:type>
+            <maml:name>String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>"$($script:MyInvocation.MyCommand.Name -replace '\..*') report ran for $($env:USERDOMAIN) on host $($env:COMPUTERNAME)."</dev:defaultValue>
         </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Function</maml:name>
@@ -2230,66 +2414,6 @@ Merge-ADAuditZip -FilePaths $workstations, $servers, $nonWindows</dev:code>
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
-          <maml:name>Port</maml:name>
-          <maml:description>
-            <maml:para>The following ports can be used to send email:     "993", "995", "587", "25"</maml:para>
-          </maml:description>
-          <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
-          <dev:type>
-            <maml:name>Int32</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>0</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>SMTPServer</maml:name>
-          <maml:description>
-            <maml:para>The SMTP Server address. For example: "smtp.office365.com"</maml:para>
-          </maml:description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-          <dev:type>
-            <maml:name>String</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>SSL</maml:name>
-          <maml:description>
-            <maml:para>Switch to ensure SSL is used during transport.</maml:para>
-          </maml:description>
-          <dev:type>
-            <maml:name>SwitchParameter</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>False</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>Subject</maml:name>
-          <maml:description>
-            <maml:para>The subject is automatically populated with the name of the function that ran the script, as well as the domain and hostname.</maml:para>
-            <maml:para>If you specify subject in the parameters, it will override the default with your subject.</maml:para>
-          </maml:description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-          <dev:type>
-            <maml:name>String</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>"$($script:MyInvocation.MyCommand.Name -replace '\..*') report ran for $($env:USERDOMAIN) on host $($env:COMPUTERNAME)."</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>To</maml:name>
-          <maml:description>
-            <maml:para>This is the mailbox who will be the recipient of the communication.</maml:para>
-          </maml:description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-          <dev:type>
-            <maml:name>String</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
         <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>Token</maml:name>
           <maml:description>
@@ -2302,134 +2426,10 @@ Merge-ADAuditZip -FilePaths $workstations, $servers, $nonWindows</dev:code>
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>UserName</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>CertificateThumbprint</maml:name>
           <maml:description>
-            <maml:para>The Account authorized to send email via SMTP. From parameter is usually the same.</maml:para>
-          </maml:description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-          <dev:type>
-            <maml:name>String</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
-      </command:syntaxItem>
-      <command:syntaxItem>
-        <maml:name>Send-AuditEmail</maml:name>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
-          <maml:name>AttachmentFiles</maml:name>
-          <maml:description>
-            <maml:para>The full filepath to the zip you are sending:     -AttachmentFiles "C:\temp\ADHostAudit\2023-01-04_03.45.14_Get-ADHostAudit_AD.CONTOSO.COM.Servers.zip"</maml:para>
-            <maml:para>The Audit reports output this filename if the "-Report" switch is used allowing it to be nested in this parameter for ease of automation.</maml:para>
-          </maml:description>
-          <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
-          <dev:type>
-            <maml:name>String[]</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>Body</maml:name>
-          <maml:description>
-            <maml:para>The body of the message, pre-populates with the same data as the subject line. Specify body text in the function parameters to override.</maml:para>
-          </maml:description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-          <dev:type>
-            <maml:name>String</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>"$($script:MyInvocation.MyCommand.Name -replace '\..*') report ran for $($env:USERDOMAIN) on host $($env:COMPUTERNAME)."</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>From</maml:name>
-          <maml:description>
-            <maml:para>This is who the email will appear to originate from. This is either the same as the UserName, or, if delegated, access to an email account the Username account has delegated permissions to send for. Link:     https://learn.microsoft.com/en-us/microsoft-365/admin/add-users/give-mailbox-permissions-to-another-user?view=o365-worldwide</maml:para>
-          </maml:description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-          <dev:type>
-            <maml:name>String</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>Pass</maml:name>
-          <maml:description>
-            <maml:para>Takes a SecureString as input. The password must be added to the command by using:     -Pass (Read-Host -AsSecureString)     You will be promted to enter the password for the UserName parameter.</maml:para>
-          </maml:description>
-          <command:parameterValue required="true" variableLength="false">SecureString</command:parameterValue>
-          <dev:type>
-            <maml:name>SecureString</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
-          <maml:name>Port</maml:name>
-          <maml:description>
-            <maml:para>The following ports can be used to send email:     "993", "995", "587", "25"</maml:para>
-          </maml:description>
-          <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
-          <dev:type>
-            <maml:name>Int32</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>0</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>SMTPServer</maml:name>
-          <maml:description>
-            <maml:para>The SMTP Server address. For example: "smtp.office365.com"</maml:para>
-          </maml:description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-          <dev:type>
-            <maml:name>String</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>SSL</maml:name>
-          <maml:description>
-            <maml:para>Switch to ensure SSL is used during transport.</maml:para>
-          </maml:description>
-          <dev:type>
-            <maml:name>SwitchParameter</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>False</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>Subject</maml:name>
-          <maml:description>
-            <maml:para>The subject is automatically populated with the name of the function that ran the script, as well as the domain and hostname.</maml:para>
-            <maml:para>If you specify subject in the parameters, it will override the default with your subject.</maml:para>
-          </maml:description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-          <dev:type>
-            <maml:name>String</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>"$($script:MyInvocation.MyCommand.Name -replace '\..*') report ran for $($env:USERDOMAIN) on host $($env:COMPUTERNAME)."</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>To</maml:name>
-          <maml:description>
-            <maml:para>This is the mailbox who will be the recipient of the communication.</maml:para>
-          </maml:description>
-          <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-          <dev:type>
-            <maml:name>String</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>UserName</maml:name>
-          <maml:description>
-            <maml:para>The Account authorized to send email via SMTP. From parameter is usually the same.</maml:para>
+            <maml:para>API key for the Azure Function App</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
           <dev:type>
@@ -2455,6 +2455,91 @@ Merge-ADAuditZip -FilePaths $workstations, $servers, $nonWindows</dev:code>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>SMTPServer</maml:name>
+        <maml:description>
+          <maml:para>The SMTP Server address. For example: "smtp.office365.com"</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
+        <maml:name>Port</maml:name>
+        <maml:description>
+          <maml:para>The following ports can be used to send email:     "993", "995", "587", "25"</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+        <dev:type>
+          <maml:name>Int32</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>0</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>UserName</maml:name>
+        <maml:description>
+          <maml:para>The Account authorized to send email via SMTP. From parameter is usually the same.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>SSL</maml:name>
+        <maml:description>
+          <maml:para>Switch to ensure SSL is used during transport.</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>From</maml:name>
+        <maml:description>
+          <maml:para>This is who the email will appear to originate from. This is either the same as the UserName, or, if delegated, access to an email account the Username account has delegated permissions to send for. Link:     https://learn.microsoft.com/en-us/microsoft-365/admin/add-users/give-mailbox-permissions-to-another-user?view=o365-worldwide</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>To</maml:name>
+        <maml:description>
+          <maml:para>This is the mailbox who will be the recipient of the communication.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>Subject</maml:name>
+        <maml:description>
+          <maml:para>The subject is automatically populated with the name of the function that ran the script, as well as the domain and hostname.</maml:para>
+          <maml:para>If you specify subject in the parameters, it will override the default with your subject.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>"$($script:MyInvocation.MyCommand.Name -replace '\..*') report ran for $($env:USERDOMAIN) on host $($env:COMPUTERNAME)."</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Body</maml:name>
         <maml:description>
           <maml:para>The body of the message, pre-populates with the same data as the subject line. Specify body text in the function parameters to override.</maml:para>
@@ -2466,26 +2551,14 @@ Merge-ADAuditZip -FilePaths $workstations, $servers, $nonWindows</dev:code>
         </dev:type>
         <dev:defaultValue>"$($script:MyInvocation.MyCommand.Name -replace '\..*') report ran for $($env:USERDOMAIN) on host $($env:COMPUTERNAME)."</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-        <maml:name>CertificateThumbprint</maml:name>
-        <maml:description>
-          <maml:para>API key for the Azure Function App</maml:para>
-        </maml:description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-        <dev:type>
-          <maml:name>String</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
-      </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-        <maml:name>From</maml:name>
+        <maml:name>Pass</maml:name>
         <maml:description>
-          <maml:para>This is who the email will appear to originate from. This is either the same as the UserName, or, if delegated, access to an email account the Username account has delegated permissions to send for. Link:     https://learn.microsoft.com/en-us/microsoft-365/admin/add-users/give-mailbox-permissions-to-another-user?view=o365-worldwide</maml:para>
+          <maml:para>Takes a SecureString as input. The password must be added to the command by using:     -Pass (Read-Host -AsSecureString)     You will be promted to enter the password for the UserName parameter.</maml:para>
         </maml:description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <command:parameterValue required="true" variableLength="false">SecureString</command:parameterValue>
         <dev:type>
-          <maml:name>String</maml:name>
+          <maml:name>SecureString</maml:name>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
@@ -2514,79 +2587,6 @@ Merge-ADAuditZip -FilePaths $workstations, $servers, $nonWindows</dev:code>
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-        <maml:name>Pass</maml:name>
-        <maml:description>
-          <maml:para>Takes a SecureString as input. The password must be added to the command by using:     -Pass (Read-Host -AsSecureString)     You will be promted to enter the password for the UserName parameter.</maml:para>
-        </maml:description>
-        <command:parameterValue required="true" variableLength="false">SecureString</command:parameterValue>
-        <dev:type>
-          <maml:name>SecureString</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName)" position="named" aliases="none">
-        <maml:name>Port</maml:name>
-        <maml:description>
-          <maml:para>The following ports can be used to send email:     "993", "995", "587", "25"</maml:para>
-        </maml:description>
-        <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
-        <dev:type>
-          <maml:name>Int32</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>0</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-        <maml:name>SMTPServer</maml:name>
-        <maml:description>
-          <maml:para>The SMTP Server address. For example: "smtp.office365.com"</maml:para>
-        </maml:description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-        <dev:type>
-          <maml:name>String</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-        <maml:name>SSL</maml:name>
-        <maml:description>
-          <maml:para>Switch to ensure SSL is used during transport.</maml:para>
-        </maml:description>
-        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
-        <dev:type>
-          <maml:name>SwitchParameter</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>False</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-        <maml:name>Subject</maml:name>
-        <maml:description>
-          <maml:para>The subject is automatically populated with the name of the function that ran the script, as well as the domain and hostname.</maml:para>
-          <maml:para>If you specify subject in the parameters, it will override the default with your subject.</maml:para>
-        </maml:description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-        <dev:type>
-          <maml:name>String</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>"$($script:MyInvocation.MyCommand.Name -replace '\..*') report ran for $($env:USERDOMAIN) on host $($env:COMPUTERNAME)."</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-        <maml:name>To</maml:name>
-        <maml:description>
-          <maml:para>This is the mailbox who will be the recipient of the communication.</maml:para>
-        </maml:description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-        <dev:type>
-          <maml:name>String</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
-      </command:parameter>
       <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
         <maml:name>Token</maml:name>
         <maml:description>
@@ -2599,10 +2599,10 @@ Merge-ADAuditZip -FilePaths $workstations, $servers, $nonWindows</dev:code>
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-        <maml:name>UserName</maml:name>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>CertificateThumbprint</maml:name>
         <maml:description>
-          <maml:para>The Account authorized to send email via SMTP. From parameter is usually the same.</maml:para>
+          <maml:para>API key for the Azure Function App</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -2763,30 +2763,6 @@ Merge-ADAuditZip -FilePaths $workstations, $servers, $nonWindows</dev:code>
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
-        <maml:name>FTPHostName</maml:name>
-        <maml:description>
-          <maml:para>Specifies the name of the FTP server to connect to.</maml:para>
-        </maml:description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-        <dev:type>
-          <maml:name>String</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
-        <maml:name>FTPSecure</maml:name>
-        <maml:description>
-          <maml:para>Specifies the level of security to use when connecting to the FTP server. The default value is None.</maml:para>
-        </maml:description>
-        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
-        <dev:type>
-          <maml:name>String</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
-      </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>FTPUserName</maml:name>
         <maml:description>
@@ -2795,18 +2771,6 @@ Merge-ADAuditZip -FilePaths $workstations, $servers, $nonWindows</dev:code>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
           <maml:name>String</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="7" aliases="none">
-        <maml:name>LocalFilePath</maml:name>
-        <maml:description>
-          <maml:para>Specifies the local path to the file to upload to the FTP server.</maml:para>
-        </maml:description>
-        <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
-        <dev:type>
-          <maml:name>String[]</maml:name>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
@@ -2823,6 +2787,18 @@ Merge-ADAuditZip -FilePaths $workstations, $servers, $nonWindows</dev:code>
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+        <maml:name>FTPHostName</maml:name>
+        <maml:description>
+          <maml:para>Specifies the name of the FTP server to connect to.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
         <maml:name>Protocol</maml:name>
         <maml:description>
@@ -2835,10 +2811,10 @@ Merge-ADAuditZip -FilePaths $workstations, $servers, $nonWindows</dev:code>
         </dev:type>
         <dev:defaultValue>Sftp</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="8" aliases="none">
-        <maml:name>RemoteFTPPath</maml:name>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
+        <maml:name>FTPSecure</maml:name>
         <maml:description>
-          <maml:para>Specifies the remote path to upload the file to on the FTP server.</maml:para>
+          <maml:para>Specifies the level of security to use when connecting to the FTP server. The default value is None.</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
         <dev:type>
@@ -2855,6 +2831,30 @@ Merge-ADAuditZip -FilePaths $workstations, $servers, $nonWindows</dev:code>
         <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
         <dev:type>
           <maml:name>String[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="7" aliases="none">
+        <maml:name>LocalFilePath</maml:name>
+        <maml:description>
+          <maml:para>Specifies the local path to the file to upload to the FTP server.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+        <dev:type>
+          <maml:name>String[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="8" aliases="none">
+        <maml:name>RemoteFTPPath</maml:name>
+        <maml:description>
+          <maml:para>Specifies the remote path to upload the file to on the FTP server.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+        <dev:type>
+          <maml:name>String</maml:name>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>

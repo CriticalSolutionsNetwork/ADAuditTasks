@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: ADAuditTasks-help.xml
 Module Name: ADAuditTasks
 online version: https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Merge-ADAuditZip
@@ -79,22 +79,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -OpenDirectory
-Specifies an optional switch to open the directory of the merged compressed ZIP
-file after creation.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -OutputFolder
 Specifies the output folder for the merged compressed ZIP file.
 The default folder
@@ -108,6 +92,22 @@ Aliases:
 Required: False
 Position: 3
 Default value: C:\temp
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OpenDirectory
+Specifies an optional switch to open the directory of the merged compressed ZIP
+file after creation.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

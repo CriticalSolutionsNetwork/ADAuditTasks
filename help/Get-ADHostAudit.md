@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: ADAuditTasks-help.xml
 Module Name: ADAuditTasks
 online version: https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-ADHostAudit
@@ -54,51 +54,6 @@ Get-ADHostAudit -OSType "2008" -DirPath "C:\Temp\" -Report -Verbose
 
 ## PARAMETERS
 
-### -AttachmentFolderPath
-Specifies the directory where attachments will be saved.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 4
-Default value: C:\temp\ADHostAudit
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -DaystoConsiderAHostInactive
-Specifies the number of days to consider a host as inactive.
-
-```yaml
-Type: Int32
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 2
-Default value: 90
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -Enabled
-If set to $false, the function will also search for disabled computers.
-
-```yaml
-Type: Boolean
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: True
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
 ### -HostType
 Specifies the type of hosts to search for.
 Valid values are WindowsServers, WindowsWorkstations, and Non-Windows.
@@ -131,6 +86,21 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
+### -DaystoConsiderAHostInactive
+Specifies the number of days to consider a host as inactive.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 2
+Default value: 90
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
 ### -Report
 Saves a CSV report to the specified directory.
 
@@ -142,6 +112,36 @@ Aliases:
 Required: False
 Position: 3
 Default value: False
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -AttachmentFolderPath
+Specifies the directory where attachments will be saved.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 4
+Default value: C:\temp\ADHostAudit
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Enabled
+If set to $false, the function will also search for disabled computers.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: True
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```

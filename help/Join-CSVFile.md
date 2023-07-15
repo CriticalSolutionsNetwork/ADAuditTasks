@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: ADAuditTasks-help.xml
 Module Name: ADAuditTasks
 online version: https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Join-CSVFiles
@@ -36,6 +36,21 @@ This example will merge the contents of "C:\path\to\csv1.csv" and
 
 ## PARAMETERS
 
+### -CSVFilePaths
+An array of strings containing the file paths of the CSV files to be merged.
+
+```yaml
+Type: String[]
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 1
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
 ### -AttachmentFolderPath
 The output folder path where the merged CSV file will be saved.
 Default location is "C:\temp\MergedCSV".
@@ -48,21 +63,6 @@ Aliases:
 Required: False
 Position: 2
 Default value: C:\temp\MergedCSV
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -CSVFilePaths
-An array of strings containing the file paths of the CSV files to be merged.
-
-```yaml
-Type: String[]
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 1
-Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
