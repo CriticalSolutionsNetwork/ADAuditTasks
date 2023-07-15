@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: ADAuditTasks-help.xml
 Module Name: ADAuditTasks
 online version: https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Send-AuditEmail
@@ -73,10 +73,9 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -Body
-The body of the message, pre-populates with the same data as the subject line.
-Specify body text
-in the function parameters to override.
+### -SMTPServer
+The SMTP Server address.
+For example: "smtp.office365.com"
 
 ```yaml
 Type: String
@@ -85,22 +84,54 @@ Aliases:
 
 Required: False
 Position: Named
-Default value: "$($script:MyInvocation.MyCommand.Name -replace '\..*') report ran for $($env:USERDNSDOMAIN) on host $($env:COMPUTERNAME)."
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -CertificateThumbprint
-API key for the Azure Function App
+### -Port
+The following ports can be used to send email:
+    "993", "995", "587", "25"
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: 0
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -UserName
+The Account authorized to send email via SMTP.
+From parameter is usually the same.
 
 ```yaml
 Type: String
-Parameter Sets: Func
+Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SSL
+Switch to ensure SSL is used during transport.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -115,6 +146,74 @@ Link:
 ```yaml
 Type: String
 Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -To
+This is the mailbox who will be the recipient of the communication.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Subject
+The subject is automatically populated with the name of the function that ran the script,
+as well as the domain and hostname.
+
+If you specify subject in the parameters, it will override the default with your subject.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: "$($script:MyInvocation.MyCommand.Name -replace '\..*') report ran for $($env:USERDOMAIN) on host $($env:COMPUTERNAME)."
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Body
+The body of the message, pre-populates with the same data as the subject line.
+Specify body text
+in the function parameters to override.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: "$($script:MyInvocation.MyCommand.Name -replace '\..*') report ran for $($env:USERDOMAIN) on host $($env:COMPUTERNAME)."
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Pass
+Takes a SecureString as input.
+The password must be added to the command by using:
+    -Pass (Read-Host -AsSecureString)
+    You will be promted to enter the password for the UserName parameter.
+
+```yaml
+Type: SecureString
+Parameter Sets: Pass
 Aliases:
 
 Required: False
@@ -155,104 +254,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Pass
-Takes a SecureString as input.
-The password must be added to the command by using:
-    -Pass (Read-Host -AsSecureString)
-    You will be promted to enter the password for the UserName parameter.
-
-```yaml
-Type: SecureString
-Parameter Sets: Pass
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Port
-The following ports can be used to send email:
-    "993", "995", "587", "25"
-
-```yaml
-Type: Int32
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: 0
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -SMTPServer
-The SMTP Server address.
-For example: "smtp.office365.com"
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -SSL
-Switch to ensure SSL is used during transport.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Subject
-The subject is automatically populated with the name of the function that ran the script,
-as well as the domain and hostname.
-
-If you specify subject in the parameters, it will override the default with your subject.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: "$($script:MyInvocation.MyCommand.Name -replace '\..*') report ran for $($env:USERDNSDOMAIN) on host $($env:COMPUTERNAME)."
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -To
-This is the mailbox who will be the recipient of the communication.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Token
 If you are using the optional function feature, this is the api token for the specific function.
 Ensure you are using the "Function Key" and NOT the "Host Key" to ensure access is only to the specific funtion.
@@ -269,16 +270,15 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -UserName
-The Account authorized to send email via SMTP.
-From parameter is usually the same.
+### -CertificateThumbprint
+API key for the Azure Function App
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Func
 Aliases:
 
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False

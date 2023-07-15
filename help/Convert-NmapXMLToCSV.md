@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: ADAuditTasks-help.xml
 Module Name: ADAuditTasks
 online version: https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Convert-NmapXMLToCSV
@@ -35,6 +35,21 @@ This example will convert the contents of "C:\path\to\nmap.xml" into a CSV file 
 
 ## PARAMETERS
 
+### -InputXml
+A string containing the full path to the Nmap XML file that needs to be converted.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 1
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
 ### -AttachmentFolderPath
 The output folder path where the converted CSV file will be saved.
 Default location is "C:\temp\NmapXMLToCSV".
@@ -47,21 +62,6 @@ Aliases:
 Required: False
 Position: 2
 Default value: C:\temp\NmapXMLToCSV
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -InputXml
-A string containing the full path to the Nmap XML file that needs to be converted.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 1
-Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```

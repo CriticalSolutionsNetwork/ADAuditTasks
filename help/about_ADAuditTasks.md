@@ -39,7 +39,6 @@ The following Private Functions support the functions in this module:
 - `Group-UpdateByProduct`
 - `Initialize-ModuleEnv`
 - `Install-ADModule`
-- `Read-FileContent`
 - `Test-IsAdmin`
 - `Write-AuditLog`
 

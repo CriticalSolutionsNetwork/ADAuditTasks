@@ -1,4 +1,4 @@
-﻿---
+---
 external help file: ADAuditTasks-help.xml
 Module Name: ADAuditTasks
 online version: https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-QuickPing
@@ -20,10 +20,12 @@ Get-QuickPing [[-IPRange] <Object>] [[-TTL] <Int32>] [[-BufferSize] <Int32>] [[-
 
 ## DESCRIPTION
 This function performs a quick ping on a range of IP addresses specified by the IPRange parameter.
-The ping is done with a Time-to-Live (TTL) value of 128 (by default), meaning only the local network
-will be pinged.
-The function returns an array of IP addresses that responded to the ping and an array
-of IP addresses that failed to respond.
+The ping is done with a Time-to-Live (TTL) value of 128 (by default).
+The function returns an array
+of IP addresses that responded to the ping and an array of IP addresses that failed to respond.
+This function has specific behaviors depending on the PowerShell version.
+For PowerShell 7 and
+above, it uses the 'Test-Connection' cmdlet's '-OutVariable' parameter.
 
 ## EXAMPLES
 
@@ -37,21 +39,45 @@ failed to respond.
 
 ### EXAMPLE 2
 ```
-Get-QuickPing -IPRange 192.168.1.0/24
-Performs a quick ping on all IP addresses in the 192.168.1.0/24 network with a TTL of
-128 and returns an array of IP addresses that responded to the ping and an array of IP
-addresses that failed to respond.
-```
-
-### EXAMPLE 3
-```
-Get-QuickPing -IPRange @(192.168.1.1, 192.168.1.2, 192.168.1.3)
+Get-QuickPing -IPRange "192.168.1.1", "192.168.1.2", "192.168.1.3"
 Performs a quick ping on the IP addresses 192.168.1.1, 192.168.1.2, and 192.168.1.3 with
 a TTL of 128 and returns an array of IP addresses that responded to the ping and an array
 of IP addresses that failed to respond.
 ```
 
 ## PARAMETERS
+
+### -IPRange
+Specifies a range of IP addresses to ping.
+Can be a string with a single IP address.
+
+```yaml
+Type: Object
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 1
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -TTL
+Specifies the Time-to-Live (TTL) value to use for the ping.
+The default value is 128.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 2
+Default value: 128
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -BufferSize
 Specifies the size of the buffer to use for the ping.
@@ -81,39 +107,6 @@ Aliases:
 Required: False
 Position: 4
 Default value: 1
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -IPRange
-Specifies a range of IP addresses to ping.
-Can be a string with a single IP address,
-a range of IP addresses in CIDR notation, or an array of IP addresses.
-
-```yaml
-Type: Object
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 1
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -TTL
-Specifies the Time-to-Live (TTL) value to use for the ping.
-The default value is 128.
-
-```yaml
-Type: Int32
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 2
-Default value: 128
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

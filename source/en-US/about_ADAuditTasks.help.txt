@@ -37,7 +37,6 @@ LONG DESCRIPTION
     - `Group-UpdateByProduct`
     - `Initialize-ModuleEnv`
     - `Install-ADModule`
-    - `Read-FileContent`
     - `Test-IsAdmin`
     - `Write-AuditLog`
 
