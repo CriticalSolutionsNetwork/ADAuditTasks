@@ -21,7 +21,7 @@ ModuleVersion = '0.0.1'
 GUID = '7ddb359a-e07f-4be0-b63a-a81f44c61fff'
 
 # Author of this module
-Author = '(DrIOSx)'
+Author = 'DrIOSx'
 
 # Company or vendor of this module
 CompanyName = 'CriticalSolutions.net LLC'
@@ -115,7 +115,7 @@ PrivateData = @{
 } # End of PrivateData hashtable
 
 # HelpInfo URI of this module
-HelpInfoURI = 'https://audittaskshelpfiles.blob.core.windows.net/helpfiles/'
+HelpInfoURI = 'https://audittaskshelpfiles.blob.core.windows.net/helpfiles'
 
 # Default prefix for commands exported from this module. Override the default prefix using Import-Module -Prefix.
 # DefaultCommandPrefix = ''
