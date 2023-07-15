@@ -46,8 +46,12 @@ function Get-ADUserPrivilegeAudit {
         [switch]$Report
     )
     begin {
-        Write-AuditLog -Start
-        Write-AuditLog "###############################################"
+        if (!($script:LogString)) {
+            Write-AuditLog -Start
+        }
+        else {
+            Write-AuditLog -BeginFunction
+        }
         # Get name of the function
         $ScriptFunctionName = $MyInvocation.MyCommand.Name -replace '\..*'
         if ($env:USERNAME -eq 'SYSTEM') {

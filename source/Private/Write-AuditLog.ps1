@@ -175,7 +175,7 @@
                         exit
                     }
                 }
-                'Error'       { Write-Error ('[ERROR] X ' + $Message) -ErrorAction Continue }
+                'Error'       { Write-Error ('[ERROR] X - ' + $FuncName + ' ' + $Message) -ErrorAction Continue }
                 'Verbose'     { Write-Verbose ('[VERBOSE] ~ ' + $Message) }
                 Default { Write-Information ('[INFORMATION] * ' + $Message)  -InformationAction Continue}
             }
