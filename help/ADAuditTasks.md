@@ -1,7 +1,7 @@
 ﻿---
 Module Name: ADAuditTasks
 Module Guid: 7ddb359a-e07f-4be0-b63a-a81f44c61fff
-Download Help Link: https://audittaskshelpfiles.blob.core.windows.net/helpfiles/
+Download Help Link: https://audittaskshelpfiles.blob.core.windows.net/helpfiles
 Help Version: 1.0.0.5
 Locale: en-US
 ---
