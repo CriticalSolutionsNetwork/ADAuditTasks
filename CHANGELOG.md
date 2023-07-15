@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
--Test fix dh.
+-Test fix downloadable help.
 ## [0.7.3] - 2023-07-15
 
 ### Fixed
