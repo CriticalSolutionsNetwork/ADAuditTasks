@@ -21,19 +21,19 @@ ModuleVersion = '0.0.1'
 GUID = '7ddb359a-e07f-4be0-b63a-a81f44c61fff'
 
 # Author of this module
-Author = 'Douglas S. Rios (DrIOSx)'
+Author = '(DrIOSx)'
 
 # Company or vendor of this module
-CompanyName = 'Douglas S. Rios (DrIOSx)'
+CompanyName = 'CriticalSolutions.net LLC'
 
 # Copyright statement for this module
-Copyright = '(c) 2023 Douglas S. Rios (DrIOSx). All rights reserved.'
+Copyright = '(c) 2023 DrIOSX via CriticalSolutions.net LLC. All rights reserved.'
 
 # Description of the functionality provided by this module
 Description = 'A module for running various Active Directory Tasks'
 
 # Minimum version of the Windows PowerShell engine required by this module
-PowerShellVersion = '5.0'
+PowerShellVersion = '5.1'
 
 # Name of the Windows PowerShell host required by this module
 # PowerShellHostName = ''
@@ -96,16 +96,16 @@ PrivateData = @{
 
         Prerelease = ''
         # Tags applied to this module. These help with module discovery in online galleries.
-        # Tags = @()
+        Tags       = @('ActiveDirectory', 'Audit', 'Security')
 
         # A URL to the license for this module.
         # LicenseUri = ''
 
         # A URL to the main website for this project.
-        # ProjectUri = ''
+        ProjectUri = 'https://github.com/CriticalSolutionsNetwork/ADAuditTasks'
 
         # A URL to an icon representing this module.
-        # IconUri = ''
+        IconUri    = 'https://csn-source.s3.us-east-2.amazonaws.com/CSN-Icon.png'
 
         # ReleaseNotes of this module
         ReleaseNotes = ''
@@ -115,7 +115,7 @@ PrivateData = @{
 } # End of PrivateData hashtable
 
 # HelpInfo URI of this module
-# HelpInfoURI = ''
+HelpInfoURI = 'https://audittaskshelpfiles.blob.core.windows.net/helpfiles/'
 
 # Default prefix for commands exported from this module. Override the default prefix using Import-Module -Prefix.
 # DefaultCommandPrefix = ''
