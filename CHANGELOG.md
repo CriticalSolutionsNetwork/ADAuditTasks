@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
--Test fix downloadable help.
+- GT instead of LT in Get-ADActiveUserAudit
 ## [0.7.3] - 2023-07-15
 
 ### Fixed
