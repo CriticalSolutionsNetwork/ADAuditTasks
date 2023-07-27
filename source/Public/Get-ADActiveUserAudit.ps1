@@ -110,7 +110,7 @@ function Get-ADActiveUserAudit {
     }
     process {
         # Get Users
-        Get-ADUser -Filter { LastLogonTimeStamp -gt $time -and Enabled -eq $Enabled } `
+        Get-ADUser -Filter { (LastLogonTimeStamp -lt $time) -and (Enabled -eq $Enabled) } `
             -Properties $propsArray -OutVariable ADExport | Out-Null
         # Create custom object for the output
         $Export = Build-ADAuditTasksUser -ADExport $ADExport

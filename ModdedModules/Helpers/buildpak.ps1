@@ -29,8 +29,8 @@ Merge-ADAuditZip -FilePaths  $workstations, $servers, $nonWindows, $activeUsers,
 
 $netaudit = Get-NetworkAudit -LocalSubnets -Report -Verbose
 
-$script = { Get-NetworkAudit -LocalSubnets -NoHops -Report -Verbose }
-$script2 = { Get-NetworkAudit -LocalSubnets -Report -ThrottleLimit 320 -Verbose }
+$script     = { Get-NetworkAudit -LocalSubnets -NoHops -Report -Verbose }
+$script2    = { Get-NetworkAudit -LocalSubnets -Report -ThrottleLimit 320 -Verbose }
 Measure-Command -Expression $script -Verbose
 Measure-Command -Expression $script2 -Verbose
 
@@ -62,10 +62,10 @@ Get-NetworkAudit -Ports 443 -Computers $test1 -Report -NoHops -AddService
 #>
 
 <#
-    $ver = "v0.7.4"
+    $ver = "v0.7.5"
     git checkout main
     git pull origin main
-    git tag -a $ver -m "Release version $ver help fix"
+    git tag -a $ver -m "Release version $ver fix"
     git push origin $ver
     "Fix: PR #37"
     git push origin $ver
