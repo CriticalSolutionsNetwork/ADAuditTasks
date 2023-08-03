@@ -55,9 +55,9 @@ The following Private Functions support the functions in this module:
 The following example demonstrates how to create a zip file of different host types:
 
 ```powershell
-$workstations   = Get-ADHostAudit -HostType WindowsWorkstations
-$servers        = Get-ADHostAudit -HostType WindowsServers
-$nonWindows     = Get-ADHostAudit -HostType "Non-Windows"
+$workstations   = Get-ADHostAudit -HostType WindowsWorkstations -Report
+$servers        = Get-ADHostAudit -HostType WindowsServers -Report
+$nonWindows     = Get-ADHostAudit -HostType "Non-Windows" -Report
 
 Merge-ADAuditZip -FilePaths $workstations, $servers, $nonWindows
 ```
