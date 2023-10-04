@@ -21,7 +21,7 @@ function Get-ADUserPrivilegeAudit {
     .PARAMETER Report
     Adds report output as CSV to the directory specified by AttachmentFolderPath.
     .NOTES
-    This function requires the ActiveDirectory module.
+    This function requires the ActiveDirectory module and the desktop version of Powershell. Import-Module ADAuditTasks -UseWindowsPowershell in powershell core.
     .LINK
     https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-ADUserPrivilegeAudit
     .LINK

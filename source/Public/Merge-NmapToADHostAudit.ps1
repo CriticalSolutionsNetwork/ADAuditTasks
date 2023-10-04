@@ -59,6 +59,14 @@ function Merge-NmapToADHostAudit {
         # Variables
         $adAuditData = Import-Csv -Path $ADAuditCsv
         $nmapData = Import-Csv -Path $NmapCsv
+        if (@($adAuditData).Count -eq 0) {
+            Write-AuditLog "Empty AD Audit CSV file: $ADAuditCsv" -Severity Warning
+            throw "Empty AD Audit CSV file: $ADAuditCsv"
+        }
+        if (@($nmapData).Count -eq 0) {
+            Write-AuditLog "Empty Nmap CSV file: $NmapCsv" -Severity Warning
+            throw "Empty Nmap CSV file: $NmapCsv"
+        }
         [string]$OutputCsv = "$AttachmentFolderPath\$((Get-Date).ToString('yyyy-MM-dd_hh.mm.ss')).$($env:USERDOMAIN).NmapJoinedADHostAudit.csv"
         [string]$UnmatchedNmapOutputCsv = "$AttachmentFolderPath\$((Get-Date).ToString('yyyy-MM-dd_hh.mm.ss')).$($env:USERDOMAIN).NmapUnjoinedToADAudit.csv"
     }
@@ -96,7 +104,7 @@ function Merge-NmapToADHostAudit {
             # ROws by ip and hostname
             $nmapRowsByIP = $nmapDataGrouped | Where-Object { $_.IPAddress -eq $ip }
             $nmapRowsByHostname = $nmapDataGrouped | Where-Object { $_.Hostname -eq $hostname }
-            $nmapRow = if ($nmapRowsByIP) { $nmapRowsByIP[0] } elseif ($nmapRowsByHostname) { $nmapRowsByHostname[0] } else { $null }
+            $nmapRow = if (@($nmapRowsByIP).Count -gt 0) { $nmapRowsByIP[0] } elseif (@($nmapRowsByHostname).Count -gt 0) { $nmapRowsByHostname[0] } else { $null }
             if (!$hostname -and $nmapRow.Hostname) {
                 $hostname = $nmapRow.Hostname
             }
@@ -106,7 +114,7 @@ function Merge-NmapToADHostAudit {
             # Find additional IPs with the same hostname
             $additionalIPs = ($nmapDataGrouped | Where-Object { $_.Hostname -eq $hostname -and $_.IPAddress -ne $ip } | ForEach-Object { $_.IPAddress }) -join ', '
             # Consolidate duplicate hostnames and IP addresses before removing them from $nmapDataGrouped
-            if ($nmapRowsByHostname.Count -gt 1) {
+            if (@($nmapRowsByHostname).Count -gt 1) {
                 $openPorts = ($nmapRowsByHostname.OpenPorts | ForEach-Object { $_.Split(', ') } | Sort-Object | Get-Unique) -join ', '
                 $closedPorts = ($nmapRowsByHostname.ClosedPorts | ForEach-Object { $_.Split(', ') } | Sort-Object | Get-Unique) -join ', '
                 $services = ($nmapRowsByHostname.Services | ForEach-Object { $_.Split(', ') } | Sort-Object | Get-Unique) -join ', '

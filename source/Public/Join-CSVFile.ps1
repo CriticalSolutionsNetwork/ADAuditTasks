@@ -58,7 +58,7 @@ function Join-CSVFile {
                 throw "File not found: $csvPath"
             }
             $csvContent = Import-Csv -Path $csvPath
-            if ($csvContent.Count -eq 0) {
+            if (@($csvContent).Count -eq 0) {
                 Write-AuditLog "Empty CSV file: $csvPath" -Severity Warning
                 throw "Empty CSV file: $csvPath"
             }

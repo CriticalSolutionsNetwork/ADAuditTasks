@@ -1,4 +1,4 @@
-Function Get-AdExtendedRight([Microsoft.ActiveDirectory.Management.ADObject] $ADObject) {
+Function Get-AdExtendedRight([Microsoft.ActiveDirectory.Management.ADObject]$ADObject) {
     # Initialize an empty array to store extended rights
     $ExportER = @()
     # Loop through each access control entry in the object's security descriptor

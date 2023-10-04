@@ -5,6 +5,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Get-FormattedDate function to format date for file names for later use.
+- Requires Desktop Edition for Get-ADUserPrivilegeAudit
+
+### Fixed
+
+- In the `source/Public/Get-ADActiveUserAudit.ps1`, `source/Public/Get-ADHostAudit.ps1`, `source/Public/Get-ADUserWildCardAudit.ps1`, `source/Public/Get-QuickPing.ps1`, `source/Public/Join-CSVFile.ps1`, and `source/Public/Merge-NmapToADHostAudit.ps1` files.
+- The code was updated to ensure that the correct count of objects in the `$Export` variable is logged in the `Write-AuditLog` function
+
+## [0.7.6] - 2023-07-27
+
 ### Fixed
 
 - GT instead of LT in Get-ADActiveUserAudit

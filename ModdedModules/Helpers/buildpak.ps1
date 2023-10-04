@@ -62,7 +62,7 @@ Get-NetworkAudit -Ports 443 -Computers $test1 -Report -NoHops -AddService
 #>
 
 <#
-    $ver = "v0.7.5"
+    $ver = "v0.7.7"
     git checkout main
     git pull origin main
     git tag -a $ver -m "Release version $ver fix"
@@ -300,3 +300,5 @@ function New-MissingTestFiles {
     }
 }
 New-MissingTestFiles -FunctionType 'Private'
+
+

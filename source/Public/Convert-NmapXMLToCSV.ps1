@@ -2,7 +2,6 @@ function Convert-NmapXMLToCSV {
 <#
     .SYNOPSIS
     Converts an Nmap XML scan output file to a CSV file.
-
     .DESCRIPTION
     The Convert-NmapXMLToCSV function takes an Nmap XML scan output
     file as input and converts it into a CSV file. The function
@@ -10,28 +9,22 @@ function Convert-NmapXMLToCSV {
     closed ports, services, service versions, and operating systems.
     The output CSV file is saved to the specified folder or to
     C:\temp\NmapXMLToCSV by default.
-
     .PARAMETER InputXml
     A string containing the full path to the Nmap XML file that needs to be converted.
-
     .PARAMETER AttachmentFolderPath
     The output folder path where the converted CSV file will be saved.
     Default location is "C:\temp\NmapXMLToCSV".
-
     .EXAMPLE
     Convert-NmapXMLToCSV -InputXml "C:\path\to\nmap.xml" -AttachmentFolderPath "C:\path\to\output"
     This example will convert the contents of "C:\path\to\nmap.xml" into a CSV file and save it in "C:\path\to\output".
-
     .NOTES
     Make sure the input Nmap XML file is properly formatted and contains the necessary
     information for the conversion to work correctly.
-
     .LINK
     https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Convert-NmapXMLToCSV
     .LINK
     https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Convert-NmapXMLToCSV
 #>
-
     [CmdletBinding()]
     param (
         [Parameter(

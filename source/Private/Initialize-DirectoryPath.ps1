@@ -1,31 +1,31 @@
 function Initialize-DirectoryPath {
-    <#
-.SYNOPSIS
-Initializes one or more directory paths if they do not already exist.
-.DESCRIPTION
-The `Initialize-DirectoryPath` function checks if the specified directory
-paths exist. If a path does not exist, the function will create the directory.
-If a directory already exists, no action is taken.
-.PARAMETER DirectoryPath
-The `DirectoryPath` parameter specifies an array of directory paths to be checked
-and created if they do not already exist.
-.EXAMPLE
-Initialize-DirectoryPath -DirectoryPath "C:\Output"
+<#
+    .SYNOPSIS
+    Initializes one or more directory paths if they do not already exist.
+    .DESCRIPTION
+    The `Initialize-DirectoryPath` function checks if the specified directory
+    paths exist. If a path does not exist, the function will create the directory.
+    If a directory already exists, no action is taken.
+    .PARAMETER DirectoryPath
+    The `DirectoryPath` parameter specifies an array of directory paths to be checked
+    and created if they do not already exist.
+    .EXAMPLE
+    Initialize-DirectoryPath -DirectoryPath "C:\Output"
 
-This example checks if the "C:\Output" directory exists. If it does not exist,
-the function creates the directory. If the directory already exists, no action
-is taken.
-.EXAMPLE
-Initialize-DirectoryPath -DirectoryPath "C:\Output1", "C:\Output2"
+    This example checks if the "C:\Output" directory exists. If it does not exist,
+    the function creates the directory. If the directory already exists, no action
+    is taken.
+    .EXAMPLE
+    Initialize-DirectoryPath -DirectoryPath "C:\Output1", "C:\Output2"
 
-This example checks if the "C:\Output1" and "C:\Output2" directories exist. If a directory
-does not exist, the function creates it. If a directory already exists, no action
-is taken.
-.NOTES
-This function is not visible outside of the module.
-.NOTES
-Author: DrIOSx
-Date: 15-Apr-2023
+    This example checks if the "C:\Output1" and "C:\Output2" directories exist. If a directory
+    does not exist, the function creates it. If a directory already exists, no action
+    is taken.
+    .NOTES
+    This function is not visible outside of the module.
+    .NOTES
+    Author: DrIOSx
+    Date: 15-Apr-2023
 #>
     [OutputType([string])]
     [CmdletBinding()]
