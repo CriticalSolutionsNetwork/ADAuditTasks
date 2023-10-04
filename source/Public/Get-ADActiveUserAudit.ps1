@@ -120,7 +120,7 @@ function Get-ADActiveUserAudit {
         Write-AuditLog "The $ScriptFunctionName Export was successful."
 
         # Log output object properties.
-        Write-AuditLog "There are $($Export.Count) objects listed with the following properties: "
+        Write-AuditLog "There are $(@($Export).Count) objects listed with the following properties: "
         Write-AuditLog "$(($Export | Get-Member -MemberType property ).Name -join " | ")"
         # Export to csv and zip, if requested.
         if ($Report) {

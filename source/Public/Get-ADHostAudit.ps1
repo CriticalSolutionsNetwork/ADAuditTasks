@@ -185,7 +185,7 @@ https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-ADHostAudit
             $ExportMembers = "Export: $(($Export | Get-Member -MemberType property ).Name -join " | ")"
             # Log a successful export message and list the exported properties and the number of objects exported
             Write-AuditLog "The $ScriptFunctionName Export was successful."
-            Write-AuditLog "There are $($Export.Count) objects listed with the following properties: "
+            Write-AuditLog "There are $(@($Export).Count) objects listed with the following properties: "
             Write-AuditLog "$ExportMembers"
             # If the -Report switch is used, create a report archive and log the output
             if ($Report) {

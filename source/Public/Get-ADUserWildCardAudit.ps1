@@ -118,7 +118,7 @@ function Get-ADUserWildCardAudit {
     }
     end {
         Write-AuditLog "The $ScriptFunctionName Export was successful."
-        Write-AuditLog "There are $($Export.Count) objects listed with the following properties: "
+        Write-AuditLog "There are $(@($Export).Count) objects listed with the following properties: "
         Write-AuditLog "$(($Export | Get-Member -MemberType property ).Name -join " | ")"
         if ($Report) {
             # Add Datetime to filename

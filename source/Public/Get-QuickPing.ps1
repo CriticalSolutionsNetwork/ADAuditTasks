@@ -1,5 +1,5 @@
 function Get-QuickPing {
-<#
+    <#
     .SYNOPSIS
     Performs a quick ping on a range of IP addresses and returns an array of IP addresses
     that responded to the ping and an array of IP addresses that failed to respond.
@@ -33,20 +33,35 @@ function Get-QuickPing {
     https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-QuickPing
 #>
     param (
-        $IPRange,
+        [Parameter(Mandatory = $true)]
+        [ValidateScript({
+                if ($_ -match "^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$") {
+                    $true
+                }
+                else {
+                    throw "Invalid IP address format"
+                }
+            })]
+        [Array]$IPRange,
+
+        [ValidateRange(1, 255)]
         [int]$TTL = 128,
+
+        [ValidateRange(16, 65500)]
         [int32]$BufferSize = 16,
+
+        [ValidateRange(1, [int]::MaxValue)]
         [int32]$Count = 1
     )
+
     begin {
-        if (!$Script:LogString) {
-            if (!($script:LogString)) {
-                Write-AuditLog -Start
-            }
-            else {
-                Write-AuditLog -BeginFunction
-            }
+        if (!($script:LogString)) {
+            Write-AuditLog -Start
         }
+        else {
+            Write-AuditLog -BeginFunction
+        }
+
         $FailedToPing = @()
         $Success = @()
         $TotalIPs = $IPRange.Count
@@ -79,13 +94,13 @@ function Get-QuickPing {
                     }
                 }
             }
-            catch { throw $_.Exception}
+            catch { throw $_.Exception }
         }
-        if ($null -eq $FailedToPing) {
-            $FailedtoPing = "NoIPs"
+        if ($FailedToPing.Count -eq 0) {
+            $FailedToPing = "NoIPs"
         }
-        if ($null -eq $Success) {
-            $FailedtoPing = "NoIPs"
+        if ($Success.Count -eq 0) {
+            $FailedToPing = "NoIPs"
         }
     }
     end {

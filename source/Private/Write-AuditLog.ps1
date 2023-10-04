@@ -177,7 +177,7 @@
                 }
                 'Error'       { Write-Error ('[ERROR] X - ' + $FuncName + ' ' + $Message) -ErrorAction Continue }
                 'Verbose'     { Write-Verbose ('[VERBOSE] ~ ' + $Message) }
-                Default { Write-Information ('[INFORMATION] * ' + $Message)  -InformationAction Continue}
+                Default { Write-Information ('[INFO] * ' + $Message)  -InformationAction Continue}
             }
         }
         catch {

@@ -42,7 +42,6 @@ function Get-NetworkAudit {
     .LINK
     https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-NetworkAudit
 #>
-
     [OutputType([pscustomobject])]
     [CmdletBinding(DefaultParameterSetName = 'Default', SupportsShouldProcess = $true, ConfirmImpact = 'High')]
     param (
