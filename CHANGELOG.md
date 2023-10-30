@@ -7,9 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Grabbing FQDN using Get-CimInstance instead of environment variable.
-
+- Grabbing FQDN using Get-CimInstance instead of environment variable
 - Logging functions.
+- Implemented previously missing logging technique to avoid log lumping.
 
 ## [0.7.7] - 2023-10-04
 
