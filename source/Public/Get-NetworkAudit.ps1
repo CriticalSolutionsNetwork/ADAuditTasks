@@ -96,12 +96,7 @@ function Get-NetworkAudit {
     )
     begin {
         # Create logging object
-        if (!($script:LogString)) {
-            Write-AuditLog -Start
-        }
-        else {
-            Write-AuditLog -BeginFunction
-        }
+        Write-AuditLog -Start
         # Begin Logging
         Write-AuditLog "Begin Log"
         # Check if PSnmap module is installed, if not install it.

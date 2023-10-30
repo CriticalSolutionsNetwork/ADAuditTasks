@@ -17,6 +17,12 @@ Build-Docs
 <#
 
 #>
+$workstations   = Get-ADHostAudit -HostType WindowsWorkstations -Report
+$servers        = Get-ADHostAudit -HostType WindowsServers -Report
+$nonWindows     = Get-ADHostAudit -HostType "Non-Windows" -Report
+
+Merge-ADAuditZip -FilePaths $workstations, $servers, $nonWindows
+
 
 $workstations       = Get-ADHostAudit -HostType WindowsWorkstations -Report -Verbose
 $servers            = Get-ADHostAudit -HostType WindowsServers -Report -Verbose
