@@ -66,11 +66,7 @@ function Get-ADUserWildCardAudit {
     begin {
         Write-AuditLog -Start
         $ScriptFunctionName = $MyInvocation.MyCommand.Name -replace '\..*'
-        if ($env:USERNAME -eq 'SYSTEM') {
-            $DomainSuffix = $env:USERDOMAIN
-        } else {
-            $DomainSuffix = $env:USERDNSDOMAIN
-        }
+        $DomainSuffix = (Get-CimInstance -ClassName Win32_ComputerSystem).Domain
         ### ActiveDirectory Module Install
         try {
             Install-ADModule -ErrorAction Stop -Verbose

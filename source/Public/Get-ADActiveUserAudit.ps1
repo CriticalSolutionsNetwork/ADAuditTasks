@@ -63,11 +63,7 @@ function Get-ADActiveUserAudit {
         Write-AuditLog -Start
         $ScriptFunctionName = $MyInvocation.MyCommand.Name -replace '\..*'
         ### ActiveDirectory Module Install
-        if ($env:USERNAME -eq 'SYSTEM') {
-            $DomainSuffix = $env:USERDOMAIN
-        } else {
-            $DomainSuffix = $env:USERDNSDOMAIN
-        }
+        $DomainSuffix = (Get-CimInstance -ClassName Win32_ComputerSystem).Domain
 
         try {
             Install-ADModule -ErrorAction Stop -Verbose

@@ -51,11 +51,7 @@ function Get-ADUserPrivilegeAudit {
 
         # Get name of the function
         $ScriptFunctionName = $MyInvocation.MyCommand.Name -replace '\..*'
-        if ($env:USERNAME -eq 'SYSTEM') {
-            $DomainSuffix = $env:USERDOMAIN
-        } else {
-            $DomainSuffix = $env:USERDNSDOMAIN
-        }
+        $DomainSuffix = (Get-CimInstance -ClassName Win32_ComputerSystem).Domain
         # Check if ActiveDirectory module is installed
         ### ActiveDirectory Module Install
         try {

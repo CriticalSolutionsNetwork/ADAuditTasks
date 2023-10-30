@@ -84,12 +84,8 @@ https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-ADHostAudit
         Write-AuditLog -Start
         # Get the name of the script function
         $ScriptFunctionName = $MyInvocation.MyCommand.Name -replace '\..*'
-        if ($env:USERNAME -eq 'SYSTEM') {
-            $DomainSuffix = $env:USERDOMAIN
-        } else {
-            $DomainSuffix = $env:USERDNSDOMAIN
-        }
-        $DomainSuffix
+        $DomainSuffix = (Get-CimInstance -ClassName Win32_ComputerSystem).Domain
+
         # Check if the Active Directory module is installed and install it if necessary
         try {
             Install-ADModule -ErrorAction Stop -Verbose

@@ -211,7 +211,7 @@ function Get-NetworkAudit {
     # Process Close
     end {
         if ($Report) {
-            $csv = "C:\temp\$((Get-Date).ToString('yyyy-MM-dd_hh.mm.ss')).$($env:USERDOMAIN)_HostScan_$subnetText.csv"
+            $csv = "C:\temp\$((Get-Date).ToString('yyyy-MM-dd_hh.mm.ss'))_$((Get-CimInstance -ClassName Win32_ComputerSystem).Domain)_HostScan_$subnetText.csv"
             $zip = $csv -replace ".csv", ".zip"
             $log = $csv -replace ".csv", ".AuditLog.csv"
             Write-AuditLog -EndFunction
