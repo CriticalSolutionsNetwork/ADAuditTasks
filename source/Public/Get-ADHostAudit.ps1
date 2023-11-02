@@ -81,20 +81,12 @@ https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-ADHostAudit
     )
     begin {
         # Create logging object
-        if (!($script:LogString)) {
-            Write-AuditLog -Start
-        }
-        else {
-            Write-AuditLog -BeginFunction
-        }
+        Write-AuditLog -Start
         # Get the name of the script function
         $ScriptFunctionName = $MyInvocation.MyCommand.Name -replace '\..*'
+        $DomainSuffix = (Get-CimInstance -ClassName Win32_ComputerSystem).Domain
+
         # Check if the Active Directory module is installed and install it if necessary
-        if ($env:USERNAME -eq 'SYSTEM') {
-            $DomainSuffix = $env:USERDOMAIN
-        } else {
-            $DomainSuffix = $env:USERDNSDOMAIN
-        }
         try {
             Install-ADModule -ErrorAction Stop -Verbose
         }
@@ -210,7 +202,7 @@ https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-ADHostAudit
             # If there is no output, log message and create an audit log file
             $ExportFileName = "$AttachmentFolderPath\$((Get-Date).ToString('yyyy-MM-dd_hh.mm.ss'))_$($ScriptFunctionName)_$($DomainSuffix)"
             $log = Join-Path -Path "$ExportFileName." -ChildPath "$FileSuffix.AuditLog.csv"
-            $Script:LogString += Write-AuditLog "There is no output for the specified host type $FileSuffix"
+            Write-AuditLog "There is no output for the specified host type $FileSuffix"
             Write-AuditLog -End -OutputPath $log
             # If the -Report switch is not used, return null
             if (-not $Report) {

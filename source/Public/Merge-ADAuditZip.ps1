@@ -55,11 +55,7 @@ function Merge-ADAuditZip {
         Write-AuditLog -BeginFunction
     }
     # Remove any blank file paths from the array
-    if ($env:USERNAME -eq 'SYSTEM') {
-        $DomainSuffix = $env:USERDOMAIN
-    } else {
-        $DomainSuffix = $env:USERDNSDOMAIN
-    }
+    $DomainSuffix = (Get-CimInstance -ClassName Win32_ComputerSystem).Domain
     $FilePaths = $FilePaths | Where-Object { $_ }
     # Create the output directory if it doesn't exist
     Initialize-DirectoryPath -DirectoryPath $OutputFolder
