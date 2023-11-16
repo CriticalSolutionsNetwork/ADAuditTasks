@@ -201,7 +201,7 @@ https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-ADHostAudit
         else {
             # If there is no output, log message and create an audit log file
             $ExportFileName = "$AttachmentFolderPath\$((Get-Date).ToString('yyyy-MM-dd_hh.mm.ss'))_$($ScriptFunctionName)_$($DomainSuffix)"
-            $log = Join-Path -Path "$ExportFileName." -ChildPath "$FileSuffix.AuditLog.csv"
+            $log = "$ExportFileName.$FileSuffix.AuditLog.csv"
             Write-AuditLog "There is no output for the specified host type $FileSuffix"
             Write-AuditLog -End -OutputPath $log
             # If the -Report switch is not used, return null

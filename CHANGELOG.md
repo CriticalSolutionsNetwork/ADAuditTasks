@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Fixed 'Get-ADHostAudit' to properly create filename for log when device type is missing.
+
+## [0.8.0] - 2023-11-02
+
+### Fixed
+
 - Grabbing FQDN using Get-CimInstance instead of environment variable
 - Logging functions.
 - Implemented previously missing logging technique to avoid log lumping.
