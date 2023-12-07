@@ -21,10 +21,10 @@ function Build-ADAuditTasksComputer {
 
     # Hash tables for Operating System version mapping
     $osVersionMapWorkstation = @{
-        "6.1 (7600)" = "Windows 7"
-        "6.1 (7601)" = "Windows 7 SP1"
-        "6.2 (9200)" = "Windows 8"
-        "6.3 (9600)" = "Windows 8.1"
+        "6.1 (7600)"   = "Windows 7"
+        "6.1 (7601)"   = "Windows 7 SP1"
+        "6.2 (9200)"   = "Windows 8"
+        "6.3 (9600)"   = "Windows 8.1"
         "10.0 (10240)" = "Windows 10 1507"
         "10.0 (10586)" = "Windows 10 1511"
         "10.0 (14393)" = "Windows 10 1607"
@@ -41,13 +41,13 @@ function Build-ADAuditTasksComputer {
         "10.0 (22000)" = "Windows 11 21H2"
     }
     $osVersionMapServer = @{
-        "6.0 (6000)" = "Windows Server 2008"
-        "6.0 (6001)" = "Windows Server 2008 SP1"
-        "6.0 (6002)" = "Windows Server 2008 SP2"
-        "6.1 (7600)" = "Windows Server 2008 R2"
-        "6.1 (7601)" = "Windows Server 2008 R2 SP1"
-        "6.2 (9200)" = "Windows Server 2012"
-        "6.3 (9600)" = "Windows Server 2012 R2"
+        "6.0 (6000)"   = "Windows Server 2008"
+        "6.0 (6001)"   = "Windows Server 2008 SP1"
+        "6.0 (6002)"   = "Windows Server 2008 SP2"
+        "6.1 (7600)"   = "Windows Server 2008 R2"
+        "6.1 (7601)"   = "Windows Server 2008 R2 SP1"
+        "6.2 (9200)"   = "Windows Server 2012"
+        "6.3 (9600)"   = "Windows Server 2012 R2"
         "10.0 (14393)" = "Windows Server 2016"
         "10.0 (17763)" = "Windows Server 2019"
         "10.0 (20348)" = "Windows Server 2022"
@@ -62,13 +62,31 @@ function Build-ADAuditTasksComputer {
     Write-AuditLog "Begin ADAuditTasksComputer object creation."
 
     $Export = $ADComputers | ForEach-Object {
-        # Determine the Operating System Version and Build Name
-        $osVersion = $_.OperatingSystemVersion
+        # Inside Build-ADAuditTasksComputer function
+
+        $osVersion = $_.OperatingSystemVersion -replace '^\s+|\s+$', '' # Trim whitespace
+        if (-not $osVersion) { $osVersion = "Unknown" } # Handle null/empty values
+
         $osBuildName = if ($_.OperatingSystem -like "*Server*") {
-            $osVersionMapServer[$osVersion]
-        } else {
-            $osVersionMapWorkstation[$osVersion]
+            if ($null -ne $osVersionMapServer[$osVersion]) {
+                $osVersionMapServer[$osVersion]
+            }
+            else {
+                "Unknown Server OS"
+            }
         }
+        elseif ($_.OperatingSystem -notlike "*windows*") {
+            "Non-Windows OS" # Default for non-Windows
+        }
+        else {
+            if ($null -ne $osVersionMapWorkstation[$osVersion]) {
+                $osVersionMapWorkstation[$osVersion]
+            }
+            else {
+                "Unknown Workstation OS"
+            }
+        }
+
 
         # Convert LastLogonTimestamp and LastSeen to DateTime
         $lastLogonDateTime = [DateTime]::FromFileTime($_.lastLogonTimestamp)
