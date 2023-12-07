@@ -1,38 +1,38 @@
 function Get-ADHostAudit {
-    <#
-.SYNOPSIS
-    Active Directory Server and Workstation Audit with Report export option (Can also be piped to CSV if Report isn't specified).
-.DESCRIPTION
-    Audits Active Directory for hosts that haven't signed in for a specified number of days. Output can be piped to a CSV manually, or automatically saved to C:\temp\ADHostAudit or a specified directory using the -Report switch.
+<#
+    .SYNOPSIS
+        Active Directory Server and Workstation Audit with Report export option (Can also be piped to CSV if Report isn't specified).
+    .DESCRIPTION
+        Audits Active Directory for hosts that haven't signed in for a specified number of days. Output can be piped to a CSV manually, or automatically saved to C:\temp\ADHostAudit or a specified directory using the -Report switch.
 
-    Use the Tab key to cycle through the -HostType parameter.
-.EXAMPLE
-    PS C:\> Get-ADHostAudit -HostType WindowsServers -Report -Verbose
-.EXAMPLE
-    PS C:\> Get-ADHostAudit -HostType WindowsWorkstations -Report -Verbose
-.EXAMPLE
-    PS C:\> Get-ADHostAudit -HostType "Non-Windows" -Report -Verbose
-.EXAMPLE
-    PS C:\> Get-ADHostAudit -OSType "2008" -DirPath "C:\Temp\" -Report -Verbose
-.PARAMETER HostType
-    Specifies the type of hosts to search for. Valid values are WindowsServers, WindowsWorkstations, and Non-Windows.
-.PARAMETER OSType
-    Specifies the operating system to search for. There is no need to add wildcards.
-.PARAMETER DaystoConsiderAHostInactive
-    Specifies the number of days to consider a host as inactive.
-.PARAMETER Report
-    Saves a CSV report to the specified directory.
-.PARAMETER AttachmentFolderPath
-    Specifies the directory where attachments will be saved.
-.PARAMETER Enabled
-    If set to $false, the function will also search for disabled computers.
-.NOTES
-    By default, output is saved to C:\temp\ADHostAudit.
-    For more information, type: Get-Help Get-ADHostAudit -ShowWindow
-.LINK
-https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-ADHostAudit
-.LINK
-https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-ADHostAudit
+        Use the Tab key to cycle through the -HostType parameter.
+    .EXAMPLE
+        PS C:\> Get-ADHostAudit -HostType WindowsServers -Report -Verbose
+    .EXAMPLE
+        PS C:\> Get-ADHostAudit -HostType WindowsWorkstations -Report -Verbose
+    .EXAMPLE
+        PS C:\> Get-ADHostAudit -HostType "Non-Windows" -Report -Verbose
+    .EXAMPLE
+        PS C:\> Get-ADHostAudit -OSType "2008" -DirPath "C:\Temp\" -Report -Verbose
+    .PARAMETER HostType
+        Specifies the type of hosts to search for. Valid values are WindowsServers, WindowsWorkstations, and Non-Windows.
+    .PARAMETER OSType
+        Specifies the operating system to search for. There is no need to add wildcards.
+    .PARAMETER DaystoConsiderAHostInactive
+        Specifies the number of days to consider a host as inactive.
+    .PARAMETER Report
+        Saves a CSV report to the specified directory.
+    .PARAMETER AttachmentFolderPath
+        Specifies the directory where attachments will be saved.
+    .PARAMETER Enabled
+        If set to $false, the function will also search for disabled computers.
+    .NOTES
+        By default, output is saved to C:\temp\ADHostAudit.
+        For more information, type: Get-Help Get-ADHostAudit -ShowWindow
+    .LINK
+    https://github.com/CriticalSolutionsNetwork/ADAuditTasks/wiki/Get-ADHostAudit
+    .LINK
+    https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-ADHostAudit
 #>
 
 
@@ -145,7 +145,6 @@ https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-ADHostAudit
         "DistinguishedName",
         "servicePrincipalName",
         "whenChanged"
-
 
     } # End Begin
     process {
