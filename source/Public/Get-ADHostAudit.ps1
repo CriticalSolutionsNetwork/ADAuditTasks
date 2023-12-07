@@ -141,9 +141,11 @@ https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-ADHostAudit
         "lastLogonTimestamp",
         "Name",
         "OperatingSystem",
+        "OperatingSystemVersion", # Newly added property
         "DistinguishedName",
         "servicePrincipalName",
         "whenChanged"
+
 
     } # End Begin
     process {
@@ -155,7 +157,7 @@ https://criticalsolutionsnetwork.github.io/ADAuditTasks/#Get-ADHostAudit
         if ($OSPicked) {
             Write-AuditLog "And Operating System is like: $OSPicked."
             Get-ADComputer -Filter { (LastLogonTimeStamp -gt $time) -and (Enabled -eq $Enabled) -and (OperatingSystem -like $OSPicked) }`
-            -Properties $propsArray -OutVariable ADComps | Out-Null
+                -Properties $propsArray -OutVariable ADComps | Out-Null
         }
         elseif ($POSIX) {
             Write-AuditLog "And Operating System is: Non-Windows(POSIX)."
