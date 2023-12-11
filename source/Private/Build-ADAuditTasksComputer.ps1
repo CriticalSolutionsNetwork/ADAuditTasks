@@ -21,6 +21,8 @@ function Build-ADAuditTasksComputer {
 
     # Hash tables for Operating System version mapping
     $osVersionMapWorkstation = @{
+        "5.1 (2600)"   = "Windows XP"
+        "6.0 (6000)"   = "Windows Vista"
         "6.1 (7600)"   = "Windows 7"
         "6.1 (7601)"   = "Windows 7 SP1"
         "6.2 (9200)"   = "Windows 8"
@@ -41,6 +43,7 @@ function Build-ADAuditTasksComputer {
         "10.0 (22000)" = "Windows 11 21H2"
     }
     $osVersionMapServer = @{
+        "5.2 (3790)"   = "Windows Server 2003"
         "6.0 (6000)"   = "Windows Server 2008"
         "6.0 (6001)"   = "Windows Server 2008 SP1"
         "6.0 (6002)"   = "Windows Server 2008 SP2"
@@ -62,7 +65,6 @@ function Build-ADAuditTasksComputer {
     Write-AuditLog "Begin ADAuditTasksComputer object creation."
 
     $Export = $ADComputers | ForEach-Object {
-        # Inside Build-ADAuditTasksComputer function
 
         $osVersion = $_.OperatingSystemVersion -replace '^\s+|\s+$', '' # Trim whitespace
         if (-not $osVersion) { $osVersion = "Unknown" } # Handle null/empty values
