@@ -40,7 +40,10 @@ function Build-ADAuditTasksComputer {
         "10.0 (19042)" = "Windows 10 20H2"
         "10.0 (19043)" = "Windows 10 21H1"
         "10.0 (19044)" = "Windows 10 21H2"
+        "10.0 (19045)" = "Windows 10 22H2"
         "10.0 (22000)" = "Windows 11 21H2"
+        "10.0 (22621)" = "Windows 11 22H2"
+        "10.0 (22631)" = "Windows 11 23H2"
     }
     $osVersionMapServer = @{
         "5.2 (3790)"   = "Windows Server 2003"
