@@ -5,6 +5,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added `OperatingSystemVersion` and `OperatingSystemBuildName` properties to `ADAuditTasksComputer` class.
+- Updated `Build-ADAuditTasksComputer` function to include logic for mapping OS versions to human-readable names using new hash tables `$osVersionMapWorkstation` and `$osVersionMapServer`.
+- Modified `Get-ADHostAudit` function to include `OperatingSystemVersion` in `$propsArray`, ensuring compatibility with changes in `ADAuditTasksComputer` class.
+
+### Changed
+
+- Refactored `ADAuditTasksComputer` class to improve clarity and maintainability, moving data transformation logic to `Build-ADAuditTasksComputer` function.
+- Adjusted `Build-ADAuditTasksComputer` function to align with the refactored `ADAuditTasksComputer` class, preserving original functionality and output format.
+- Refactored Initialize-ModuleEnv function to use force parameter and set to medium. Setting to high in future update.
+
+
+## [0.8.1] - 2023-11-16
+
 ### Fixed
 
 - Fixed 'Get-ADHostAudit' to properly create filename for log when device type is missing.
