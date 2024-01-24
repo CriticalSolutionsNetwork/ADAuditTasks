@@ -5,6 +5,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Fixed `Get-ADHostAudit` to properly create lastseen property.
+
+## [0.9.0] - 2024-01-18
+
 ### Added
 
 - Added `OperatingSystemVersion` and `OperatingSystemBuildName` properties to `ADAuditTasksComputer` class.
