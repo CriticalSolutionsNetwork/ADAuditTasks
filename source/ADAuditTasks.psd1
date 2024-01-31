@@ -27,7 +27,7 @@ Author = 'DrIOSx'
 CompanyName = 'CriticalSolutions.net LLC'
 
 # Copyright statement for this module
-Copyright = '(c) 2023 DrIOSX via CriticalSolutions.net LLC. All rights reserved.'
+Copyright = '(c) 2024 DrIOSX via CriticalSolutions.net LLC. All rights reserved.'
 
 # Description of the functionality provided by this module
 Description = 'A module for running various Active Directory Tasks'
