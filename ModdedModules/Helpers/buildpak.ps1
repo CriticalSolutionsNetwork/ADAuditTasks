@@ -308,3 +308,140 @@ function New-MissingTestFiles {
 New-MissingTestFiles -FunctionType 'Private'
 
 
+
+# Check net framework:
+function Get-NetframeworkVersion {
+    $release = Get-ItemPropertyValue -LiteralPath 'HKLM:SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full' -Name Release
+    switch ($release) {
+        { $_ -ge 533320 } { $version = '4.8.1 or later'; break }
+        { $_ -ge 528040 } { $version = '4.8'; break }
+        { $_ -ge 461808 } { $version = '4.7.2'; break }
+        { $_ -ge 461308 } { $version = '4.7.1'; break }
+        { $_ -ge 460798 } { $version = '4.7'; break }
+        { $_ -ge 394802 } { $version = '4.6.2'; break }
+        { $_ -ge 394254 } { $version = '4.6.1'; break }
+        { $_ -ge 393295 } { $version = '4.6'; break }
+        { $_ -ge 379893 } { $version = '4.5.2'; break }
+        { $_ -ge 378675 } { $version = '4.5.1'; break }
+        { $_ -ge 378389 } { $version = '4.5'; break }
+        default { $version = $null; break }
+    }
+    if ($version) {
+        Write-Host -Object ".NET Framework Version: $version"
+    } else {
+        Write-Host -Object '.NET Framework Version 4.5 or later is not detected.'
+    }
+}
+
+
+# Public function Candidate:
+
+function Get-GroupMembershipChangeFromDC {
+    <#
+        .SYNOPSIS
+            Retrieves group membership changes from domain controllers.
+        .DESCRIPTION
+            This function queries domain controllers to find events related to group membership changes (Event IDs 4728 and 4729).
+            It can query all domain controllers in the domain or target only the local domain controller.
+            Will query local domain controller if required RPC ports are not available.
+            The function returns an object containing details of each group membership change.
+        .PARAMETER DaysAgo
+            Specifies the number of days to look back for group membership changes.
+            The default value is 1 day.
+        .PARAMETER Local
+            If used, the function will check for group membership changes only on the local domain controller.
+            This switch also checks if the script is being run on a domain controller.
+        .EXAMPLE
+            Get-GroupMembershipChangesFromDC
+            This example retrieves group membership changes from all domain controllers in the last day.
+        .EXAMPLE
+            Get-GroupMembershipChangesFromDC -DaysAgo 3
+            This example retrieves group membership changes from all domain controllers in the last 3 days.
+        .EXAMPLE
+            Get-GroupMembershipChangesFromDC -Local
+            This example retrieves group membership changes from the local domain controller in the last day.
+        .OUTPUTS
+            PSCustomObject
+            Each object represents a group membership change with the following properties:
+            - Group: The name of the group that was changed.
+            - Action: Indicates whether a member was added or removed.
+            - When: The date and time of the change.
+            - Who: The name of the user who made the change.
+            - AccountAffected: The name of the account that was added or removed.
+        .NOTES
+            This function requires Active Directory PowerShell module and appropriate permissions to access event logs on domain controllers.
+            Ensure that the necessary audit policies are configured for group membership change events to be logged.
+        .LINK
+            About_Group_Policy_Settings
+    #>
+        [CmdletBinding()]
+        param (
+            [Parameter(Mandatory=$false)]
+            [int]$DaysAgo = 1,
+            [Parameter(Mandatory=$false)]
+            [switch]$Local
+        )
+        # Function to check if the current computer is a Domain Controller
+        function Is-DomainController {
+            $computer = Get-WmiObject Win32_ComputerSystem
+            return $computer.DomainRole -eq 4 -or $computer.DomainRole -eq 5
+        }
+        # Function to test remote event log access
+        function Test-RemoteEventLogAccess {
+            param (
+                [string]$ComputerName
+            )
+            $portCheck = Test-NetConnection -ComputerName $ComputerName -Port 135
+            return $portCheck.TcpTestSucceeded
+        }
+
+        # Initialize an array to store the results
+        $results = @()
+
+        if ($Local -or -not (Is-DomainController)) {
+            $DCs = @((Get-ADDomainController -Filter {Name -eq "$($env:COMPUTERNAME)"}))
+        } else {
+            $DCs = Get-ADDomainController -Filter *
+            foreach ($DC in $DCs) {
+                if (-not (Test-RemoteEventLogAccess -ComputerName $DC.HostName)) {
+                    Write-Warning "Cannot access the event log on DC: $($DC.HostName). Trying local DC instead."
+                    $DCs = @((Get-ADDomainController -Filter {Name -eq $($env:COMPUTERNAME)}))
+                    break
+                }
+            }
+        }
+        # Define timeframe for report
+        $startDate = (Get-Date).AddDays(-$DaysAgo)
+        # Store group membership changes events from the security event logs in an array.
+        foreach ($DC in $DCs) {
+            $events = Get-EventLog -LogName Security -ComputerName $DC.Hostname -After $startDate | Where-Object {$_.EventID -eq 4728 -or $_.EventID -eq 4729}
+            # Process each event
+            foreach ($e in $events) {
+                # Member Added to Group
+                if ($e.EventID -eq 4728) {
+                    $results += [PSCustomObject]@{
+                        Group = $e.ReplacementStrings[2]
+                        Action = 'Member added'
+                        When = $e.TimeGenerated
+                        Who = $e.ReplacementStrings[6]
+                        AccountAffected = $e.ReplacementStrings[0]
+                    }
+                }
+                # Member Removed from Group
+                elseif ($e.EventID -eq 4729) {
+                    $results += [PSCustomObject]@{
+                        Group = $e.ReplacementStrings[2]
+                        Action = 'Member removed'
+                        When = $e.TimeGenerated
+                        Who = $e.ReplacementStrings[6]
+                        AccountAffected = $e.ReplacementStrings[0]
+                    }
+                }
+            }
+        }
+        # Return the results object
+        return $results
+    }
+    # Example usage
+    # Get-GroupMembershipChangeFromDC -DaysAgo 2
+    # Get-GroupMembershipChangeFromDC -Local
