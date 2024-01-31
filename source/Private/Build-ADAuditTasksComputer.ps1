@@ -95,16 +95,18 @@ function Build-ADAuditTasksComputer {
 
         # Convert LastLogonTimestamp and LastSeen to DateTime
         $lastLogonDateTime = [DateTime]::FromFileTime($_.lastLogonTimestamp)
-        $lastSeenDateTime = [DateTime]::FromFileTime($_.lastLogonTimestamp) # Adjust as needed for LastSeen logic
 
-        # Determine LastSeen string representation
-        $lastSeenString = switch ($lastSeenDateTime) {
-            { $_ -lt (Get-Date).Adddays(-90) } { '3+ months' }
-            { $_ -lt (Get-Date).Adddays(-60) } { '2+ months' }
-            { $_ -lt (Get-Date).Adddays(-30) } { '1+ month' }
-            default { 'Recently' }
-        }
-
+        $lastSeenString = $(
+            switch (([DateTime]::FromFileTime($_.lastLogonTimestamp))) {
+                # Over 90 Days
+                { ($_ -lt (Get-Date).Adddays( - (90))) } { '3+ months'; break }
+                # Over 60 Days
+                { ($_ -lt (Get-Date).Adddays( - (60))) } { '2+ months'; break }
+                # Over 30 Days
+                { ($_ -lt (Get-Date).Adddays( - (30))) } { '1+ month'; break }
+                default { 'Recently' }
+            } # End Switch
+        ) # End LastSeen
         # GroupMemberships processing (adjust as needed)
         $groupMemberships = $(Get-ADGroupMemberof -SamAccountName $_.Name -AccountType ADComputer)
 

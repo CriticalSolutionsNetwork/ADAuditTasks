@@ -9,7 +9,7 @@ function Get-WebCertAudit {
     .PARAMETER Url
     The URL of the web server.
     .EXAMPLE
-    Get-WebCert -Url "https://www.example.com"
+    Get-WebCertAudit -Url "https://www.example.com"
     This example retrieves the certificate information for the web server at https://www.example.com.
     .OUTPUTS
     PSCustomObject
