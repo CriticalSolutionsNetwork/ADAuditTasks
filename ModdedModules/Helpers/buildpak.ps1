@@ -405,7 +405,7 @@ function Get-GroupMembershipChangeFromDC {
             foreach ($DC in $DCs) {
                 if (-not (Test-RemoteEventLogAccess -ComputerName $DC.HostName)) {
                     Write-Warning "Cannot access the event log on DC: $($DC.HostName). Trying local DC instead."
-                    $DCs = @((Get-ADDomainController -Filter {Name -eq $($env:COMPUTERNAME)}))
+                    $DCs = @((Get-ADDomainController -Filter {Name -eq "$($env:COMPUTERNAME)"}))
                     break
                 }
             }
